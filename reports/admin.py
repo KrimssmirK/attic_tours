@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Visa
+from .models import VisaType
 
-admin.site.register(Visa)
+admin.site.register(VisaType)
