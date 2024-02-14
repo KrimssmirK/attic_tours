@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import VisaType
+from .models import VisaType, Coordinator
 
 
 class VisaTypeModelTests(TestCase):
@@ -12,3 +12,13 @@ class VisaTypeModelTests(TestCase):
         visa_type_on_db = VisaType.objects.first()
         self.assertEqual(visa_type_on_db, new_visa_type)
         
+
+class CoordinatorModelTests(TestCase):
+    """
+    add coordinator and check if it is added correctly
+    """
+    def test_add_coordinator(self):
+        new_coordinator = Coordinator(name="arvie")
+        new_coordinator.save()
+        coordinator_on_db = Coordinator.objects.first()
+        self.assertEqual(coordinator_on_db, new_coordinator)
