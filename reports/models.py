@@ -1,12 +1,6 @@
 from django.db import models
 
 
-def create_choices(model):
-    items_on_db = model.objects.all()
-    choices = {str(item_name)[0]: str(item_name) for item_name in items_on_db}
-    return choices
-
-
 class Report(models.Model):
     visa_type = models.CharField(max_length=200)
     coordinator = models.CharField(max_length=200)
