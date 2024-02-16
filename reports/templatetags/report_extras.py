@@ -11,3 +11,12 @@ def lookup(dict, key):
         return dict[key]
     else: 
         return 0
+
+
+@register.filter(name="get_total")
+def get_total(dict):
+    total = sum(dict.values())
+    if total >= 0:
+        return total
+    else:
+        return 0
