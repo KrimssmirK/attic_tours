@@ -1,0 +1,20 @@
+{% load report_extras %}
+
+<!doctype html>
+<html>
+    <head></head>
+    <body>
+        <table>
+            <tr>
+                {% for visa_type in visa_types %}
+                    <th>{{ visa_type }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for visa_type in visa_types %}
+                    <td>{{ reports|lookup:visa_type }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </body>
+</html>
