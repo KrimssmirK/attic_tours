@@ -1,3 +1,4 @@
+{% comment %} custom template tag filter {% endcomment %}
 {% load report_extras %}
 
 <!doctype html>
@@ -9,11 +10,13 @@
                 {% for visa_type in visa_types %}
                     <th>{{ visa_type }}</th>
                 {% endfor %}
+                <th>TOTAL</th>
             </tr>
             <tr>
                 {% for visa_type in visa_types %}
                     <td>{{ reports|lookup:visa_type }}</td>
                 {% endfor %}
+                <td>{{ reports|get_total }}</td>
             </tr>
         </table>
     </body>
