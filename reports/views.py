@@ -15,7 +15,6 @@ def index(request):
             reports_dicts[report.visa_type] += report.no_of_pax
         else:
             reports_dicts[report.visa_type] = report.no_of_pax
-    print("reports_dicts:", reports_dicts)
             
     context = {"reports": reports_dicts, "visa_types": visa_types}
     return render(request, "reports/index.html", context)
