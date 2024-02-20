@@ -1,76 +1,48 @@
-{% comment %} custom template tag filter {% endcomment %}
+{% extends './base.html' %}
+{% block index %}active{% endblock %}
+{% block title %}
+  HOME
+{% endblock %}
 {% load report_extras %}
-
-{% load static %}
-
-
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" href="{% static 'reports/index_style.css' %}" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.3.1/css/all.min.css" rel="stylesheet">
-        
-    </head>
-    {% comment %} <body>
-        <table>
-            <tr>
-                {% for visa_type in visa_types %}
-                    <th>{{ visa_type }}</th>
-                {% endfor %}
-                <th>TOTAL</th>
-            </tr>
-            <tr>
-                {% for visa_type in visa_types %}
-                    <td>{{ reports|lookup:visa_type }}</td>
-                {% endfor %}
-                <td>{{ reports|get_total }}</td>
-            </tr>
-        </table>
-    </body> {% endcomment %}
-    <body class="bg-default">
-        <div class="main-content">
-          <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-            <div class="container-fluid">
-              <h2 class="mb-5 text-white">Today's Stats</h2>
-              <div class="header-body">
-                <div class="row d-flex">
-                   
-                    {% for visa_type in visa_types %}
-                  <div class="col-xl-3 col-lg-6 w-25">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">{{ visa_type }}</h5>
-                            <span class="h2 font-weight-bold mb-0">{{ reports|lookup:visa_type }}</span>
-                          </div>
+{% block content %}
+  <div class="bg-default">
+    <div class="main-content">
+      <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+        <div class="container-fluid">
+          <h2 class="mb-5 text-white">Today's Stats</h2>
+          <div class="header-body">
+            <div class="row d-flex">
+              {% for visa_type in visa_types %}
+                <div class="col-xl-3 col-lg-6 w-25">
+                  <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <h5 class="card-title text-uppercase text-muted mb-0">{{ visa_type }}</h5>
+                          <span class="h2 font-weight-bold mb-0">{{ reports|lookup:visa_type }}</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  {% endfor %}
+                </div>
+              {% endfor %}
 
-                  <div class="col-xl-3 col-lg-6 w-25">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">TOTAL</h5>
-                            <span class="h2 font-weight-bold mb-0">{{ reports|get_total }}</span>
-                          </div>
-                        </div>
+              <div class="col-xl-3 col-lg-6 w-25">
+                <div class="card card-stats mb-4 mb-xl-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">TOTAL</h5>
+                        <span class="h2 font-weight-bold mb-0">{{ reports|get_total }}</span>
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </body>
-</html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      </div>
+    </div>
+  </div>
+{% endblock %}
