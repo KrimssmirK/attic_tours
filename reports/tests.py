@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
+from django.urls import reverse
 from .models import VisaType, Coordinator, Report
 
 
@@ -45,3 +46,8 @@ class ReportModelTests(TestCase):
         report_on_db = Report.objects.first()
         self.assertEqual(report_on_db, new_report)
         
+
+class IndexViewTests(TestCase):
+    def test_page_exist(self):
+        response = self.client.get(reverse("reports:index"))
+        self.assertEqual(response.status_code, 200)
