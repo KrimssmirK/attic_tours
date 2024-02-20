@@ -19,3 +19,7 @@ def index(request):
     context = {"reports": reports_dicts, "visa_types": visa_types}
     return render(request, "reports/index.html", context)
 
+
+def reports(request):
+    return render(request, "reports/reports.html", {})
+
