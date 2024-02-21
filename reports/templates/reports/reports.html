@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content %}
   <div class="center w-75 m-auto p-2 mt-3">
-    <form method="post" class="card p-5">
+    <form method="post" class="card p-5" id="myForm">
       {% csrf_token %}
 
       <h2>Report</h2>
@@ -32,4 +32,13 @@
       </div>
     </form>
   </div>
+  <script>
+    const form = document.getElementById('myForm')
+    form.addEventListener('submit', (event) => {
+      // event.preventDefault()
+      // here you can show something on submit or do whatever you want
+      alert("Thank you for reporting =>")
+      
+    })
+  </script>
 {% endblock %}
