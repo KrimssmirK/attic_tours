@@ -1,8 +1,35 @@
 {% extends './base.html' %}
-{% block reports %}active{% endblock %}
+{% block reports %}
+  active
+{% endblock %}
 {% block title %}
   REPORTS
 {% endblock %}
 {% block content %}
-a
+  <div class="center w-75 m-auto p-2 mt-3">
+    <form method="post" class="card p-5">
+      {% csrf_token %}
+
+      <h2>Report</h2>
+      {% for field in form %}
+        {% if field.name == 'completed' %}
+          <p>{{ field.label_tag }} {{ field }}</p>
+        {% endif %}
+
+        {% if field.errors %}
+          <small class="error">{{ field.errors|striptags }}</small>
+        {% else %}
+          {{ field.label_tag }} {{ field }}
+        {% endif %}
+
+        {% if field.errors %}
+          <small class="error">{{ field.errors|striptags }}</small>
+        {% endif %}
+      {% endfor %}
+
+      <div class="form-buttons mt-1 text-center p-2">
+        <input type="submit" value="Report" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
 {% endblock %}

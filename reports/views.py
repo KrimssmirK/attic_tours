@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from .models import Report, VisaType, Coordinator
+from django.views.generic.edit import CreateView
+from django.contrib import messages
+from django.urls import reverse_lazy
 
 
 
@@ -10,6 +13,14 @@ def index(request):
     return render(request, "reports/index.html", context)
 
 
-def reports(request):
-    return render(request, "reports/reports.html", {})
+class ReportPageView(CreateView):
+  model = Report
+  template_name = 'reports/reports.html'
+  fields = "__all__"
+  success_url = reverse_lazy('reports:index')
+  
+#   def form_valid(self, form):
+#     form.instance.user = self.request.user
+#     messages.success(self.request, "Success to report!")
+#     return super(ReportPageView, self).form_valid(form)
 
