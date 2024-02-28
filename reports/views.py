@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from .models import Report, VisaType, Coordinator
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
@@ -18,4 +19,3 @@ class ReportPageView(CreateView):
   fields = "__all__"
   success_url = reverse_lazy('reports:index')
   
-
