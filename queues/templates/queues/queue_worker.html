@@ -1,4 +1,5 @@
 {% extends './base.html' %}
+{% load static %}
 {% block queues %}
   active
 {% endblock %}
@@ -6,5 +7,27 @@
   QUEUE
 {% endblock %}
 {% block content %}
-si shiela ang gagawa neto!! thanksss!!
+<div class="row mt-5">
+  <div class="col-12">
+    <h1 class="fw-bold text-center" id="current_queue_number">0</h1>
+  </div>
+  <div class="col-6 text-end">
+    <button type="button" class="btn btn-secondary">BACK</button>
+  </div>
+  <div class="col-6 text-start">
+    <button type="button" class="btn btn-primary">NEXT</button>
+  </div>
+</div>
+<script src="
+https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
+"></script>
+<script src="{% static 'queues/js/queue_number_loader.js' %}"></script>
+<script>
+  const endpoint = "{% url 'queues:japan_queue_number' %}"
+  const interval = 5_000
+  const DomID = 'current_queue_number'
+  const hasCallVoice = false
+  updateQueueNumber(endpoint, 5_000, DomID, false)
+</script>
 {% endblock %}
+
