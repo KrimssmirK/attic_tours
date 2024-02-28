@@ -3,7 +3,7 @@ const state = {
   "previous_data": null
 }
 
-function updateQueueNumber(endpoint, interval, DomID) {
+function updateQueueNumber(endpoint, interval, DomID, hasCallVoice) {
   var intervalId = window.setInterval(function () {
     getCurrentQueueNumber(endpoint)
   }, interval)
@@ -18,7 +18,9 @@ function updateQueueNumber(endpoint, interval, DomID) {
       // update UI
       if (!_.isEqual(received_data, state.previous_data)) {
         updateTargetDOM(DomID)
-        callCustomer()
+        if (hasCallVoice) {
+          callCustomer()
+        }
       }
       state.previous_data = received_data
     }
