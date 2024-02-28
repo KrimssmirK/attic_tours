@@ -85,3 +85,9 @@ venv.bak/
 
 # source activation
 bin/
+
+# Mac
+.DS_Store
+
+# Migrations
+[0-9][0-9][0-9][0-9]_initial.py
