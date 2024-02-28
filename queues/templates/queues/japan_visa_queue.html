@@ -58,5 +58,6 @@ https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
   const endpoint = "{% url 'queues:japan_queue_number' %}"
   const interval = 5_000
   const DomID = 'current_queue_number'
-  updateQueueNumber(endpoint, 5_000, DomID)
+  const hasCallVoice = true
+  updateQueueNumber(endpoint, 5_000, DomID, hasCallVoice)
 </script>
