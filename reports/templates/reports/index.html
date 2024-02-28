@@ -12,6 +12,7 @@
       <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
         <div class="container-fluid">
           <h2 class="mb-5 text-white">Today's Stats</h2>
+          <div id="visaContainer"></div>
           {% if reports|has_reports %}
             <div class="header-body">
               <div class="row d-flex flex-wrap">
@@ -49,4 +50,111 @@
       </div>
     </div>
   </div>
+  {% comment %} <div id="test_ajax"></div> {% endcomment %}
+  {% comment %} <script src="
+https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
+"></script> {% endcomment %}
+  {% comment %} <script>
+    // implementationReferenceForSpeech()
+    
+    function implementationReferenceNoNeedRefreshing() {
+      received_data = {
+        TOURISM: 10,
+        COE: 2
+      }
+      var previous_data = null
+      if (received_data) {
+        mountContainer()
+    
+        var intervalId = window.setInterval(function () {
+          if (!_.isEqual(received_data, previous_data)) {
+            for (const [key, value] of Object.entries(received_data)) {
+              mountVisaCard(key, value)
+            }
+            previous_data = received_data
+          }
+        }, 1000)
+      }
+    
+      function getTodayVisaReportData() {
+        const xhttp = new XMLHttpRequest()
+        xhttp.onload = function () {
+          // What to do when the response is ready
+          var data = JSON.parse(xhttp.responseText)
+          alert(data.age)
+        }
+        xhttp.open('GET', "{% url 'reports:ajax' %}")
+        xhttp.send()
+      }
+    
+      function createParagraphElement() {
+        const parent = document.getElementById('test_ajax')
+        const paragraph = document.createElement('p')
+        paragraph.innerText = 'hello AJAX'
+        parent.append(paragraph)
+      }
+    
+      function removeParagraphElement() {
+        const parent = document.getElementById('test_ajax')
+        while (parent.firstChild) {
+          parent.removeChild(parent.firstChild)
+        }
+      }
+    
+      // flow
+      // 1. get the data
+      // 2. remove if there is existing
+      // 3. add content
+    
+      function mountContainer() {
+        const parent = document.getElementById('visaContainer')
+        const container = document.createElement('div')
+        container.setAttribute('class', 'header-body')
+        const innerContainer = document.createElement('div')
+        innerContainer.setAttribute('class', 'row d-flex flex-wrap')
+        innerContainer.setAttribute('id', 'visaCards')
+    
+        container.appendChild(innerContainer)
+    
+        parent.appendChild(container)
+      }
+    
+      function mountVisaCard(visaType, pax) {
+        const parent = document.getElementById('visaCards')
+    
+        const card = document.createElement('div')
+        card.setAttribute('class', 'card card-stats mb-4 mb-xl-0 m-2')
+        card.style.width = 'fit-content'
+        const cardBody = document.createElement('div')
+        cardBody.setAttribute('class', 'card-body')
+        const cardRow = document.createElement('div')
+        cardRow.setAttribute('class', 'row')
+        const cardCol = document.createElement('col')
+        cardCol.setAttribute('class', 'col')
+        const cardHeader = document.createElement('h5')
+        cardHeader.setAttribute('class', 'card-title text-uppercase text-muted mb-0')
+        cardHeader.innerText = visaType
+        const cardSpan = document.createElement('span')
+        cardSpan.setAttribute('class', 'h2 font-weight-bold mb-0')
+        cardSpan.innerText = pax
+    
+        cardCol.appendChild(cardHeader)
+        cardCol.appendChild(cardSpan)
+    
+        cardRow.appendChild(cardCol)
+    
+        cardBody.appendChild(cardRow)
+    
+        card.appendChild(cardBody)
+    
+        parent.appendChild(card)
+      }
+    }
+    
+    function implementationReferenceForSpeech() {
+     // let utterance = new SpeechSynthesisUtterance('sir arvie hello po')
+     // speechSynthesis.speak(utterance)
+    }
+    
+  </script> {% endcomment %}
 {% endblock %}
