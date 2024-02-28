@@ -55,8 +55,8 @@ https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
 "></script>
 <script src="{% static 'queues/js/queue_number_loader.js' %}"></script>
 <script>
-  const endpoint = {% url 'queues:japan_queue_number' %}
-  const interval = 5_000 
-  const DomID = "current_queue_number" 
+  const endpoint = "{% url 'queues:japan_queue_number' %}"
+  const interval = 5_000
+  const DomID = 'current_queue_number'
   updateQueueNumber(endpoint, 5_000, DomID)
 </script>

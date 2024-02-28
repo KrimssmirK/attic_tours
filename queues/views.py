@@ -18,7 +18,7 @@ def japan_visa_worker(request):
 
 # APIs
 def get_japan_queue_number(request):
-    current_queue_number = Queue.objects.filter(date__date=timezone.now().date())[0].current_number
+    current_queue_number = Queue.objects.filter(date__date=timezone.now().date())[0].current_queue_number
     data = {
         "current_queue_number": current_queue_number
     }
