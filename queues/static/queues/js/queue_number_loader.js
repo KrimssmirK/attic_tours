@@ -1,6 +1,8 @@
 const state = {
   "received_data": null,
-  "previous_data": null
+  "previous_data": {
+    "current_queue_number": 0
+  }
 }
 
 function updateQueueNumber(endpoint, interval, DomID, hasCallVoice) {
