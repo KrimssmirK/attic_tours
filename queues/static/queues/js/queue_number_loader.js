@@ -49,9 +49,11 @@ function updateQueueNumber(endpoint, interval, DomID, hasCallVoice, audioID) {
 function callCustomer() {
   const templateSpeach = "japan visa applicant number"
   let utterance = new SpeechSynthesisUtterance(templateSpeach + state.received_data.current_queue_number)
+  utterance.volume = 1
+  utterance.pitch = 1.3
+  utterance.lang = "en-US"
   speechSynthesis.speak(utterance)
 }
-
 
 
 
