@@ -14,9 +14,9 @@ def queue(request):
     return render(request, "queues/queue.html", context)
 
 
-def japan_visa_customer_queue(request):
+def customer_queue(request):
     context = {}
-    return render(request, "queues/japan_visa_queue.html", context)
+    return render(request, "queues/customer_queue.html", context)
 
 
 
