@@ -49,6 +49,7 @@
       </footer>
     </div>
   </body>
+  <audio src="{% static 'queues/audio/callingsound.mp3' %}" id="calling"></audio>
 </html>
 <script src="
 https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
@@ -59,5 +60,6 @@ https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
   const interval = 1_000
   const DomID = 'current_queue_number'
   const hasCallVoice = true
-  updateQueueNumber(endpoint, interval, DomID, hasCallVoice)
+  const audioID = "calling"
+  updateQueueNumber(endpoint, interval, DomID, hasCallVoice, audioID)
 </script>
