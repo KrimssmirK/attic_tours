@@ -22,7 +22,10 @@ def customer_queue(request):
 
 # APIs
 def get_japan_queue_number(request):
-    current_queue_number = Queue.objects.filter(date__date=timezone.now().date())[0].current_queue_number
+    try:
+        current_queue_number = Queue.objects.filter(date__date=timezone.now().date())[0].current_queue_number
+    except Exception:
+        current_queue_number = 0
     data = {
         "current_queue_number": current_queue_number
     }
@@ -30,7 +33,12 @@ def get_japan_queue_number(request):
 
 @csrf_exempt
 def put_increase_japan_queue_number(request):
-    queue = Queue.objects.filter(date__date=timezone.now().date())[0]
+    try:
+        queue = Queue.objects.filter(date__date=timezone.now().date())[0]
+    except Exception:
+        Queue().save()
+        queue = Queue.objects.filter(date__date=timezone.now().date())[0]
+    
     queue.current_queue_number += 1
     queue.save()
     return JsonResponse({}, status=200)
