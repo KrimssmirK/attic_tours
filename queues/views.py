@@ -2,20 +2,23 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 # JSON
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 
 from .models import Queue
 from django.utils import timezone
 
 
 # Views
+def queue(request):
+    context = {}
+    return render(request, "queues/queue.html", context)
+
+
 def japan_visa_customer_queue(request):
     context = {}
     return render(request, "queues/japan_visa_queue.html", context)
 
-def japan_visa_worker(request):
-    context = {}
-    return render(request, "queues/queue_worker.html", context)
+
 
 # APIs
 def get_japan_queue_number(request):
