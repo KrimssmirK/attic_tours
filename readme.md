@@ -16,3 +16,6 @@ Customer
 ### Technical Requirements
 
 Notification
+
+### Questions
+1. throughput?? - always calling per second using AJAX to the server
