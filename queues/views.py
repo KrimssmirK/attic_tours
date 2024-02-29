@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 # JSON
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from .models import Queue
 from django.utils import timezone
@@ -24,3 +25,16 @@ def get_japan_queue_number(request):
     }
     return JsonResponse(data, status=200)
 
+@csrf_exempt
+def put_increase_japan_queue_number(request):
+    queue = Queue.objects.filter(date__date=timezone.now().date())[0]
+    queue.current_queue_number += 1
+    queue.save()
+    return JsonResponse({}, status=200)
+
+@csrf_exempt
+def put_decrease_japan_queue_number(request):
+    queue = Queue.objects.filter(date__date=timezone.now().date())[0]
+    queue.current_queue_number -= 1
+    queue.save()
+    return JsonResponse({}, status=200)

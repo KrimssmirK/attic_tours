@@ -7,27 +7,39 @@
   QUEUE
 {% endblock %}
 {% block content %}
-<div class="row mt-5">
-  <div class="col-12">
-    <h1 class="fw-bold text-center" id="current_queue_number">0</h1>
+  <div class="row mt-5">
+    <div class="col-12">
+      <h1 class="fw-bold text-center" id="current_queue_number">0</h1>
+    </div>
+    <script>
+      function onNextButtonClick() {
+        const xhttp = new XMLHttpRequest()
+        xhttp.open('PUT', "{% url 'queues:increase_japan_queue_number'%}")
+      
+        xhttp.send()
+      }
+      function onBackButtonClick() {
+        const xhttp = new XMLHttpRequest()
+        xhttp.open('PUT', "{% url 'queues:decrease_japan_queue_number'%}")
+        xhttp.send()
+      }
+    </script>
+    <div class="col-6 text-end">
+      <button type="button" class="btn btn-secondary" onclick="onBackButtonClick(this)">BACK</button>
+    </div>
+    <div class="col-6 text-start">
+      <button type="button" class="btn btn-primary" onclick="onNextButtonClick(this)">NEXT</button>
+    </div>
   </div>
-  <div class="col-6 text-end">
-    <button type="button" class="btn btn-secondary">BACK</button>
-  </div>
-  <div class="col-6 text-start">
-    <button type="button" class="btn btn-primary">NEXT</button>
-  </div>
-</div>
-<script src="
+  <script src="
 https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
 "></script>
-<script src="{% static 'queues/js/queue_number_loader.js' %}"></script>
-<script>
-  const endpoint = "{% url 'queues:japan_queue_number' %}"
-  const interval = 5_000
-  const DomID = 'current_queue_number'
-  const hasCallVoice = false
-  updateQueueNumber(endpoint, 5_000, DomID, false)
-</script>
+  <script src="{% static 'queues/js/queue_number_loader.js' %}"></script>
+  <script>
+    const endpoint = "{% url 'queues:japan_queue_number' %}"
+    const interval = 5_000
+    const DomID = 'current_queue_number'
+    const hasCallVoice = false
+    updateQueueNumber(endpoint, 5_000, DomID, false)
+  </script>
 {% endblock %}
-
