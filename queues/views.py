@@ -45,7 +45,12 @@ def put_increase_japan_queue_number(request):
 
 @csrf_exempt
 def put_decrease_japan_queue_number(request):
-    queue = Queue.objects.filter(date__date=timezone.now().date())[0]
-    queue.current_queue_number -= 1
-    queue.save()
+    try:
+        queue = Queue.objects.filter(date__date=timezone.now().date())[0]
+    except Exception:
+        Queue().save()
+        queue = Queue.objects.filter(date__date=timezone.now().date())[0]
+    if (queue.current_queue_number != 0):
+        queue.current_queue_number -= 1
+        queue.save()
     return JsonResponse({}, status=200)
