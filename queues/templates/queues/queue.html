@@ -1,0 +1,63 @@
+{% extends './base.html' %}
+{% load static %}
+{% block queues %}
+  active
+{% endblock %}
+{% block title %}
+  QUEUE
+{% endblock %}
+{% block content %}
+  <div class="w-50 mx-auto mt-5">
+    <div class="row">
+      {% comment %} <div class="col-12">
+        <h1 class="fw-bold text-center" id="current_queue_number" style="font-size: 500px;">0</h1>
+      </div> {% endcomment %}
+      <div class="bg-danger p-3 mh-100 mx-50">
+        <div>
+          <div class="bg-white w-75 mx-auto">
+            <p class="text-black text-center fw-bold fs-1">JAPAN VISA</p>
+          </div>
+          <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_queue_number">0</p>
+        </div>
+        <p class="text-white text-center p-0 fw-bold fs-2">NOW SERVING</p>
+        <div class="row">
+          <div class="col-6 text-end">
+            <button type="button" class="btn btn-secondary" onclick="onBackButtonClick(this)">BACK</button>
+          </div>
+          <div class="col-6 text-start">
+            <button type="button" class="btn btn-primary" onclick="onNextButtonClick(this)">NEXT</button>
+          </div>
+        </div>
+      </div>
+      <script>
+        function onNextButtonClick(event) {
+          const xhttp = new XMLHttpRequest()
+          xhttp.open('PUT', "{% url 'queues:increase_japan_queue_number'%}")
+        
+          xhttp.send()
+          event.blur()
+        }
+        function onBackButtonClick(event) {
+          const xhttp = new XMLHttpRequest()
+          xhttp.open('PUT', "{% url 'queues:decrease_japan_queue_number'%}")
+          xhttp.send()
+          event.blur()
+        }
+      </script>
+    </div>
+    <p class="text-center"><a href="{% url 'queues:customer_queue' %}" style="text-decoration: none;">CUSTOMER VIEW</a></p>
+  </div>
+
+  <script src="
+https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
+"></script>
+  <script src="{% static 'queues/js/queue_number_loader.js' %}"></script>
+  <script>
+    const endpoint = "{% url 'queues:japan_queue_number' %}"
+    const interval = 1_000
+    const DomID = 'current_queue_number'
+    const hasCallVoice = false
+    const audioID = null
+    updateQueueNumber(endpoint, interval, DomID, hasCallVoice, audioID)
+  </script>
+{% endblock %}
