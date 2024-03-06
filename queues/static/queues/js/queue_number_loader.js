@@ -21,10 +21,7 @@ function updateQueueNumber(endpoint, interval, DomID, hasCallVoice, audioID) {
       if (!_.isEqual(received_data, state.previous_data)) {
         updateTargetDOM(DomID)
         if (hasCallVoice) {
-          // call ring
-          ring(audioID)
-          // call customer
-          // callCustomer()
+          ringAndCallApplicant(audioID)
         }
       }
       state.previous_data = received_data
@@ -38,15 +35,15 @@ function updateQueueNumber(endpoint, interval, DomID, hasCallVoice, audioID) {
     targetDOM.innerText = state.received_data.current_queue_number
   }
 
-  function ring(audioID) {
+  function ringAndCallApplicant(audioID) {
     const targetAudio = document.getElementById(audioID)
     targetAudio.play()
-    targetAudio.setAttribute("onended", "callCustomer()")
+    targetAudio.setAttribute("onended", "callApplicant()")
   }
 
   
 }
-function callCustomer() {
+function callApplicant() {
   const templateSpeach = "japan visa applicant number"
   let utterance = new SpeechSynthesisUtterance(templateSpeach + state.received_data.current_queue_number)
   utterance.volume = 1
