@@ -3,15 +3,18 @@
 ### Functional Requirements
 
 Worker
-- see the current number (Japan and Korea)
-- click the next number
-- page for Japan and Korea
+- see the current number (Japan)
+- click the next number (Japan)
+- select window number (new)
+- call applicant (new)
+- edit number (new)
 
 
-Customer
-- notify through big monitor (Japan and Korea)
-- see the current number (Japan and Korea)
-- see the video
+applicant
+- notify through big monitor (Japan)
+- see the current number (Japan)
+- see the video (YouTube)
+- see which window (new)
 
 ### Technical Requirements
 
