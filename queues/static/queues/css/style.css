@@ -1,3 +1,15 @@
-@charset "utf-8";
+.custom-body {
+    background-color: #f7f4f4;
+}
 
-/* add custom style */
+.custom-queue-card {
+    background-color: #D43F3A;
+}
+
+.custom-queue-number p {
+    font-size: 150px;
+}
+
+.custom-queue-notes {
+    background-color: #D43F3A;
+}

@@ -12,12 +12,12 @@ from django.utils import timezone
 # Views
 def queue(request):
     context = {}
-    return render(request, "queues/queue.html", context)
+    return render(request, "queues/new_queue.html", context)
 
 
 def customer_queue(request):
     context = {}
-    return render(request, "queues/customer_queue.html", context)
+    return render(request, "queues/new_customer_queue.html", context)
 
 
 

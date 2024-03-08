@@ -1,0 +1,124 @@
+{% extends './base.html' %}
+{% load static %}
+{% block queues %}
+  active
+{% endblock %}
+{% block title %}
+  QUEUE
+{% endblock %}
+{% block content %}
+  <div class="row g-5 p-5 pb-0">
+    <div class="col-6">
+      <div class="w-5 mx-auto">
+        <div class="row">
+          <div class="bg-danger pt-3 mh-100 mx-50">
+            <div>
+              <div class="bg-white w-75 mx-auto">
+                <p class="text-black text-center fw-bold fs-1">JAPAN VISA</p>
+              </div>
+              <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_queue_number">0</p>
+            </div>
+            <div class="text-white text-center p-0 fw-bold fs-2">
+              <p>NOW SERVING</p>
+              <p id="current_window_number"></p>
+            </div>
+            <div class="row p-2 justify-content-between" style="background-color: #981b27;">
+              <div class="row p-2 justify-content-between">
+                <div class="col-8">
+                  <select class="form-select" aria-label="Default select example" id="windows"></select>
+                </div>
+
+                <button type="button" class="col-4 btn btn-light" onclick="onSetButtonClick(this)">SET</button>
+              </div>
+
+              <button type="button" class="col-4 btn btn-secondary" onclick="onBackButtonClick(this)">BACK</button>
+
+              <button type="button" class="col-4 btn btn-warning" onclick="onCallButtonClick(this)">CALL</button>
+
+              <button type="button" class="col-4 btn btn-primary" onclick="onNextButtonClick(this)">NEXT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="w-5 mx-auto">
+        <div class="row">
+          <div class="bg-danger pt-3 mh-100 mx-50">
+            <div>
+              <div class="bg-white w-75 mx-auto">
+                <p class="text-black text-center fw-bold fs-1">KOREA / TICKET</p>
+              </div>
+              <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_queue_number">0</p>
+            </div>
+            <div class="text-white text-center p-0 fw-bold fs-2">
+              <p>NOW SERVING</p>
+              <p id="current_window_number"></p>
+            </div>
+            <div class="row p-2 justify-content-between" style="background-color: #981b27;">
+              <div class="row p-2 justify-content-between">
+                <div class="col-8">
+                  <select class="form-select" aria-label="Default select example" id="windows"></select>
+                </div>
+
+                <button type="button" class="col-4 btn btn-light" onclick="onSetButtonClick(this)">SET</button>
+              </div>
+
+              <button type="button" class="col-4 btn btn-secondary" onclick="onBackButtonClick(this)">BACK</button>
+
+              <button type="button" class="col-4 btn btn-warning" onclick="onCallButtonClick(this)">CALL</button>
+
+              <button type="button" class="col-4 btn btn-primary" onclick="onNextButtonClick(this)">NEXT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-end pe-5">
+    <a href="{% url 'queues:customer_queue' %}" style="text-decoration: none;" target="_blank">APPLICANT VIEW</a>
+  </p>
+{% endblock %}
+
+{% comment %} <script>
+    function onNextButtonClick(event) {
+      var e = document.getElementById('windows')
+      var value = e.value
+      var data = { window_id: value }
+      var json = JSON.stringify(data)
+    
+      const xhttp = new XMLHttpRequest()
+      xhttp.open('PUT', "{% url 'queues:increase_japan_queue_number'%}")
+      xhttp.send(json)
+      event.blur()
+    }
+    function onBackButtonClick(event) {
+      var e = document.getElementById('windows')
+      var value = e.value
+      var data = { window_id: value }
+      var json = JSON.stringify(data)
+    
+      const xhttp = new XMLHttpRequest()
+      xhttp.open('PUT', "{% url 'queues:decrease_japan_queue_number'%}")
+      xhttp.send(json)
+      event.blur()
+    }
+    function onCallButtonClick(event) {
+      const xhttp = new XMLHttpRequest()
+      xhttp.open('PUT', "{% url 'queues:call_applicant'%}")
+      xhttp.send()
+      event.blur()
+    }
+    function onSetButtonClick(event) {
+      var e = document.getElementById('windows')
+      var value = e.value
+      var data = { window_id: value }
+      var json = JSON.stringify(data)
+    
+      const xhttp = new XMLHttpRequest()
+      xhttp.open('PUT', "{% url 'queues:set_window'%}")
+      xhttp.send(json)
+      event.blur()
+    }
+  </script> {% endcomment %}
