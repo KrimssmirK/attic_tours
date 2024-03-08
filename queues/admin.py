@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Queue
+from .models import Queue, Window
 
 # Register your models here.
 class QueueAdmin(admin.ModelAdmin):
@@ -7,3 +7,4 @@ class QueueAdmin(admin.ModelAdmin):
     list_filter = ["date"]
 
 admin.site.register(Queue, QueueAdmin)
+admin.site.register(Window)
