@@ -3,8 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 # JSON
 from django.http import JsonResponse
+import json
 
-from .models import Queue
+from .models import Queue, Window
 from django.utils import timezone
 
 
@@ -20,37 +21,76 @@ def customer_queue(request):
 
 
 
+
 # APIs
-def get_japan_queue_number(request):
-    try:
-        current_queue_number = Queue.objects.filter(date__date=timezone.now().date())[0].current_queue_number
-    except Exception:
-        current_queue_number = 0
+def get_japan_queue(request):
+    
+    
+    current_queues = Queue.objects.filter(date__date=timezone.now())
+
+    if len(list(current_queues)) == 0:    
+        window_1 = Window.objects.create()
+        queue_0 = Queue.objects.create(window=window_1)
+        current_queue = queue_0
+    else:
+        current_queue = current_queues[0]
+        
+    
+    
+    current_window = Window.objects.get(pk=current_queue.window_id)
+    windows = Window.objects.all()
+
     data = {
-        "current_queue_number": current_queue_number
+        "current_queue": {
+            "number": current_queue.current_queue_number,
+            "call": current_queue.call
+            },
+        "current_window": {
+            "number": current_window.number,
+            "service_type": current_window.service_type
+            },
+        "windows": list(windows.values())
     }
-    return JsonResponse(data, status=200)
+    
+    # reset call
+    current_queue.call = False
+    current_queue.save()
+    
+    return JsonResponse(data, safe=False, status=200)
+
 
 @csrf_exempt
 def put_increase_japan_queue_number(request):
-    try:
-        queue = Queue.objects.filter(date__date=timezone.now().date())[0]
-    except Exception:
-        Queue().save()
-        queue = Queue.objects.filter(date__date=timezone.now().date())[0]
-    
+    received_data = json.loads(request.body)
+    queue = Queue.objects.filter(date__date=timezone.now())[0]
     queue.current_queue_number += 1
+    queue.window = Window.objects.get(pk=int(received_data['window_id']))
     queue.save()
     return JsonResponse({}, status=200)
 
 @csrf_exempt
 def put_decrease_japan_queue_number(request):
-    try:
-        queue = Queue.objects.filter(date__date=timezone.now().date())[0]
-    except Exception:
-        Queue().save()
-        queue = Queue.objects.filter(date__date=timezone.now().date())[0]
+    received_data = json.loads(request.body)
+    queue = Queue.objects.filter(date__date=timezone.now())[0]
     if (queue.current_queue_number != 0):
         queue.current_queue_number -= 1
+        queue.window = Window.objects.get(pk=int(received_data['window_id']))
         queue.save()
+    return JsonResponse({}, status=200)
+
+
+@csrf_exempt
+def call_applicant(request):
+    queue = Queue.objects.filter(date__date=timezone.now())[0]
+    queue.call = True
+    queue.save()
+    return JsonResponse({}, status=200)
+
+
+@csrf_exempt
+def set_window(request):
+    received_data = json.loads(request.body)
+    queue = Queue.objects.filter(date__date=timezone.now())[0]
+    queue.window = Window.objects.get(pk=int(received_data['window_id']))
+    queue.save()
     return JsonResponse({}, status=200)
