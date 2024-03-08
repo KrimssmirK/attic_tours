@@ -15,7 +15,7 @@
           <div class="row gx-5 gy-5">
             <div class="col-7">
               <div style="height: 30vw;">
-                <iframe style="height: 100%;width: 100%;" src="https://www.youtube.com/embed/videoseries?si=HPb7EwvrSH9t01hw&amp;list=PLnkFhq_pPjMWBu-CFJ8_u5ysXhPfaAySt&amp;loop=1&amp;controls=0&amp;mute=1&amp;autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+                <iframe id="attic_youtube"style="height: 100%;width: 100%;" src="https://www.youtube.com/embed/videoseries?si=HPb7EwvrSH9t01hw&amp;list=PLnkFhq_pPjMWBu-CFJ8_u5ysXhPfaAySt&amp;loop=1&amp;controls=0&amp;mute=1&amp;autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
               </div>
               <div class="bg-danger mt-5">
                 <p class="fs-1 fw-bold text-light text-center text-wrap">PLEASE TAKE A NUMBER AND WAIT FOR YOUR NUMBER TO BE CALLED</p>
@@ -34,7 +34,11 @@
                   </div>
                   <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_queue_number">0</p>
                 </div>
-                <p class="text-white text-center p-0 fw-bold fs-2">NOW SERVING</p>
+                <div class="text-white text-center p-0 fw-bold fs-2">
+                  <p>NOW SERVING</p>
+                  <p id="current_window_number"></p>
+                </div>
+                
               </div>
             </div>
           </div>
@@ -42,9 +46,6 @@
       </div>
 
       <footer class="d-flex justify-content-center mt-auto">
-        {% comment %} <div class="me-5">
-          <img src="{% static 'queues/img/qr_code.png' %}" alt="qr_code" height="100" width="100" />
-        </div> {% endcomment %}
         <p class="fs-2">LIKE OUR FB PAGE @ATTIC TOURS SM FAIRVIEW</p>
       </footer>
     </div>
@@ -54,12 +55,13 @@
 <script src="
 https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
 "></script>
-<script src="{% static 'queues/js/queue_number_loader.js' %}"></script>
+<script src="{% static 'queues/js/utils.js' %}"></script>
 <script>
-  const endpoint = "{% url 'queues:japan_queue_number' %}"
-  const interval = 1_000
-  const DomID = 'current_queue_number'
-  const hasCallVoice = true
+
+  const endpoint = "{% url 'queues:japan_queue' %}"
+  const queue_number_dom_id = 'current_queue_number'
+  const window_number_dom_id = 'current_window_number'
   const audioID = "calling"
-  updateQueueNumber(endpoint, interval, DomID, hasCallVoice, audioID)
+  caller(endpoint)
+  observer(queue_number_dom_id, window_number_dom_id, null, audioID)
 </script>

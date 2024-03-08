@@ -9,55 +9,88 @@
 {% block content %}
   <div class="w-50 mx-auto mt-5">
     <div class="row">
-      {% comment %} <div class="col-12">
-        <h1 class="fw-bold text-center" id="current_queue_number" style="font-size: 500px;">0</h1>
-      </div> {% endcomment %}
-      <div class="bg-danger p-3 mh-100 mx-50">
+      <div class="bg-danger pt-3 mh-100 mx-50">
         <div>
           <div class="bg-white w-75 mx-auto">
             <p class="text-black text-center fw-bold fs-1">JAPAN VISA</p>
           </div>
           <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_queue_number">0</p>
         </div>
-        <p class="text-white text-center p-0 fw-bold fs-2">NOW SERVING</p>
-        <div class="row">
-          <div class="col-6 text-end">
-            <button type="button" class="btn btn-secondary" onclick="onBackButtonClick(this)">BACK</button>
+        <div class="text-white text-center p-0 fw-bold fs-2">
+          <p>NOW SERVING</p>
+          <p id="current_window_number"></p>
+        </div>
+        <div class="row p-2 justify-content-between" style="background-color: #981b27;">
+          <div class="row p-2 justify-content-between">
+            <div class="col-8">
+              <select class="form-select" aria-label="Default select example" id="windows"></select>
+            </div>
+
+            <button type="button" class="col-4 btn btn-light" onclick="onSetButtonClick(this)">SET</button>
           </div>
-          <div class="col-6 text-start">
-            <button type="button" class="btn btn-primary" onclick="onNextButtonClick(this)">NEXT</button>
-          </div>
+
+          
+          <button type="button" class="col-4 btn btn-secondary" onclick="onBackButtonClick(this)">BACK</button>
+
+          <button type="button" class="col-4 btn btn-warning" onclick="onCallButtonClick(this)">CALL</button>
+
+          <button type="button" class="col-4 btn btn-primary" onclick="onNextButtonClick(this)">NEXT</button>
         </div>
       </div>
       <script>
         function onNextButtonClick(event) {
+          var e = document.getElementById('windows')
+          var value = e.value
+          var data = { window_id: value }
+          var json = JSON.stringify(data)
+        
           const xhttp = new XMLHttpRequest()
           xhttp.open('PUT', "{% url 'queues:increase_japan_queue_number'%}")
-        
-          xhttp.send()
+          xhttp.send(json)
           event.blur()
         }
         function onBackButtonClick(event) {
+          var e = document.getElementById('windows')
+          var value = e.value
+          var data = { window_id: value }
+          var json = JSON.stringify(data)
+        
           const xhttp = new XMLHttpRequest()
           xhttp.open('PUT', "{% url 'queues:decrease_japan_queue_number'%}")
+          xhttp.send(json)
+          event.blur()
+        }
+        function onCallButtonClick(event) {
+          const xhttp = new XMLHttpRequest()
+          xhttp.open('PUT', "{% url 'queues:call_applicant'%}")
           xhttp.send()
+          event.blur()
+        }
+        function onSetButtonClick(event) {
+          var e = document.getElementById('windows')
+          var value = e.value
+          var data = { window_id: value }
+          var json = JSON.stringify(data)
+        
+          const xhttp = new XMLHttpRequest()
+          xhttp.open('PUT', "{% url 'queues:set_window'%}")
+          xhttp.send(json)
           event.blur()
         }
       </script>
     </div>
-    <p class="text-center"><a href="{% url 'queues:customer_queue' %}" style="text-decoration: none;">CUSTOMER VIEW</a></p>
+    <p class="text-center">
+      <a href="{% url 'queues:customer_queue' %}" style="text-decoration: none;" target="_blank">APPLICANT VIEW</a>
+    </p>
   </div>
 
-  <script src="
-https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
-"></script>
-  <script src="{% static 'queues/js/queue_number_loader.js' %}"></script>
+  <script src="{% static 'queues/js/utils.js' %}"></script>
   <script>
-    const endpoint = "{% url 'queues:japan_queue_number' %}"
-    const interval = 1_000
-    const DomID = 'current_queue_number'
-    const hasCallVoice = false
-    const audioID = null
-    updateQueueNumber(endpoint, interval, DomID, hasCallVoice, audioID)
+    const endpoint = "{% url 'queues:japan_queue' %}"
+    const queue_number_dom_id = 'current_queue_number'
+    const window_number_dom_id = 'current_window_number'
+    const windows_id = 'windows'
+    caller(endpoint)
+    observer(queue_number_dom_id, window_number_dom_id, windows_id, null)
   </script>
 {% endblock %}
