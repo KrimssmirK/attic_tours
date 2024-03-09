@@ -16,26 +16,26 @@
               <div class="bg-white w-75 mx-auto">
                 <p class="text-black text-center fw-bold fs-1">JAPAN VISA</p>
               </div>
-              <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_queue_number">0</p>
+              <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_japan_queue_number">0</p>
             </div>
             <div class="text-white text-center p-0 fw-bold fs-2">
               <p>NOW SERVING</p>
-              <p id="current_window_number"></p>
+              <p id="current_japan_window_number"></p>
             </div>
             <div class="row p-2 justify-content-between" style="background-color: #981b27;">
               <div class="row p-2 justify-content-between">
                 <div class="col-8">
-                  <select class="form-select" aria-label="Default select example" id="windows"></select>
+                  <select class="form-select" aria-label="Default select example" id="japan_windows"></select>
                 </div>
 
-                <button type="button" class="col-4 btn btn-light" onclick="onSetButtonClick(this)">SET</button>
+                <button type="button" class="col-4 btn btn-light" onclick="onSetJapanButtonClick(this)">SET</button>
               </div>
 
-              <button type="button" class="col-4 btn btn-secondary" onclick="onBackButtonClick(this)">BACK</button>
+              <button type="button" class="col-4 btn btn-secondary" onclick="onBackJapanButtonClick(this)">BACK</button>
 
-              <button type="button" class="col-4 btn btn-warning" onclick="onCallButtonClick(this)">CALL</button>
+              <button type="button" class="col-4 btn btn-warning" onclick="onCallJapanButtonClick(this)">CALL</button>
 
-              <button type="button" class="col-4 btn btn-primary" onclick="onNextButtonClick(this)">NEXT</button>
+              <button type="button" class="col-4 btn btn-primary" onclick="onNextJapanButtonClick(this)">NEXT</button>
             </div>
           </div>
         </div>
@@ -47,28 +47,28 @@
           <div class="bg-danger pt-3 mh-100 mx-50">
             <div>
               <div class="bg-white w-75 mx-auto">
-                <p class="text-black text-center fw-bold fs-1">KOREA / TICKET</p>
+                <p class="text-black text-center fw-bold fs-1">KOREA VISA</p>
               </div>
-              <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_queue_number">0</p>
+              <p class="text-white text-center fw-bold" style="font-size: 12vw;transform:scaleY(1.2)" id="current_korea_ticket_queue_number">0</p>
             </div>
             <div class="text-white text-center p-0 fw-bold fs-2">
               <p>NOW SERVING</p>
-              <p id="current_window_number"></p>
+              <p id="current_korea_ticket_window_number"></p>
             </div>
             <div class="row p-2 justify-content-between" style="background-color: #981b27;">
               <div class="row p-2 justify-content-between">
                 <div class="col-8">
-                  <select class="form-select" aria-label="Default select example" id="windows"></select>
+                  <select class="form-select" aria-label="Default select example" id="korea_windows"></select>
                 </div>
 
-                <button type="button" class="col-4 btn btn-light" onclick="onSetButtonClick(this)">SET</button>
+                <button type="button" class="col-4 btn btn-light" onclick="onSetKoreaTicketButtonClick(this)">SET</button>
               </div>
 
-              <button type="button" class="col-4 btn btn-secondary" onclick="onBackButtonClick(this)">BACK</button>
+              <button type="button" class="col-4 btn btn-secondary" onclick="onBackKoreaTicketButtonClick(this)">BACK</button>
 
-              <button type="button" class="col-4 btn btn-warning" onclick="onCallButtonClick(this)">CALL</button>
+              <button type="button" class="col-4 btn btn-warning" onclick="onCallKoreaTicketButtonClick(this)">CALL</button>
 
-              <button type="button" class="col-4 btn btn-primary" onclick="onNextButtonClick(this)">NEXT</button>
+              <button type="button" class="col-4 btn btn-primary" onclick="onNextKoreaTicketButtonClick(this)">NEXT</button>
             </div>
           </div>
         </div>
@@ -79,11 +79,10 @@
   <p class="text-end pe-5">
     <a href="{% url 'queues:customer_queue' %}" style="text-decoration: none;" target="_blank">APPLICANT VIEW</a>
   </p>
-{% endblock %}
-
-{% comment %} <script>
-    function onNextButtonClick(event) {
-      var e = document.getElementById('windows')
+  <script>
+    // japan
+    function onNextJapanButtonClick(event) {
+      var e = document.getElementById('japan_windows')
       var value = e.value
       var data = { window_id: value }
       var json = JSON.stringify(data)
@@ -93,8 +92,8 @@
       xhttp.send(json)
       event.blur()
     }
-    function onBackButtonClick(event) {
-      var e = document.getElementById('windows')
+    function onBackJapanButtonClick(event) {
+      var e = document.getElementById('japan_windows')
       var value = e.value
       var data = { window_id: value }
       var json = JSON.stringify(data)
@@ -104,21 +103,85 @@
       xhttp.send(json)
       event.blur()
     }
-    function onCallButtonClick(event) {
+    function onCallJapanButtonClick(event) {
       const xhttp = new XMLHttpRequest()
-      xhttp.open('PUT', "{% url 'queues:call_applicant'%}")
+      xhttp.open('PUT', "{% url 'queues:call_japan_applicant'%}")
       xhttp.send()
       event.blur()
     }
-    function onSetButtonClick(event) {
-      var e = document.getElementById('windows')
+    function onSetJapanButtonClick(event) {
+      var e = document.getElementById('japan_windows')
       var value = e.value
       var data = { window_id: value }
       var json = JSON.stringify(data)
     
       const xhttp = new XMLHttpRequest()
-      xhttp.open('PUT', "{% url 'queues:set_window'%}")
+      xhttp.open('PUT', "{% url 'queues:set_japan_window'%}")
       xhttp.send(json)
       event.blur()
     }
-  </script> {% endcomment %}
+    
+    // korea
+    function onNextKoreaTicketButtonClick(event) {
+      var e = document.getElementById('korea_windows')
+      var value = e.value
+      var data = { window_id: value }
+      var json = JSON.stringify(data)
+    
+      const xhttp = new XMLHttpRequest()
+      xhttp.open('PUT', "{% url 'queues:increase_korea_ticket_queue_number'%}")
+      xhttp.send(json)
+      event.blur()
+    }
+    function onBackKoreaTicketButtonClick(event) {
+      var e = document.getElementById('korea_windows')
+      var value = e.value
+      var data = { window_id: value }
+      var json = JSON.stringify(data)
+    
+      const xhttp = new XMLHttpRequest()
+      xhttp.open('PUT', "{% url 'queues:decrease_korea_ticket_queue_number'%}")
+      xhttp.send(json)
+      event.blur()
+    }
+    function onCallKoreaTicketButtonClick(event) {
+      const xhttp = new XMLHttpRequest()
+      xhttp.open('PUT', "{% url 'queues:call_korea_ticket_applicant'%}")
+      xhttp.send()
+      event.blur()
+    }
+    function onSetKoreaTicketButtonClick(event) {
+      var e = document.getElementById('korea_windows')
+      var value = e.value
+      var data = { window_id: value }
+      var json = JSON.stringify(data)
+    
+      const xhttp = new XMLHttpRequest()
+      xhttp.open('PUT', "{% url 'queues:set_korea_ticket_window'%}")
+      xhttp.send(json)
+      event.blur()
+    }
+  </script>
+  <script src="{% static 'queues/js/utils.js' %}"></script>
+  <script>
+    const endpoint = "{% url 'queues:japan_korea_ticket_queue' %}"
+    const japan_queue_number_dom_id = 'current_japan_queue_number'
+    const japan_window_number_dom_id = 'current_japan_window_number'
+    const korea_ticket_queue_number_dom_id = 'current_korea_ticket_queue_number'
+    const korea_ticket_window_number_dom_id = 'current_korea_ticket_window_number'
+    const windows_id = { japan: 'japan_windows', korea: 'korea_windows' }
+    const audio_id = null
+    caller(endpoint)
+    
+    // observer params
+    /*
+                  japan_queue_number_dom_id, 
+                  japan_window_number_dom_id, 
+                  korea_ticket_queue_number_dom_id,
+                  korea_ticket_window_number_dom_id,
+                  windows_id, 
+                  audio_id
+                  */
+    observer(japan_queue_number_dom_id, japan_window_number_dom_id, korea_ticket_queue_number_dom_id, korea_ticket_window_number_dom_id, windows_id, audio_id)
+  </script>
+{% endblock %}

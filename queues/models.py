@@ -12,10 +12,16 @@ class Window(models.Model):
     
 
 
-class Queue(models.Model):
-    current_queue_number = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
+class JapanQueue(models.Model):
+    number = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
     window = models.ForeignKey(Window, on_delete=models.CASCADE)
     call = models.BooleanField(default=False)
     date = models.DateTimeField("queue date", default=timezone.now)
     
+
+class KoreaTicketQueue(models.Model):
+    number = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    window = models.ForeignKey(Window, on_delete=models.CASCADE)
+    call = models.BooleanField(default=False)
+    date = models.DateTimeField("queue date", default=timezone.now)
 

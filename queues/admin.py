@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Queue, Window
+from .models import JapanQueue, KoreaTicketQueue, Window
 
 # Register your models here.
 class QueueAdmin(admin.ModelAdmin):
-    list_display = ["current_queue_number", "date"]
+    list_display = ["number", "date"]
     list_filter = ["date"]
 
-admin.site.register(Queue, QueueAdmin)
+admin.site.register(JapanQueue, QueueAdmin)
+admin.site.register(KoreaTicketQueue, QueueAdmin)
 admin.site.register(Window)
