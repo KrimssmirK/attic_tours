@@ -20,8 +20,13 @@
       <div class="row">
         <div class="col-6">
           {% comment %}YouTube{% endcomment %}
-          <div class="w-100 border border-3 border-white shadow" style="height: 490px;">
+          <div class="w-100 border border-3 border-white shadow" style="height: 392px;">
             <iframe class="container-fluid p-0 h-100" id="attic_youtube" src="https://www.youtube.com/embed/videoseries?si=HPb7EwvrSH9t01hw&amp;list=PLnkFhq_pPjMWBu-CFJ8_u5ysXhPfaAySt&amp;loop=1&amp;controls=0&amp;mute=1&amp;autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+          </div>
+
+          {% comment %}Passport Claim{% endcomment %}
+          <div class="custom-queue-notes p-0 border border-3 border-white shadow mt-2">
+            <p class="fw-bold fs-4 p-1 text-center text-white m-0" style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">FOR PASSPORT CLAIMS, PLEASE PROCEED TO ANY WINDOW</p>
           </div>
         </div>
         <div class="col-6">
@@ -95,12 +100,12 @@
   caller(endpoint)
   // observer params
   /*
-      japan_queue_number_dom_id, 
-      japan_window_number_dom_id, 
-      korea_ticket_queue_number_dom_id,
-      korea_ticket_window_number_dom_id,
-      windows_id, 
-      audio_id
-      */
+        japan_queue_number_dom_id, 
+        japan_window_number_dom_id, 
+        korea_ticket_queue_number_dom_id,
+        korea_ticket_window_number_dom_id,
+        windows_id, 
+        audio_id
+        */
   observer(japan_queue_number_dom_id, japan_window_number_dom_id, korea_ticket_queue_number_dom_id, korea_ticket_window_number_dom_id, windows_id, audio_id)
 </script>
