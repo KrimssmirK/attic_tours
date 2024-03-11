@@ -3,18 +3,29 @@
 ### Functional Requirements
 
 Worker
-- see the current number (Japan)
-- click the next number (Japan)
-- select window number (new)
-- call applicant (new)
-- edit number (new)
+Available
+- see the current number (Japan & Korea)
+- click the next number (Japan & Korea)
+- select window number (Japan & Korea)
+- call applicant (Japan & Korea)
+- edit number (Japan & Korea)
 
+Planning
+- polish the design
 
 applicant
-- notify through big monitor (Japan)
-- see the current number (Japan)
+Available
+- notify through big monitor (Japan & Korea)
+- see the current number (Japan & Korea)
 - see the video (YouTube)
-- see which window (new)
+- see which window (Japan & Korea)
+
+Planning
+- sounds from YouTube
+
+
+Problem
+- multiple click of button to call applicant
 
 ### Technical Requirements
 
