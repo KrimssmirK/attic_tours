@@ -1,27 +1,22 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator 
-from django.utils import timezone
 
 
-class Window(models.Model):
-    number = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(20)])
-    service_type = models.CharField(default="Japan Visa", max_length=200)
+class Service(models.Model):
+    name = models.CharField(max_length=100)
     
     def __str__(self):
-        return str(self.number) + " (" + self.service_type + ")"
+        return self.name
+
+
+
+class Queue(models.Model):
+    number = models.PositiveSmallIntegerField("current number", default=0)
+    window = models.PositiveSmallIntegerField("current window", default=0)
+    call = models.BooleanField("is calling?", default=False)
+    date = models.DateField("created", auto_now_add=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
     
+    def __str__(self):
+        return self.service.name + " " + "Queue"
 
-
-class JapanQueue(models.Model):
-    number = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
-    window = models.ForeignKey(Window, on_delete=models.CASCADE)
-    call = models.BooleanField(default=False)
-    date = models.DateTimeField("queue date", default=timezone.now)
-    
-
-class KoreaTicketQueue(models.Model):
-    number = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
-    window = models.ForeignKey(Window, on_delete=models.CASCADE)
-    call = models.BooleanField(default=False)
-    date = models.DateTimeField("queue date", default=timezone.now)
 
