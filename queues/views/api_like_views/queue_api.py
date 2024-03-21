@@ -5,19 +5,17 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 
 
-def get_queue(request):
-    service_name = "Japan Visa" # CONSTANT -> DYNAMIC
-    service = Service.objects.get(name=service_name)
+def get_queue(request, service):
+    service = Service.objects.get(name=service)
     
     queue = None
     try:
         queue = Queue.objects.get(service=service, date__lte=timezone.now().date())
     except Queue.DoesNotExist:
+        # create new queue if there is no queue set
         queue = Queue.objects.create(service=service)
     
-    data = {
-        "test": 1
-    }
+    # this is the format to communicate with the front-end
+    data = queue.convert_attrbs_to_dict()
     
-    return HttpResponse(data.test)
-    # return JsonResponse(data, safe=False, status=200)
+    return JsonResponse(data, safe=False, status=200)

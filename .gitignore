@@ -91,3 +91,6 @@ bin/
 
 # Migrations
 [0-9][0-9][0-9][0-9]_initial.py
+
+# Windows
+Scripts

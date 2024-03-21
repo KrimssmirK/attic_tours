@@ -6,7 +6,7 @@ urlpatterns = [
     # path("", views.queue, name="queue"),
     # path("customer/", views.customer_queue, name="customer_queue"),
     # api calls below
-    path("api/get_queue", get_queue, name="japan_korea_ticket_queue"),
+    path("api/get_queue/<str:service>/", get_queue, name="api_get_queue"),
     # japan
     # path("visa/increase_japan_queue_number", views.put_increase_japan_queue_number, name="increase_japan_queue_number"),
     # path("visa/decrease_japan_queue_number", views.put_decrease_japan_queue_number, name="decrease_japan_queue_number"),
