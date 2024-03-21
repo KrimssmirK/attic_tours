@@ -7,15 +7,15 @@
   QUEUE
 {% endblock %}
 {% block content %}
-  <div class="container">
-    <h1>CURRENT QUEUE</h1>
+  <div class="container mt-1">
+    <h1 class="text-center">CURRENT QUEUE</h1>
     <div class="row">
       <div class="col-6">
         {% comment %}JAPAN VISA{% endcomment %}
 
         <div class="container border border-2 border-white p-2 shadow" style="background-color: #D43F3A;">
           {% comment %}TITLE{% endcomment %}
-          <h2 class="p-2 bg-white text-center fw-bold fs-1">JAPAN VISA</h2>
+          <h2 class="p-2 bg-white text-center fw-bold fs-1" id="service_name">JAPAN VISA</h2>
 
           {% comment %}NUMBER{% endcomment %}
           <div class="container bg-white">
@@ -35,6 +35,7 @@
           {% comment %}WINDOWS{% endcomment %}
           <div class="text-center py-2">
             <select class="text-center fw-bold fs-3 p-2" id="windows" name="windows">
+              <option value="0">NONE</option>
               <option value="1">WINDOW 1</option>
               <option value="2">WINDOW 2</option>
               <option value="3">WINDOW 3</option>
@@ -71,6 +72,7 @@
           {% comment %}WINDOWS{% endcomment %}
           <div class="text-center py-2">
             <select class="text-center fw-bold fs-3 p-2" id="windows" name="windows">
+              <option value="0">NONE</option>
               <option value="1">WINDOW 1</option>
               <option value="2">WINDOW 2</option>
               <option value="3">WINDOW 3</option>
@@ -84,4 +86,6 @@
       </div>
     </div>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{% static 'queues/js/worker_queue/controller.js' %}"></script>
 {% endblock %}
