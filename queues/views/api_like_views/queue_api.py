@@ -19,3 +19,24 @@ def get_queue(request, service):
     data = queue.convert_attrbs_to_dict()
     
     return JsonResponse(data, safe=False, status=200)
+
+
+def change_number_queue(request, queue_id, str_number):
+    queue = Queue.objects.get(pk=queue_id)
+    queue.number += int(str_number)
+    queue.save()
+    return JsonResponse({}, safe=False, status=200)
+
+
+def change_window_queue(request, queue_id, str_number):
+    queue = Queue.objects.get(pk=queue_id)
+    queue.window += int(str_number)
+    queue.save()
+    return JsonResponse({}, safe=False, status=200)
+
+
+def change_call_queue(request, queue_id, switch):
+    queue = Queue.objects.get(pk=queue_id)
+    queue.call = True if switch == "on" else False
+    queue.save()
+    return JsonResponse({}, safe=False, status=200)
