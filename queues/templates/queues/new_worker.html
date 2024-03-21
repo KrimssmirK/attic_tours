@@ -1,0 +1,87 @@
+{% extends './base.html' %}
+{% load static %}
+{% block queues %}
+  active
+{% endblock %}
+{% block title %}
+  QUEUE
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <h1>CURRENT QUEUE</h1>
+    <div class="row">
+      <div class="col-6">
+        {% comment %}JAPAN VISA{% endcomment %}
+
+        <div class="container border border-2 border-white p-2 shadow" style="background-color: #D43F3A;">
+          {% comment %}TITLE{% endcomment %}
+          <h2 class="p-2 bg-white text-center fw-bold fs-1">JAPAN VISA</h2>
+
+          {% comment %}NUMBER{% endcomment %}
+          <div class="container bg-white">
+            <div class="row justify-content-between">
+              <div class="col-2 text-start align-self-center">
+                <button><i class="bi bi-chevron-compact-left"></i></button>
+              </div>
+              <div class="col-8 align-self-center">
+                <p class="fw-bold text-center m-0" style="font-size:120px;">4</p>
+              </div>
+              <div class="col-2 text-end align-self-center">
+                <button><i class="bi bi-chevron-compact-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          {% comment %}WINDOWS{% endcomment %}
+          <div class="text-center py-2">
+            <select class="text-center fw-bold fs-3 p-2" id="windows" name="windows">
+              <option value="1">WINDOW 1</option>
+              <option value="2">WINDOW 2</option>
+              <option value="3">WINDOW 3</option>
+              <option value="4">WINDOW 4</option>
+            </select>
+          </div>
+        </div>
+        <div class="text-center py-2">
+          <button type="button" class="fs-3 text-white fw-bold w-100" style="background-color: #D43F3A;">CALL</button>
+        </div>
+      </div>
+      <div class="col-6">
+        {% comment %}KOREA VISA{% endcomment %}
+
+        <div class="container border border-2 border-white p-2 shadow" style="background-color: #D43F3A;">
+          {% comment %}TITLE{% endcomment %}
+          <h2 class="p-2 bg-white text-center fw-bold fs-1">KOREA VISA</h2>
+
+          {% comment %}NUMBER{% endcomment %}
+          <div class="container bg-white">
+            <div class="row justify-content-between">
+              <div class="col-2 text-start align-self-center">
+                <button><i class="bi bi-chevron-compact-left"></i></button>
+              </div>
+              <div class="col-8 align-self-center">
+                <p class="fw-bold text-center m-0" style="font-size:120px;">4</p>
+              </div>
+              <div class="col-2 text-end align-self-center">
+                <button><i class="bi bi-chevron-compact-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          {% comment %}WINDOWS{% endcomment %}
+          <div class="text-center py-2">
+            <select class="text-center fw-bold fs-3 p-2" id="windows" name="windows">
+              <option value="1">WINDOW 1</option>
+              <option value="2">WINDOW 2</option>
+              <option value="3">WINDOW 3</option>
+              <option value="4">WINDOW 4</option>
+            </select>
+          </div>
+        </div>
+        <div class="text-center py-2">
+          <button type="button" class="fs-3 text-white fw-bold w-100" style="background-color: #D43F3A;">CALL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
