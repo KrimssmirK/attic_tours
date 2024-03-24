@@ -12,40 +12,79 @@
       <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
         <div class="container-fluid">
           <h2 class="mb-5 text-white">Today's Stats</h2>
-          <div id="visaContainer"></div>
-          {% if reports|has_reports %}
-            <div class="header-body">
-              <div class="row d-flex flex-wrap">
-                {% for visa_type in visa_types %}
-                  {% if reports|is_exist:visa_type %}
-                    <div class="card card-stats mb-4 mb-xl-0 m-2" style="width: fit-content;">
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">{{ visa_type }}</h5>
-                            <span class="h2 font-weight-bold mb-0">{{ reports|lookup:visa_type }}</span>
+          <div id="visaContainer">
+            <h3 class="text-white m-2">SM FAIRVIEW</h3>
+            {% if fairview_reports|has_reports %}
+              <div class="header-body">
+                <div class="row d-flex flex-wrap">
+                  {% for visa_type in visa_types %}
+                    {% if fairview_reports|is_exist:visa_type %}
+                      <div class="card card-stats mb-4 mb-xl-0 m-2" style="width: fit-content;">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">{{ visa_type }}</h5>
+                              <span class="h2 font-weight-bold mb-0">{{ fairview_reports|lookup:visa_type }}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  {% endif %}
-                {% endfor %}
+                    {% endif %}
+                  {% endfor %}
 
-                <div class="card card-stats mb-4 mb-xl-0 m-2" style="width: fit-content;">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <h5 class="card-title text-uppercase text-muted mb-0">TOTAL</h5>
-                        <span class="h2 font-weight-bold mb-0">{{ reports|get_total }}</span>
+                  <div class="card card-stats mb-4 mb-xl-0 m-2" style="width: fit-content;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <h5 class="card-title text-uppercase text-muted mb-0">TOTAL</h5>
+                          <span class="h2 font-weight-bold mb-0">{{ fairview_reports|get_total }}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  {% else %}
+                  <p class="mb-5 text-white">NO REPORTS</p>
                 </div>
-                {% else %}
-                <p class="mb-5 text-white">NO REPORTS</p>
               </div>
-            </div>
-          {% endif %}
+            {% endif %}
+          </div>
+
+          <div id="visaContainer">
+            <h3 class="text-white m-2">SM MOA</h3>
+            {% if moa_reports|has_reports %}
+              <div class="header-body">
+                <div class="row d-flex flex-wrap">
+                  {% for visa_type in visa_types %}
+                    {% if moa_reports|is_exist:visa_type %}
+                      <div class="card card-stats mb-4 mb-xl-0 m-2" style="width: fit-content;">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col">
+                              <h5 class="card-title text-uppercase text-muted mb-0">{{ visa_type }}</h5>
+                              <span class="h2 font-weight-bold mb-0">{{ moa_reports|lookup:visa_type }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+
+                  <div class="card card-stats mb-4 mb-xl-0 m-2" style="width: fit-content;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <h5 class="card-title text-uppercase text-muted mb-0">TOTAL</h5>
+                          <span class="h2 font-weight-bold mb-0">{{ moa_reports|get_total }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% else %}
+                  <p class="mb-5 text-white">NO REPORTS</p>
+                </div>
+              </div>
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
