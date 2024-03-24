@@ -1,4 +1,4 @@
-const interval = setInterval(() => {
+const queue_interval = setInterval(() => {
     if (NUMBER_API_QUEUE_CALLS > 4) {
         $("#loading").detach()
         function produce_html(service) {
@@ -99,6 +99,6 @@ const interval = setInterval(() => {
             update_ui_constantly(SERVICE)
         });
 
-        clearInterval(interval)
+        clearInterval(queue_interval)
     }
 }, 1_000)

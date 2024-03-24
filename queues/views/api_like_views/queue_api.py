@@ -1,17 +1,19 @@
-from queues.models import Queue, Service
+from queues.models import Queue, Service, Branch
 from django.utils import timezone
 from django.http import JsonResponse
 
 
-def get_queue(request, service):
+def get_queue(request, branch_id, service):
     service = Service.objects.get(name=service)
+    branch = Branch.objects.get(pk=branch_id)
+    print(branch)
 
     queue = None
     try:
-        queue = Queue.objects.get(service=service, date=timezone.now().date())
+        queue = Queue.objects.get(branch=branch, service=service, date__gte=timezone.now().date())
     except Queue.DoesNotExist:
         # create new queue if there is no queue set
-        queue = Queue.objects.create(service=service)
+        queue = Queue.objects.create(branch=branch, service=service)
 
     # this is the format to communicate with the front-end
     data = queue.convert_attrbs_to_dict()
