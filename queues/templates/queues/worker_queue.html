@@ -15,5 +15,12 @@
         <img src="{% static 'queues/img/loading.gif' %}" width="100" height="100" />
       </div>
     </div>
+    <div class="m-5 text-center">
+      <h2>APPLICANT'S VIEW</h2>
+      <ul style="list-style-type: none;">
+        <li><a href="{% url 'queues:applicant_queue' branch_name='SM FAIRVIEW' %}" target="_blank">SM FAIRVIEW APPLICANT VIEW</a></li>
+        <li><a href="{% url 'queues:applicant_queue' branch_name='SM MOA' %}" target="_blank">SM MOA APPLICANT VIEW</a></li>
+      </ul>
+    </div>
   </div>
 {% endblock %}

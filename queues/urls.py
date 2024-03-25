@@ -1,5 +1,6 @@
 from django.urls import path
 from queues.views.worker_view import worker_queue
+from queues.views.applicant_view import applicant_queue
 from queues.views.api_like_views.service_api import get_services
 from queues.views.api_like_views.branch_api import get_branches
 from queues.views.api_like_views.queue_api import get_queue, change_number_queue, change_window_queue, change_call_queue
@@ -7,7 +8,7 @@ from queues.views.api_like_views.queue_api import get_queue, change_number_queue
 app_name = "queues"
 urlpatterns = [
     path("", worker_queue, name="worker_queue"),
-    # path("customer/", views.customer_queue, name="customer_queue"),
+    path("applicant/<str:branch_name>", applicant_queue, name="applicant_queue"),
     # SERVICE API
     path("api/services/", get_services, name="api_services"),
     # BRANCH API

@@ -16,6 +16,8 @@ class Service(models.Model):
 
 class Branch(models.Model):
     name = models.CharField(max_length=100)
+    mobile_no = models.CharField(max_length=30)
+    landline_no = models.CharField(max_length=30)
     
     class Meta:
         db_table = "branch"
@@ -41,6 +43,7 @@ class Queue(models.Model):
     def convert_attrbs_to_dict(self):
         return {
             "id": self.id,
+            "name": self.service.name,
             "number": self.number,
             "window": self.window,
             "call": self.call,

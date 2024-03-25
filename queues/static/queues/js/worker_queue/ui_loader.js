@@ -1,5 +1,5 @@
 const queue_interval = setInterval(() => {
-    if (NUMBER_API_QUEUE_CALLS > 4) {
+    if (NUMBER_API_QUEUE_CALLS > Object.keys(UiState).length) {
         $("#loading").detach()
         function produce_html(service) {
             const service_mod = service.replaceAll(" ", "_")
@@ -15,7 +15,7 @@ const queue_interval = setInterval(() => {
                         </div>
                       </div>
                       <select class="text-center fw-bold p-2 mt-2" style="width: 100%; font-size: 20px;" id=${service_mod + "_window_number"} name="windows">
-                        <option value="0">WINDOW: NONE</option>
+                        <option value="0">WINDOW: ANY</option>
                         <option value="1">WINDOW 1</option>
                         <option value="2">WINDOW 2</option>
                         <option value="3">WINDOW 3</option>
