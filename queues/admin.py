@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import JapanQueue, KoreaTicketQueue, Window
+from .models import Queue, Service, Branch
 
-# Register your models here.
+
 class QueueAdmin(admin.ModelAdmin):
-    list_display = ["number", "date"]
-    list_filter = ["date"]
+    list_display = ["branch", "service", "number", "window", "call", "date"]
+    list_filter = ["branch", "date"]
 
-admin.site.register(JapanQueue, QueueAdmin)
-admin.site.register(KoreaTicketQueue, QueueAdmin)
-admin.site.register(Window)
+
+admin.site.register(Queue, QueueAdmin)
+admin.site.register(Service)
+admin.site.register(Branch)

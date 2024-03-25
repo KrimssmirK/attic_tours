@@ -1,6 +1,8 @@
 from django import template
 
+
 register = template.Library()
+
 
 @register.filter(name="has_reports")
 def has_reports(dict):
@@ -14,6 +16,7 @@ def lookup(dict, key):
     else:
         return 0
     
+    
 @register.filter(name="is_exist")
 def is_exist(dict, key):
     if key in dict:
@@ -21,8 +24,7 @@ def is_exist(dict, key):
     else:
         return False
     
-
-
+    
 @register.filter(name="get_total")
 def get_total(dict):
     total = sum(dict.values())
