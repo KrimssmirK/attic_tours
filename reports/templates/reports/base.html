@@ -19,7 +19,7 @@
     <div id="nav">
       <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'reports:index' %}"><img src="http://atticvisatracker.com/img/logo.png" alt="home" /></a>
+          <a class="navbar-brand" href="{% url 'reports:stats' branch_id=branch_id %}"><img src="http://atticvisatracker.com/img/logo.png" alt="home" /><span class="p-2 fw-light">{{ branch_name }}</span></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -27,22 +27,19 @@
                 <a class="nav-link {% block index %}
                   {% endblock %}"
                   aria-current="page"
-                  href="{% url 'reports:index' %}">
-                  HOME
+                  href="{% url 'reports:stats' branch_id=branch_id %}">
+                  STATS
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link {% block reports %}
                   {% endblock %}"
-                  href="{% url 'reports:reports' %}">
+                  href="{% url 'reports:reports' branch_id=branch_id %}">
                   REPORT
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'queues:worker_queue' %}" tabindex="-1">QUEUE</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'admin:index' %}" target="_blank" tabindex="-1">ADMIN</a>
+                <a class="nav-link" href="{% url 'queues:worker_queue' branch_id=branch_id%}" tabindex="-1">QUEUE</a>
               </li>
             </ul>
           </div>

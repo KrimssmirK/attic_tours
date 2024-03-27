@@ -1,5 +1,6 @@
 get_all_services = (callback1) => {
-    var URL = window.location.origin + "/queue/api/services/"
+    var URL = window.location.origin + "/branch/queues/api/services/"
+    console.log(URL)
     $.ajax({
         url: URL,
         type: "GET",

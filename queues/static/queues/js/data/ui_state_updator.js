@@ -2,7 +2,7 @@ let NUMBER_API_QUEUE_CALLS = 0
 
 get_queue = (service) => {
     const BRANCH_ID = sessionStorage.getItem("branch_id")
-    var URL = window.location.href + "api/get_queue/" + BRANCH_ID + "/" + service
+    var URL = window.location.origin + "/branch/queues/api/get_queue/" + BRANCH_ID + "/" + service
     $.ajax({
         url: URL,
         type: "GET",

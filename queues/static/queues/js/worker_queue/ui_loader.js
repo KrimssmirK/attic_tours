@@ -57,7 +57,7 @@ const queue_interval = setInterval(() => {
             }
 
             $("#" + service_mod + "_left_arrow").click(() => {
-                const ENDPOINT = window.location.href + "api/change_number_queue/" + UiState[service].id + "/" + "-1"
+                const ENDPOINT = window.location.origin + "/branch/queues/api/change_number_queue/" + UiState[service].id + "/" + "-1"
                 call_api(ENDPOINT)
                 const current_value = $("#" + service_mod + "_queue_number").html()
                 if (Number(current_value) > 0) {
@@ -66,7 +66,7 @@ const queue_interval = setInterval(() => {
                 }
             })
             $("#" + service_mod + "_right_arrow").click(() => {
-                const ENDPOINT = window.location.href + "api/change_number_queue/" + UiState[service].id + "/" + "1"
+                const ENDPOINT = window.location.origin + "/branch/queues/api/change_number_queue/" + UiState[service].id + "/" + "1"
                 call_api(ENDPOINT)
                 const current_value = $("#" + service_mod + "_queue_number").html()
                 UiState[service].number += 1
@@ -76,11 +76,11 @@ const queue_interval = setInterval(() => {
                 const value = $("#" + service_mod + "_window_number" + " option:selected").val()
                 UiState[service].window = Number(value)
                 $("#" + service_mod + "_window_number" + " option:selected").val(value)
-                const ENDPOINT = window.location.href + "api/change_window_queue/" + UiState[service].id + "/" + value
+                const ENDPOINT = window.location.origin + "/branch/queues/api/change_window_queue/" + UiState[service].id + "/" + value
                 call_api(ENDPOINT)
             })
             $("#" + service_mod + "_call").click(() => {
-                const ENDPOINT = window.location.href + "api/change_call_queue/" + UiState[service].id + "/" + "on"
+                const ENDPOINT = window.location.origin + "/branch/queues/api/change_call_queue/" + UiState[service].id + "/" + "on"
                 call_api(ENDPOINT)
             })
         }

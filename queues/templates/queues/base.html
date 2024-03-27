@@ -10,12 +10,12 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.3.1/css/all.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="{% static 'queues/js/data/branch.js' %}"></script>
-    <script src="{% static 'queues/js/data/get_branch.js' %}"></script>
-    <script src="{% static 'queues/js/worker_queue/branch_selector.js' %}"></script>
+    <script>
+      sessionStorage.setItem("branch_id", {{ branch_id }})
+    </script>
     <script src="{% static 'queues/js/data/service.js' %}"></script>
-    <script src="{% static 'queues/js/data/get_service.js' %}"></script>
     <script src="{% static 'queues/js/data/ui_state.js' %}"></script>
+    <script src="{% static 'queues/js/data/get_service.js' %}"></script>
     <script src="{% static 'queues/js/data/ui_state_updator.js' %}"></script>
     <script src="{% static 'queues/js/worker_queue/ui_loader.js' %}"></script>
 
@@ -29,7 +29,7 @@
     <div id="nav">
       <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'reports:index' %}"><img src="http://atticvisatracker.com/img/logo.png" alt="home" /></a>
+          <a class="navbar-brand" href="{% url 'reports:stats' branch_id=branch_id %}"><img src="http://atticvisatracker.com/img/logo.png" alt="home" /><span class="p-2 fw-light">{{ branch_name }}</span></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -37,27 +37,24 @@
                 <a class="nav-link {% block index %}
                   {% endblock %}"
                   aria-current="page"
-                  href="{% url 'reports:index' %}">
-                  HOME
+                  href="{% url 'reports:stats' branch_id=branch_id %}">
+                  STATS
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link {% block reports %}
                   {% endblock %}"
-                  href="{% url 'reports:reports' %}">
+                  href="{% url 'reports:reports' branch_id=branch_id%}">
                   REPORT
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link  {% block queues %}
                   {% endblock %}"
-                  href="{% url 'queues:worker_queue' %}"
+                  href="{% url 'queues:worker_queue' branch_id=branch_id %}"
                   tabindex="-1">
                   QUEUE
                 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'admin:index' %}" target="_blank" tabindex="-1">ADMIN</a>
               </li>
             </ul>
           </div>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Queue, Service, Branch
+from .models import Queue, Service
 
 
 class QueueAdmin(admin.ModelAdmin):
@@ -9,4 +9,3 @@ class QueueAdmin(admin.ModelAdmin):
 
 admin.site.register(Queue, QueueAdmin)
 admin.site.register(Service)
-admin.site.register(Branch)

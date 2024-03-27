@@ -1,4 +1,5 @@
 from django.db import models
+from branch.models import Branch
 
 
 class Service(models.Model):
@@ -14,18 +15,6 @@ class Service(models.Model):
         return {"id": self.id, "name": self.name}
 
 
-class Branch(models.Model):
-    name = models.CharField(max_length=100)
-    mobile_no = models.CharField(max_length=30)
-    landline_no = models.CharField(max_length=30)
-    
-    class Meta:
-        db_table = "branch"
-        
-    def __str__(self):
-        return self.name
-    
-    
 class Queue(models.Model):
     number = models.PositiveSmallIntegerField("current number", default=0)
     window = models.PositiveSmallIntegerField("current window", default=0)
