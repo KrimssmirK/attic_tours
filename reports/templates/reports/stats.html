@@ -1,0 +1,65 @@
+{% extends './base.html' %}
+{% block report_form %}
+  active
+{% endblock %}
+{% block title %}
+  REPORT
+{% endblock %}
+{% load report_extras %}
+{% block content %}
+  <div class="container mt-3">
+    <div class="row gx-3">
+      <div class="col-5">
+        {% include "./report_form.html" %}
+      </div>
+      <div class="col-7">
+        <div class="shadow h-100" style="background-color: #F8DCDC;">
+          <div class="main-content">
+            <div class="header pt-3 pt-md-8" >
+              <div class="container-fluid">
+                <h2 class="text-center fw-bold">Today's Stats</h2>
+                <div id="visaContainer">
+                  {% if reports|has_reports %}
+                    <div class="header-body">
+                      <div class="row d-flex flex-wrap">
+                        {% for visa_type in report_types %}
+                          {% if reports|is_exist:visa_type %}
+                            <div class="card card-stats mb-4 mb-xl-0 m-2" style="width: fit-content;">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col text-center">
+                                    <h5 class="card-title text-uppercase text-muted mb-0 fw-bold" >{{ visa_type }}</h5>
+                                    <span class="h2 font-weight-bold mb-0">{{ reports|lookup:visa_type }}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+      
+                        <div class="card card-stats mb-4 mb-xl-0 m-2" style="width: fit-content;">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col text-center">
+                                <h5 class="card-title text-uppercase text-muted mb-0 fw-bold" style="color: #D43F3A !important;">TOTAL</h5>
+                                <span class="h2 font-weight-bold mb-0">{{ reports|get_total }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {% else %}
+                        <p class="mb-5 ps-3 text-center">NO REPORTS</p>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  
+{% endblock %}

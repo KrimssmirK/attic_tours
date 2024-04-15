@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from queues.models import Branch
+# from queues.models import Branch
 
 
 class ReportType(models.Model):
@@ -11,7 +11,7 @@ class ReportType(models.Model):
     
 
 class Report(models.Model):
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    # branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     report_type = models.ForeignKey(ReportType,on_delete=models.CASCADE)
     coordinator = models.CharField(max_length=100)
     no_of_pax = models.IntegerField(default=1, choices=((i,i) for i in range(1, 101)))
