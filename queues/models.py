@@ -15,6 +15,9 @@ class Branch(models.Model):
     landline_no = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     
+    class Meta:
+        verbose_name_plural = "branches"
+    
     def __str__(self):
         return self.name
 

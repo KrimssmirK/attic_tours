@@ -152,10 +152,15 @@ class ModelBranchTests(TestCase):
         branch = Branch.objects.get(id=1)
         self.assertEqual(str(branch), branch.name)
         
+    def test_verbose_name_plural(self):
+        branch = Branch.objects.get(id=1)
+        plural_name = branch._meta.verbose_name_plural
+        self.assertEqual(plural_name, "branches")
+        
     def test_set_landline_no(self):
         branch = Branch.objects.get(id=2)
         self.assertEqual(branch.mobile_no, "2342142234")
-    
+        
     def test_change_landline_no(self):
         branch = Branch.objects.get(id=2)
         new_landline_no = "0916-618-6165"
