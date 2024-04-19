@@ -1,0 +1,47 @@
+{% load report_extras %}
+<div style="width: 65vw;">
+  <h2 class="fw-bold">{{ today_date }} Today's Stats</h2>
+  <div class="shadow h-100 rounded" style="background-color: #F8DCDC;">
+    <div class="main-content">
+      <div class="header pt-3 pt-md-8">
+        <div class="container-fluid">
+          <div id="visaContainer">
+            {% if reports|has_reports %}
+              <div class="header-body">
+                <div class="row d-flex flex-wrap">
+                  {% for service in services %}
+                    {% if reports|is_exist:service.name %}
+                      <div class="card card-stats mb-4 mb-xl-4 m-2" style="width: fit-content;">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col text-center">
+                              <h5 class="card-title text-uppercase text-muted mb-0 fw-bold">{{ service.name }}</h5>
+                              <span class="h2 font-weight-bold mb-0">{{ reports|lookup:service.name }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+
+                  <div class="card card-stats mb-4 mb-xl-4 m-2" style="width: fit-content;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col text-center">
+                          <h5 class="card-title text-uppercase text-muted mb-0 fw-bold" style="color: #D43F3A !important;">TOTAL</h5>
+                          <span class="h2 font-weight-bold mb-0">{{ reports|get_total }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% else %}
+                  <p class="mb-5 ps-3 text-start">NO REPORTS</p>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,10 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
+import datetime
 from django.utils import timezone
 from queues.models import Service, Branch, Report, Window, Queue, Newsfeed, Feedback
+
+
 class ModelServiceTests(TestCase):
     
     @classmethod
@@ -38,20 +41,19 @@ class ModelServiceTests(TestCase):
         self.assertEqual(str(service), expected_object_name)
         
     def test_the_set_name(self):
-        service = Service.objects.get(id=1)
+        service = list(Service.objects.all())[-3]
         self.assertEqual(service.name, "Japan Visa")
         
     def test_the_set_price(self):
-        service = Service.objects.get(id=1)
+        service = Service.objects.all().last()
         self.assertEqual(service.price, 1680)
         
     def test_the_set_price_default(self):
-        service = Service.objects.get(id=2)
+        service = list(Service.objects.all())[-2]
         self.assertEqual(service.price, 0)
         
     def test_change_name(self):
-        target_id = 3
-        service = Service.objects.get(id=target_id)
+        service = Service.objects.all().last()
         # before the change
         self.assertEqual(service.name, "Korea Visa")
         
@@ -62,12 +64,11 @@ class ModelServiceTests(TestCase):
         service.save()
         
         # get the data from the database and verify again
-        service = Service.objects.get(id=target_id)
+        service = Service.objects.all().last()
         self.assertEqual(service.name, new_service_name)
     
     def test_change_price(self):
-        target_id = 3
-        service = Service.objects.get(id=target_id)
+        service = Service.objects.all().last()
         # before the change
         self.assertEqual(service.price, 1680)
         
@@ -78,12 +79,11 @@ class ModelServiceTests(TestCase):
         service.save()
         
         # get the data from the database and verify again
-        service = Service.objects.get(id=target_id)
+        service = Service.objects.all().last()
         self.assertEqual(service.price, new_service_price)
         
     def test_negative_price_save_fail(self):
-        target_id = 3
-        service = Service.objects.get(id=target_id)
+        service = Service.objects.all().last()
         with self.assertRaises(IntegrityError):
             service.price = -1
             service.save() 
@@ -158,11 +158,11 @@ class ModelBranchTests(TestCase):
         self.assertEqual(plural_name, "branches")
         
     def test_set_landline_no(self):
-        branch = Branch.objects.get(id=2)
+        branch = Branch.objects.all().last()
         self.assertEqual(branch.mobile_no, "2342142234")
         
     def test_change_landline_no(self):
-        branch = Branch.objects.get(id=2)
+        branch = Branch.objects.all().last()
         new_landline_no = "0916-618-6165"
         branch.landline_no = new_landline_no
         # before save
@@ -171,7 +171,7 @@ class ModelBranchTests(TestCase):
         branch.save()
         
         # after save
-        branch = Branch.objects.get(id=2)
+        branch = Branch.objects.all().last()
         self.assertEqual(branch.landline_no, new_landline_no)
 
 
@@ -192,14 +192,14 @@ class ModelReportTests(TestCase):
             service=service,
             pax=1,
             by="Arviee",
-            branch=branch,
+            branch=branch
         )
-    
+        
     def setUp(self):
         pass
     
     def test_set_service(self):
-        service = Service.objects.get(id=1)
+        service = Service.objects.all().last()
         report = Report.objects.get(id=1)
         self.assertEqual(report.service, service)
         
@@ -218,7 +218,7 @@ class ModelReportTests(TestCase):
         self.assertEqual(max_length, 100)
         
     def test_set_branch(self):
-        branch = Branch.objects.get(id=1)
+        branch = Branch.objects.all().last()
         report = Report.objects.get(id=1)
         self.assertEqual(report.branch, branch)
         
@@ -232,6 +232,15 @@ class ModelReportTests(TestCase):
         expected_name = f"{report.service} {report.pax}"
         self.assertEqual(str(report), expected_name)
         
+    def test_get_today_reports_with_correct_branch(self):
+        branch = Branch.objects.all().last()
+        reports = Report.get_today_reports(branch)
+        self.assertEqual(reports["Tourism"], 1)
+    
+    def test_get_today_reports_without_correct_branch(self):
+        branch = Branch.objects.all().first()
+        reports = Report.get_today_reports(branch)
+        self.assertEqual(reports, {})
 
 class ModelWindowTests(TestCase):
     @classmethod
@@ -310,13 +319,13 @@ class ModelQueueTests(TestCase):
         )
     
     def test_set_branch(self):
-        branch = Branch.objects.get(id=1)
-        queue = Queue.objects.get(id=1)
+        branch = list(Branch.objects.all())[-2]
+        queue = list(Queue.objects.all())[-2]
         self.assertEqual(queue.branch, branch)
     
     def test_set_service(self):
-        service = Service.objects.get(id=1)
-        queue = Queue.objects.get(id=1)
+        service = list(Service.objects.all())[-2]
+        queue = list(Queue.objects.all())[-2]
         self.assertEqual(queue.service, service)
         
     def test_no_default(self):
@@ -324,8 +333,8 @@ class ModelQueueTests(TestCase):
         self.assertEqual(queue.no, 0)
     
     def test_set_window(self):
-        window = Window.objects.get(id=1)
-        queue = Queue.objects.get(id=1)
+        window = list(Window.objects.all())[-2]
+        queue = list(Queue.objects.all())[-2]
         self.assertEqual(queue.window, window)
     
     def test_call_default(self):
@@ -368,9 +377,9 @@ class ModelQueueTests(TestCase):
         self.assertEqual(queue.call, new_boolean)
     
     def test_window_delete(self):
-        window = Window.objects.get(id=2)
+        window = Window.objects.all().last()
         window.delete()
-        queue = Queue.objects.get(id=2)
+        queue = Queue.objects.all().last()
         self.assertEqual(queue.window, None)
 
 
@@ -401,8 +410,8 @@ class ModelNewsfeedTests(TestCase):
         self.assertEqual(max_length, 200)
     
     def test_set_branch(self):
-        branch = Branch.objects.get(id=1)
-        newsfeed = Newsfeed.objects.get(id=1)
+        branch = Branch.objects.all().last()
+        newsfeed = Newsfeed.objects.all().last()
         self.assertEqual(newsfeed.branch, branch)
     
     def test_object_name(self):
@@ -449,8 +458,8 @@ class ModelFeedbackTests(TestCase):
         self.assertEqual(max_length, 500)
     
     def test_set_branch(self):
-        branch = Branch.objects.get(id=1)
-        feedback = Feedback.objects.get(id=1)
+        branch = Branch.objects.all().last()
+        feedback = Feedback.objects.all().last()
         self.assertEqual(feedback.branch, branch)
     
     def test_set_date(self):
