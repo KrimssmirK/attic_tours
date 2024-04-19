@@ -25,10 +25,9 @@ $(document).ready(() => {
         })
             .done((result) => {
                 if (result.password_matched) {
-                    alert("password CORRECT!!")
                     sessionStorage.setItem("access_token", result.access_token)
-                    // const url = window.location.origin + '/branch/' + branchId
-                    // open(url, '_self')
+                    const url = window.location.origin + '/branch/' + branchId + "/report/"
+                    open(url, '_self')
                 } else {
                     alert('password is incorrect!')
                 }
