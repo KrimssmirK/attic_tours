@@ -3,6 +3,7 @@ from queues.views.views_home import home, login
 from queues.views.views_report import report, api_send_report
 from queues.views.views_queue import queue
 from queues.views.views_feedback import feedback
+from queues.views.views_applicant_queue import applicant_queue
 
 app_name = "queues"
 urlpatterns = [
@@ -16,4 +17,6 @@ urlpatterns = [
     path("branch/<int:branch_id>/queue/", queue, name="queue"),
     # feedback
     path("branch/<int:branch_id>/feedback/", feedback, name="feedback"),
+    # applicant's queue
+    path("branch/<int:branch_id>/applicant_queue/", applicant_queue, name="applicant_queue"),
 ]

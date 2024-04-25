@@ -43,5 +43,7 @@
         <button class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #000000; border-color: #D5D5D5;">Remove</button>
       </div>
   </div>
-  <p class="fw-bold mt-4" style="color: #5382A1; cursor: pointer;"><i class="bi bi-arrow-right align-self-center me-1"></i><span style="text-decoration:underline; font-style: italic;">view applicant’s queue</span></p>
+  <div class="fw-bold mt-4" style="color: #5382A1; cursor: pointer;">
+    <a href="{% url "queues:applicant_queue" branch_id=branch_id %}" ><i class="bi bi-arrow-right align-self-center me-1"></i><span style="text-decoration:underline; font-style: italic;">view applicant’s queue</span></a>
+  </div>
 </div>
