@@ -27,13 +27,13 @@ class HomeViewTests(TestCase):
         request = HttpRequest()
         response = home(request)
         actual_html = response.content.decode()
-        expected_html = render_to_string("queues/home/index.html", { "branches": list(Branch.objects.all().values()) })
+        expected_html = render_to_string("queues/home/index.html", { "branches": Branch.get_branch_without_password() })
         self.assertEqual(actual_html, expected_html)
         
     def test_correct_context(self):
         response = self.client.get("/")
         actual_context = list(response.context)[0]
-        expected_context = { "branches": list(Branch.objects.all().values()) }
+        expected_context = { "branches": Branch.get_branch_without_password() }
         self.assertEqual(actual_context, expected_context)
 
 

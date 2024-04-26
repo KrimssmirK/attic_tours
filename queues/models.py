@@ -21,6 +21,11 @@ class Branch(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @classmethod
+    def get_branch_without_password(clf):
+        branches = list(Branch.objects.all().values())
+        return [{"id": branch["id"], "name": branch["name"]} for branch in branches]
 
 
 class Report(models.Model):
