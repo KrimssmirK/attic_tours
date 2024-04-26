@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from queues.models import Branch
+from queues.models import Branch, Service
+from django.http import JsonResponse
 
 
 def queue(request, branch_id):
@@ -14,3 +15,10 @@ def queue(request, branch_id):
             "key_scale": 2,
         },
     )
+
+
+def api_get_services(request):
+    services = Service.objects.all().values()
+    return JsonResponse({
+        "services": list(services),
+        }, safe=False, status=200)

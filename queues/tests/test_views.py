@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 from queues.views.views_home import home, login
 from queues.views.views_report import report, api_send_report
+from queues.views.views_queue import api_get_services
 from queues.models import Branch, Service
 import json
 
@@ -120,7 +121,18 @@ class ReportViewTests(TestCase):
         request.POST["branch_id"] = Branch.objects.all().last().id
         response = api_send_report(request)
         self.assertEqual(response.status_code, 200)
-        
+
+
+class ViewQueueTests(TestCase):
+    @classmethod
+    def setUpTestData(clf):
+        pass
+    def test_json_correct(self):
+        services = Service.objects.all().values()
+        request = HttpRequest()
+        response = api_get_services(request)
+        actual_data = json.loads(response.content) # json string to json object
+        self.assertEqual(actual_data["services"], list(services))
     
         
 
