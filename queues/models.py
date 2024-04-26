@@ -57,6 +57,13 @@ class Window(models.Model):
         return self.name
 
 
+class PrefQueue(models.Model):
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.branch.name + "-" + self.service.name
+
 class Queue(models.Model):
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)

@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
-import datetime
 from django.utils import timezone
-from queues.models import Service, Branch, Report, Window, Queue, Newsfeed, Feedback
+from queues.models import Service, Branch, Report, Window, PrefQueue, Queue, Newsfeed, Feedback
 
 
 class ModelServiceTests(TestCase):
@@ -278,6 +277,28 @@ class ModelWindowTests(TestCase):
         window = Window.objects.get(id=2)
         self.assertEqual(window.name, new_name)
         
+        
+class ModelPrefQueueTests(TestCase):
+    @classmethod
+    def setUpTestData(clf):
+        service = Service(name="Tourism", price=1680)
+        branch = Branch(
+            name="SM FAIRVIEW",
+            mobile_no="4213412",
+            landline_no="(02)2343-4233",
+            password="1111"
+        )
+        service.save()
+        branch.save()
+        PrefQueue.objects.create(
+            service=service,
+            branch=branch
+        )
+    
+    def test_object_name(self):
+        pref_queue = PrefQueue.objects.all().last()
+        expected_name = f"{pref_queue.branch.name}-{pref_queue.service.name}"
+        self.assertEqual(str(pref_queue), expected_name)
 
 class ModelQueueTests(TestCase):
     @classmethod
