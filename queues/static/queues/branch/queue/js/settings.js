@@ -41,8 +41,8 @@ $(document).ready(() => {
         var pref_queues = await get_preference_queues(branch_id)
         console.log(pref_queues)
         pref_queues.forEach(pref_queue => {
-            $("#remove_service").append(
-                $("<option value=" + pref_queue.id + ">" + (services[pref_queue.service_id-1]).name + "</option>")
+            $("#select_remove_service").append(
+                $("<option value=" + pref_queue.id + ">" + (services[pref_queue.service_id - 1]).name + "</option>")
             )
         })
     })()
@@ -64,6 +64,31 @@ $(document).ready(() => {
                 }) // FAIL
                 .fail((xhr, status, errorThrown) => {
                     alert('Sorry, there was a problem with creating new preference queue!')
+                    console.log('Error: ' + errorThrown)
+                    console.log('Status: ' + status)
+                    console.dir(xhr)
+                })
+        }
+    })
+
+    // this is the logic when the remove service is clicked!
+    $("#button_remove_service").on("click", () => {
+        // get the selected preference queue id
+        const pref_queue_id = $("#select_remove_service").val()
+        request_delete_pref_queue(pref_queue_id)
+        function request_delete_pref_queue(pref_queue_id) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: { "pref_queue_id": pref_queue_id },
+                url: window.location.origin + '/branch/api/delete_pref_queue/',
+            })
+                .done((json) => {
+                    alert(json.status)
+                    window.location.reload()
+                })
+                .fail((xhr, status, errorThrown) => {
+                    alert('Sorry, there was a problem with deleting a preference queue!')
                     console.log('Error: ' + errorThrown)
                     console.log('Status: ' + status)
                     console.dir(xhr)

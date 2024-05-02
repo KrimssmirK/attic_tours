@@ -49,11 +49,15 @@ def api_create_pref_queue(request):
     service = Service.objects.get(id=request.POST["service_id"])
     pref_queues = PrefQueue.objects.filter(branch=branch, service=service)
     if not pref_queues.exists():
-        PrefQueue.objects.create(branch=branch, service=service)
-        status = "new service has been added to preference queue"
+        pref_queue = PrefQueue.objects.create(branch=branch, service=service)
+        status = f"{pref_queue} has been added to preference queue"
     else:
         status = "has already in preference queue"
-    # if pref_queues empty then create pref_queue
-    # if not empty then do nothing
-
     return JsonResponse(data={"status": status})
+
+
+@csrf_exempt
+def api_delete_pref_queue(request):
+    pref_queue = PrefQueue.objects.get(id=request.POST["pref_queue_id"])
+    pref_queue.delete()
+    return JsonResponse(data={"status": str(pref_queue) + " has been removed."})

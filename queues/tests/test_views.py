@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 from queues.views.views_home import home, login
 from queues.views.views_report import report, api_send_report
-from queues.views.views_queue import api_get_services, api_create_pref_queue
+from queues.views.views_queue import api_get_services, api_create_pref_queue, api_delete_pref_queue
 from queues.models import Branch, Service, PrefQueue
 import json
 
@@ -124,10 +124,10 @@ class ReportViewTests(TestCase):
 
 
 class ViewQueueTests(TestCase):
-    
+
     @classmethod
     def setUpTestData(clf):
-        PrefQueue.objects.create(
+        ViewQueueTests.pref_queue = PrefQueue.objects.create(
             branch=Branch.objects.all().first(), 
             service=Service.objects.all().first())
         
@@ -143,8 +143,9 @@ class ViewQueueTests(TestCase):
         request.POST["branch_id"] = 3
         request.POST["service_id"] = 1
         response = api_create_pref_queue(request)
+        pref_queue = PrefQueue.objects.all().last()
         data = json.loads(response.content)
-        self.assertEqual(data["status"], "new service has been added to preference queue")
+        self.assertEqual(data["status"], f"{pref_queue} has been added to preference queue")
     
     def test_the_status_when_add_new_preference_queue_failure(self):
         request = HttpRequest()
@@ -171,6 +172,9 @@ class ViewQueueTests(TestCase):
         self.assertEqual(pref_queue.branch.id, BRANCH_ID)
         self.assertEqual(pref_queue.service.id, SERVICE_ID)
         
-    
-        
-
+    def test_api_delete_pref_queue_if_deletes(self):
+        request = HttpRequest()
+        request.POST["pref_queue_id"] = ViewQueueTests.pref_queue.id
+        api_delete_pref_queue(request)
+        pref_queue = PrefQueue.objects.all()
+        self.assertEqual(pref_queue.exists(), False)
