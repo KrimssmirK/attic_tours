@@ -93,6 +93,7 @@ branches = [
     },
 ]
 windows = [
+    {"name": "ANY WINDOW"},
     {"name": "WINDOW 1"},
     {"name": "WINDOW 2"},
     {"name": "WINDOW 3"},

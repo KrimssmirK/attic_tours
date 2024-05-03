@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from queues.models import Branch, Service, PrefQueue
+from queues.models import Branch, Service, PrefQueue, Queue, Window
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt  # for enabling post request
+from django.utils import timezone
 
 
-def queue(request, branch_id):
+def view_queue(request, branch_id):
     logged_in_branch = Branch.objects.get(pk=branch_id)
     return render(
         request,
@@ -61,3 +62,33 @@ def api_delete_pref_queue(request):
     pref_queue = PrefQueue.objects.get(id=request.POST["pref_queue_id"])
     pref_queue.delete()
     return JsonResponse(data={"status": str(pref_queue) + " has been removed."})
+
+
+def api_read_queues(request):
+    branch_id = request.GET["branch_id"]
+    pref_queues = PrefQueue.objects.filter(branch_id=branch_id).values()
+    
+    queues = []
+    for pref_queue in pref_queues:
+        queue = Queue.objects.filter(branch_id=branch_id, service_id=pref_queue["service_id"], date__gte=timezone.now().date()).first()
+        if not queue:
+            queue = Queue.objects.create(
+                branch_id=branch_id,
+                service_id=pref_queue["service_id"],
+                window_id=Window.objects.all().first().id
+            )
+        queue_data = {
+            "service_name": queue.service.name,
+            "current_no": queue.no,
+            "current_window": Window.objects.get(id=queue.window_id).name
+        }
+        queues.append(queue_data)
+    
+    windows = Window.objects.all().values()
+    
+    data = {
+        "queues": queues,
+        "windows": list(windows)
+    }
+    
+    return JsonResponse(data=data, safe=False, status=200)

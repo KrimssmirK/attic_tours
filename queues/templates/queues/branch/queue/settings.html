@@ -1,20 +1,20 @@
 {% load static %}
 <div class="container">
-  <h2 class="fw-bold" style="font-size:32px;">Settings</h2>
+  <h2 class="fw-bold text-center" style="font-size:32px;">Settings</h2>
   {% comment %}Queue Settings{% endcomment %}
   <div class="mt-3">
     <h3 class="fw-bold" style="font-size:16px;">Queue</h3>
     {% comment %}adding queues{% endcomment %}
     <div class="mt-3" style="width: 280px;">
       <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #FFF0F0;">
-        <select id="select_service" class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686;"></select>
+        <select id="select_service" class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686; cursor: pointer;"></select>
       </div>
       <button id="add_service" class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #D43F3A; border-color: #D5D5D5;">Add</button>
     </div>
     {% comment %}removing queues{% endcomment %}
     <div class="mt-3" style="width: 280px;">
       <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #FFF0F0;">
-        <select id="select_remove_service" class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686;">
+        <select id="select_remove_service" class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686; cursor: pointer;">
           {% comment %} <option value="">SELECT A SERVICE TO REMOVE</option> {% endcomment %}
         </select>
       </div>
@@ -28,14 +28,14 @@
     {% comment %}adding newsfeed{% endcomment %}
     <div class="mt-3" style="width: 280px;">
       <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #FFF0F0;">
-        <textarea placeholder="Enter text.." class="p-2 border-0 w-100" style="font-size: 12px; color: #8C8686;height: 90px;"></textarea>
+        <textarea placeholder="Enter text.." class="p-2 border-0 w-100" style="font-size: 12px; color: #8C8686;height: 90px; cursor: pointer;"></textarea>
       </div>
       <button class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #D43F3A; border-color: #D5D5D5;">Add</button>
     </div>
     {% comment %}removing newsfeed{% endcomment %}
     <div class="mt-3" style="width: 280px;">
       <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #FFF0F0;">
-        <select class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686;">
+        <select class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686; cursor: pointer;">
           <option value="">SELECT TEXT TO REMOVE</option>
         </select>
       </div>

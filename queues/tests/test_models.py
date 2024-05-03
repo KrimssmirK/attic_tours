@@ -266,7 +266,7 @@ class ModelWindowTests(TestCase):
     def test_change_name(self):
         window = Window.objects.get(id=2)
         # before
-        self.assertEqual(window.name, "WINDOW 2")
+        self.assertEqual(window.name, "WINDOW 1")
         
         new_name = "WINDOW SALES"
         window.name = new_name
