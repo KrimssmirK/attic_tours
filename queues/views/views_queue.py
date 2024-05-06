@@ -78,9 +78,10 @@ def api_read_queues(request):
                 window_id=Window.objects.all().first().id
             )
         queue_data = {
+            "id": queue.id,
             "service_name": queue.service.name,
             "current_no": queue.no,
-            "current_window": Window.objects.get(id=queue.window_id).name
+            "current_window_id": Window.objects.get(id=queue.window_id).id
         }
         queues.append(queue_data)
     
@@ -92,3 +93,40 @@ def api_read_queues(request):
     }
     
     return JsonResponse(data=data, safe=False, status=200)
+
+
+@csrf_exempt
+def api_decrease_queue_no(request):
+    queue_id = request.POST["queue_id"]
+    queue = Queue.objects.get(pk=queue_id)
+    queue.no -= 1
+    queue.save()
+    return JsonResponse(data={"status": "queue no is decreased and saved!"}, safe=False, status=200)
+
+
+@csrf_exempt
+def api_increase_queue_no(request):
+    queue_id = request.POST["queue_id"]
+    queue = Queue.objects.get(pk=queue_id)
+    queue.no += 1
+    queue.save()
+    return JsonResponse(data={"status": "queue no is increased and saved!"}, safe=False, status=200)
+
+
+@csrf_exempt
+def api_set_queue_window(request):
+    queue_id = request.POST["queue_id"]
+    window_id = request.POST["window_id"]
+    queue = Queue.objects.get(pk=queue_id)
+    queue.window = Window.objects.get(pk=window_id)
+    queue.save()
+    return JsonResponse(data={"status": "queue window no is changed and saved!"}, safe=False, status=200)
+
+
+@csrf_exempt
+def api_call_applicant(request):
+    queue_id = request.POST["queue_id"]
+    queue = Queue.objects.get(pk=queue_id)
+    queue.call = True
+    queue.save()
+    return JsonResponse(data={"status": "calling applicant..."}, safe=False, status=200)

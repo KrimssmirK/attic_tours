@@ -181,3 +181,15 @@ class ViewQueueTests(TestCase):
         
     def test_api_read_queues_if_the_data_is_correct(self):
         pass
+    
+    def test_api_decrease_queue_no_if_save_correctly(self):
+        pass
+    
+    def test_api_increase_queue_no_if_save_correctly(self):
+        pass
+    
+    def test_api_set_queue_window_if_save_correctly(self):
+        pass
+    
+    def test_api_call_applicant_if_save_correctly(self):
+        pass

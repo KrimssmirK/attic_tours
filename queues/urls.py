@@ -1,7 +1,18 @@
 from django.urls import path
 from queues.views.views_home import home, login
 from queues.views.views_report import report, api_send_report
-from queues.views.views_queue import view_queue, api_get_services, api_create_pref_queue, api_get_pref_queues, api_delete_pref_queue, api_read_queues
+from queues.views.views_queue import (
+    view_queue,
+    api_get_services,
+    api_create_pref_queue,
+    api_get_pref_queues,
+    api_delete_pref_queue,
+    api_read_queues,
+    api_decrease_queue_no,
+    api_increase_queue_no,
+    api_set_queue_window,
+    api_call_applicant,
+)
 from queues.views.views_feedback import feedback
 from queues.views.views_applicant_queue import applicant_queue
 
@@ -11,16 +22,41 @@ urlpatterns = [
     path("login/", login, name="login"),
     path("branch/<int:branch_id>/report/", report, name="report"),
     path("branch/api/send_report/", api_send_report, name="api_send_report"),
-    
     # QUEUE
     path("branch/<int:branch_id>/queue/", view_queue, name="queue"),
     path("branch/api/services/", api_get_services, name="api_get_services"),
-    path("branch/api/create_pref_queue/", api_create_pref_queue, name="api_create_pref_queue"),
+    path(
+        "branch/api/create_pref_queue/",
+        api_create_pref_queue,
+        name="api_create_pref_queue",
+    ),
     path("branch/api/pref_queues/", api_get_pref_queues, name="api_get_pref_queues"),
-    path("branch/api/delete_pref_queue/", api_delete_pref_queue, name="api_delete_pref_queue"),
-    path("branch/api/read_queues/", api_read_queues, name="api_read_queues"), # NEW   
-    
-    
+    path(
+        "branch/api/delete_pref_queue/",
+        api_delete_pref_queue,
+        name="api_delete_pref_queue",
+    ),
+    path("branch/api/read_queues/", api_read_queues, name="api_read_queues"),
+    path(
+        "branch/api/decrease_queue_no/",
+        api_decrease_queue_no,
+        name="api_decrease_queue_no",
+    ),
+    path(
+        "branch/api/increase_queue_no/",
+        api_increase_queue_no,
+        name="api_increase_queue_no",
+    ),
+    path(
+        "branch/api/set_queue_window/",
+        api_set_queue_window,
+        name="api_set_queue_window",
+    ),
+    path("branch/api/call_applicant/", api_call_applicant, name="api_call_applicant"),
     path("branch/<int:branch_id>/feedback/", feedback, name="feedback"),
-    path("branch/<int:branch_id>/applicant_queue/", applicant_queue, name="applicant_queue"),
+    path(
+        "branch/<int:branch_id>/applicant_queue/",
+        applicant_queue,
+        name="applicant_queue",
+    ),
 ]
