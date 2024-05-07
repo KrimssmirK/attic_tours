@@ -202,3 +202,9 @@ class ViewQueueTests(TestCase):
     
     def test_api_delete_newsfeed_if_save_correctly(self):
         pass
+    
+    
+class ViewFeedbackTests(TestCase):
+    
+    def test_api_send_feedback_if_save_correctly(self):
+        pass

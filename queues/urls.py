@@ -16,7 +16,7 @@ from queues.views.views_queue import (
     api_create_newsfeed,
     api_delete_newsfeed
 )
-from queues.views.views_feedback import feedback
+from queues.views.views_feedback import feedback, api_send_feedback
 from queues.views.views_applicant_queue import applicant_queue
 
 app_name = "queues"
@@ -68,4 +68,5 @@ urlpatterns = [
         applicant_queue,
         name="applicant_queue",
     ),
+    path("branch/api/send_feedback/", api_send_feedback, name="api_send_feedback"),
 ]
