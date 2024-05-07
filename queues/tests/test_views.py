@@ -193,3 +193,12 @@ class ViewQueueTests(TestCase):
     
     def test_api_call_applicant_if_save_correctly(self):
         pass
+    
+    def test_api_newsfeeds_if_the_data_is_correct(self):
+        pass
+    
+    def test_api_create_newsfeed_if_save_correctly(self):
+        pass
+    
+    def test_api_delete_newsfeed_if_save_correctly(self):
+        pass

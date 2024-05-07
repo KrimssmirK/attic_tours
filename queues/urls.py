@@ -12,6 +12,9 @@ from queues.views.views_queue import (
     api_increase_queue_no,
     api_set_queue_window,
     api_call_applicant,
+    api_newsfeeds,
+    api_create_newsfeed,
+    api_delete_newsfeed
 )
 from queues.views.views_feedback import feedback
 from queues.views.views_applicant_queue import applicant_queue
@@ -53,6 +56,12 @@ urlpatterns = [
         name="api_set_queue_window",
     ),
     path("branch/api/call_applicant/", api_call_applicant, name="api_call_applicant"),
+    
+    #new (newsfeed)
+    path("branch/api/newsfeeds/", api_newsfeeds, name="api_newsfeeds"),
+    path("branch/api/create_newsfeed/", api_create_newsfeed, name="api_create_newsfeed"),
+    path("branch/api/delete_newsfeed/", api_delete_newsfeed, name="api_delete_newsfeed"),
+    
     path("branch/<int:branch_id>/feedback/", feedback, name="feedback"),
     path(
         "branch/<int:branch_id>/applicant_queue/",
