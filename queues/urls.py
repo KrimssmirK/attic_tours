@@ -18,6 +18,8 @@ from queues.views.views_queue import (
     api_get_queue,
     api_reset_call_applicant,
     api_change_newsfeed,
+    change_queue_setting_status,
+    queue_setting_status
 )
 from queues.views.views_feedback import feedback, api_send_feedback
 from queues.views.views_applicant_queue import applicant_queue
@@ -80,6 +82,16 @@ urlpatterns = [
         "branch/api/reset_call_applicant/",
         api_reset_call_applicant,
         name="api_reset_call_applicant",
+    ),
+    path(
+        "branch/api/change_queue_setting_status/",
+        change_queue_setting_status,
+        name="change_queue_setting_status",
+    ),
+     path(
+        "branch/api/queue_setting_status/",
+        queue_setting_status,
+        name="queue_setting_status",
     ),
     # NEWSFEED
     path("branch/api/newsfeeds/", api_newsfeeds, name="api_newsfeeds"),
