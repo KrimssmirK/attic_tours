@@ -9,6 +9,14 @@ $(document).ready(() => {
         url: ENDPOINT,
     })
         .done((data) => {
+            if (!data.queues.length > 0) {
+                $("#queue_card_container").append(
+                    $("<p>", {
+                        class: "text-start text-danger",
+                        text: "No Queues are set. Please use the settings left to add."
+                    })
+                )
+            }
             data.queues.forEach(queue => {
                 $("#queue_card_container").append(create_queue_card(queue, data.windows))
             })
@@ -28,6 +36,29 @@ $(document).ready(() => {
         const INCREASE_QUEUE_NO = 1
         const SET_WINDOW = 2
         const CALL_APPLICANT = 3
+        let UPDATING_INTERVAL = null
+
+        function update_queue_info(queue_id, queue_no_dom_id, queue_window_dom_id) {
+            const ENDPOINT = "/branch/api/get_queue/"
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                data: { "queue_id": queue_id },
+                url: window.location.origin + ENDPOINT,
+            })
+                .done((data) => {
+                    $("#" + queue_no_dom_id).text(data.current_no) // string should be provided
+                    $("#" + queue_window_dom_id).val(data.window_id) // id should be provided
+                })
+                .fail((xhr, status, errorThrown) => {
+                    alert('Sorry, there was a problem with changing a queue!')
+                    console.log('Error: ' + errorThrown)
+                    console.log('Status: ' + status)
+                    console.dir(xhr)
+                })
+        }
+
+
 
         function post_request(types_of_request, data) {
             const ENDPOINTS = {
@@ -86,7 +117,7 @@ $(document).ready(() => {
         // QUEUE
         const TITLE_LENGTH = queue.service_name.length
         let size_of_title = TITLE_LENGTH > 12 ? 12 : 24
-        return $("<div>", {style: "width:250px;height:300px;" })
+        return $("<div>", { style: "width:250px;height:300px;" })
             .append(
                 $("<div>",
                     {
@@ -157,7 +188,7 @@ $(document).ready(() => {
                     $windows
                 )
             ).append(
-                $("<div>", { id: "queue_card_no_" + queue.id + "_bottom",class: "text-center py-2", style: "opacity: 1.0;"})
+                $("<div>", { id: "queue_card_no_" + queue.id + "_bottom", class: "text-center py-2", style: "opacity: 1.0;" })
                     .append(
                         $("<button>", {
                             type: "button",
@@ -175,8 +206,16 @@ $(document).ready(() => {
                     )
             ).hover(() => {
                 $("#queue_card_no_" + queue.id + "_upper" + ",#queue_card_no_" + queue.id + "_bottom").css("opacity", "1.0")
+                UPDATING_INTERVAL = setInterval(() => {
+                    update_queue_info(queue.id, "queue_number_id_" + queue.id, "queue_window_id_" + queue.id)
+                }, 1000)
             }, () => {
                 $("#queue_card_no_" + queue.id + "_upper" + ",#queue_card_no_" + queue.id + "_bottom").css("opacity", "0.85")
+                clearInterval(UPDATING_INTERVAL)
             })
     }
 })
+
+
+
+

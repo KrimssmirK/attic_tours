@@ -47,6 +47,7 @@ $(document).ready(() => {
                         $("<option>", { value: pref_queue.id, text: (services[pref_queue.service_id - 1]).name })
                     )
                 })
+                $("#select_remove_service").attr("style", "font-size: 12px;cursor: pointer;")
             } else {
                 $("#select_remove_service").append(
                     $("<option>", { value: 0, text: "NO SERVICE SET" })
@@ -131,11 +132,17 @@ $(document).ready(() => {
             var newsfeeds = await get_newsfeeds(branch_id)
             if (newsfeeds.length > 0) {
                 newsfeeds.forEach(newsfeed => {
+                    $("#select_edit_newsfeed").append(
+                        $("<option>", { value: newsfeed.id, text: newsfeed.text })
+                    ).attr("style", "font-size: 12px;cursor: pointer;")
                     $("#select_remove_newsfeed").append(
                         $("<option>", { value: newsfeed.id, text: newsfeed.text })
-                    )
+                    ).attr("style", "font-size: 12px;cursor: pointer;")
                 })
             } else {
+                $("#select_edit_newsfeed").append(
+                    $("<option>", { value: "0", text: "NO NEWSFEED SET" })
+                )
                 $("#select_remove_newsfeed").append(
                     $("<option>", { value: "0", text: "NO NEWSFEED SET" })
                 )
@@ -146,7 +153,12 @@ $(document).ready(() => {
         // add service button
         $("#button_add_newsfeed").on("click", () => {
             const newsfeed_text = $("#textarea_newsfeed").val()
-            put_new_pref_queue(newsfeed_text, branch_id)
+            if (newsfeed_text.length > 0) {
+                put_new_pref_queue(newsfeed_text, branch_id)
+            } else {
+                alert("please enter the text before adding")
+            }
+            
             function put_new_pref_queue(newsfeed_text, branch_id) {
                 $.ajax({
                     type: 'POST',
@@ -198,6 +210,59 @@ $(document).ready(() => {
         })
     }
 
+    function init_newsfeed_edit_settings() {
+        $("#editNewsfeedModal").on("shown.bs.modal", (event) => {
+            var newsfeed_id = $("#select_edit_newsfeed").val() // newsfeed id
+            var selected_newsfeed_text = $("#select_edit_newsfeed ").find(":selected").text()
+            $("#modal_edit_newsfeed").text(selected_newsfeed_text)
+            $("#modal_edit_save_button").on("click", () => {
+                var new_text = $("#modal_edit_newsfeed").val()
+                request_edit_newsfeed(newsfeed_id, new_text)
+                $("#modal_edit_save_button").text("").append(
+                    $("<div>", { class: "loader" })
+                )
+            })
+        })
+        function request_edit_newsfeed(newsfeed_id, new_text) {
+            const ENDPOINT = window.location.origin + '/branch/api/change_newsfeed/'
+            $.ajax({
+                url: ENDPOINT,
+                type: 'POST',
+                data: {
+                    newsfeed_id: newsfeed_id,
+                    new_text: new_text,
+                },
+                dataType: 'json'
+            })
+                .done((data) => {
+                    // do something when the response back
+                    window.location.reload()
+                })
+                .fail((xhr, status, errorThrown) => {
+                    alert('Sorry, there was a problem!')
+                    console.log('Error: ' + errorThrown)
+                    console.log('Status: ' + status)
+                    console.dir(xhr)
+                })
+            
+                function set_loading_to_button() {
+                    $("#modal_edit_save_button").text()
+                }
+        }
+    }
+    
+
     init_queue_settings()
     init_newsfeed_settings()
+    init_newsfeed_edit_settings()
 })
+
+
+
+
+   
+
+
+   
+
+    

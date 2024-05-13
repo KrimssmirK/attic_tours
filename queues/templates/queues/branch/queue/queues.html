@@ -1,7 +1,7 @@
 {% load static %}
 <div>
-  <h2 class="fw-bold text-center" style="font-size:32px;">Queues</h2>
-  <p class="text-center">put the mouse over the queue card to update the info</p>
-  <div id="queue_card_container" class="d-flex justify-content-center gap-5 flex-wrap pt-2"></div>
+  <h2 class="text-start" style="font-size:32px;">Queues</h2>
+  <p class="text-center" style="font-style: italic; font-size: 12px;">Hint: move the mouse pointer over the queue card <em class="fw-bold">to update</em> the current queue number and window</p>
+  <div id="queue_card_container" class="d-flex justify-content-around gap-5 flex-wrap pt-2"></div>
 </div>
 <script src="{% static 'queues/branch/queue/js/queues.js' %}"></script>

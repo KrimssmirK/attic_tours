@@ -23,7 +23,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="{% static 'queues/branch/js/nav.js' %}"></script>
     <script src="{% static 'queues/home/js/logout.js' %}"></script>
-
+    <style>
+      .loader {
+        border: 3px solid #f3f3f3; /* Light grey */
+        border-top: 3px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 22.5px;
+        height: 22.5px;
+        animation: spin 2s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
     <title>
       ATTIC TOURS -{% block title %}
 
@@ -47,13 +61,21 @@
                   REPORT
                 </a>
               </li>
-              <li class="nav-item align-self-center">
-                <a class="nav-link {% block queue %}
-                  {% endblock %}"
-                  aria-current="page"
-                  href="{% url 'queues:queue' branch_id=branch_id %}">
+              <li id="nav_queue" class="nav-item dropdown align-self-center">
+                <a id="nav_queue_link" class="nav-link dropdown-toggle {% block queue %}{% endblock %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                   QUEUE
                 </a>
+                <ul id="nav_queue_items" class="dropdown-menu">
+                  <li><a class="dropdown-item 
+                    "
+                    aria-current="page"
+                    href="{% url 'queues:queue' branch_id=branch_id %}">
+                  CONTROLLER
+                  </a></li>
+                  <li><a class="dropdown-item" href="{% url 'queues:applicant_queue' branch_id=branch_id %}">APPLICANT'S VIEW</a></li>
+                
+                </ul>
+                
               </li>
               <li class="nav-item align-self-center">
                 <a class="nav-link {% block feedback %}
@@ -72,6 +94,19 @@
         </div>
       </nav>
     </div>
+    <script>
+      $("#nav_queue").hover(()=>{
+        $("#nav_queue_link").attr("class", "nav-link dropdown-toggle show")
+        $("#nav_queue_link").attr("aria-expanded", "true")
+        $("#nav_queue_items").attr("class", "dropdown-menu show")
+        $("#nav_queue_items").attr("data-bs-popper", "static")
+      },()=>{
+        $("#nav_queue_link").attr("class", "nav-link dropdown-toggle")
+        $("#nav_queue_link").attr("aria-expanded", "false")
+        $("#nav_queue_items").attr("class", "dropdown-menu")
+        $("#nav_queue_items").attr("data-bs-popper", "")
+      })
+    </script>
 
     {% block content %}
 

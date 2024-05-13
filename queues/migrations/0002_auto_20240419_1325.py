@@ -2,6 +2,7 @@
 
 from django.db import migrations
 
+
 services = [
     {"name": "TOURISM", "price": 1680},
     {"name": "BUSINESS, CONFERENCE or CULTURAL EXCHANGE, etc.", "price": 1680},
@@ -36,6 +37,8 @@ services = [
     {"name": "WIFI", "price": None},
     {"name": "TRAVEL INSURANCE", "price": None},
 ]
+
+
 branches = [
     {
         "name": "MAIN OFFICE",
@@ -92,6 +95,8 @@ branches = [
         "password": "8888",
     },
 ]
+
+
 windows = [
     {"name": "ANY WINDOW"},
     {"name": "WINDOW 1"},
@@ -107,17 +112,19 @@ windows = [
     {"name": "WINDOW TICKETING"},
     {"name": "WINDOW TOUR PACKAGE"},
     {"name": "WINDOW WIFI"},
-    {"name": "WINDOW TOUR PACKAGE"},
 ]
 
 
-def add_initial_data(apps, schema_editor):
+def add_initial_service_data(apps, schema_editor):
     Service = apps.get_model("queues", "Service")
     for service in services:
         if service["price"] is None:
             Service.objects.create(name=service["name"])
         else:
             Service.objects.create(name=service["name"], price=service["price"])
+
+
+def add_initial_branch_data(apps, schema_editor):
     Branch = apps.get_model("queues", "Branch")
     for branch in branches:
         Branch.objects.create(
@@ -126,16 +133,22 @@ def add_initial_data(apps, schema_editor):
             landline_no=branch["landline_no"],
             password=branch["password"],
         )
+
+
+def add_initial_window_data(apps, schema_editor):
     Window = apps.get_model("queues", "Window")
     for window in windows:
         Window.objects.create(name=window["name"])
 
 
 class Migration(migrations.Migration):
+    
     dependencies = [
         ("queues", "0001_initial"),
     ]
 
     operations = [
-        migrations.RunPython(add_initial_data),
+        migrations.RunPython(add_initial_service_data),
+        migrations.RunPython(add_initial_branch_data),
+        migrations.RunPython(add_initial_window_data),
     ]

@@ -10,8 +10,8 @@
 {% endblock %}
 {% block content %}
 <div class="container mw-100 p-5">
-  <h1 class="fw-bold text-shadow" style="font-size: 64px;text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;">QUEUE</h1>
-  <div class="d-flex justify-content-center gap-5 my-4 flex-wrap">
+  {% comment %} <h1 class="fw-bold text-shadow text-center" style="font-size: 64px;text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;">QUEUE</h1> {% endcomment %}
+  <div class="d-flex justify-content-between gap-5 my-4 flex-wrap" style="padding-left:50px; padding-right: 50px;">
     <div class="me-3">
       {% include "./settings.html" %}
     </div>

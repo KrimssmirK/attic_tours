@@ -139,6 +139,14 @@ def api_call_applicant(request):
     return JsonResponse(data={"status": "calling applicant..."}, safe=False, status=200)
 
 
+@csrf_exempt
+def api_reset_call_applicant(request):
+    queue_id = request.POST["queue_id"]
+    queue = Queue.objects.get(pk=queue_id)
+    queue.call = False
+    queue.save()
+    return JsonResponse(data={"status": "calling has been reset!"}, safe=False, status=200)
+
 def api_newsfeeds(request):
     newsfeeds = Newsfeed.objects.filter(branch_id=request.GET["branch_id"]).values()
     return JsonResponse(data={"newsfeeds": list(newsfeeds)}, safe=False, status=200)
@@ -146,10 +154,14 @@ def api_newsfeeds(request):
 
 @csrf_exempt
 def api_create_newsfeed(request):
-    newsfeed = Newsfeed(text=request.POST["newsfeed_text"], branch_id=request.POST["branch_id"])
+    newsfeed = Newsfeed(
+        text=request.POST["newsfeed_text"], branch_id=request.POST["branch_id"]
+    )
     newsfeed.save()
     return JsonResponse(
-        data={"status": f"{newsfeed} newsfeed created and saved!"}, safe=False, status=200
+        data={"status": f"{newsfeed} newsfeed created and saved!"},
+        safe=False,
+        status=200,
     )
 
 
@@ -160,3 +172,23 @@ def api_delete_newsfeed(request):
     return JsonResponse(
         data={"status": f"{newsfeed} has been removed."}, safe=False, status=200
     )
+
+
+def api_get_queue(request):
+    queue = Queue.objects.get(pk=request.GET["queue_id"])
+    data = {
+        "current_no": queue.no,
+        "window_id": queue.window.id,
+        "window_name": queue.window.name,
+        "call": queue.call
+    }
+    return JsonResponse(data=data, safe=False, status=201)
+
+
+@csrf_exempt
+def api_change_newsfeed(request):
+    newsfeed = Newsfeed.objects.get(pk=request.POST["newsfeed_id"])
+    newsfeed.text = request.POST["new_text"]
+    newsfeed.save()
+    data = {"status": f"{newsfeed} has been removed."}
+    return JsonResponse(data=data, safe=False, status=201)
