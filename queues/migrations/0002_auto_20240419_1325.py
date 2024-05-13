@@ -34,6 +34,7 @@ services = [
     {"name": "TICKET", "price": None},
     {"name": "TICKET (INTERNATIONAL)", "price": None},
     {"name": "TICKET (DOMESTIC)", "price": None},
+    {"name": "TICKETING", "price": None},
     {"name": "WIFI", "price": None},
     {"name": "TRAVEL INSURANCE", "price": None},
 ]
