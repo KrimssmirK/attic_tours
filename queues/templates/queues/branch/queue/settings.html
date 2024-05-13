@@ -1,0 +1,102 @@
+{% load static %}
+<div class="container">
+  <h2 class="text-start" style="font-size:32px;">Settings</h2>
+  {% comment %}Queue Settings{% endcomment %}
+  <div class="mt-3">
+    <h3 class="fw-bold" style="font-size:16px;">Queue</h3>
+    {% comment %}adding queues{% endcomment %}
+    <div class="mt-3" style="width: 280px;">
+      <p class="mb-0" style="color: #DA6767;">To Add Queue</p>
+      <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #FFF0F0;">
+        <select id="select_add_service" class="text-center p-2 border-0 w-100" style="font-size: 12px; cursor: pointer;"></select>
+      </div>
+      <button id="button_add_service" class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #D43F3A; border-color: #D5D5D5;">Add</button>
+    </div>
+    {% comment %}removing queues{% endcomment %}
+    <div class="mt-3" style="width: 280px;">
+      <p class="mb-0">To Remove Queue</p>
+      <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #C5C1C1;">
+        <select id="select_remove_service" class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686; cursor: pointer;">
+          {% comment %} <option value="">SELECT A SERVICE TO REMOVE</option> {% endcomment %}
+        </select>
+      </div>
+      <button id="button_remove_service" class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #000000; border-color: #D5D5D5;">Remove</button>
+    </div>
+  </div>
+
+  {% comment %}Newsfeed Settings{% endcomment %}
+  <div class="mt-5">
+    <h3 class="fw-bold" style="font-size:16px;">Applicant’s view Newsfeed</h3>
+    {% comment %}adding newsfeed{% endcomment %}
+    <div class="mt-3" style="width: 280px;">
+      <p class="mb-0" style="color: #DA6767;">To Add Newsfeed</p>
+      <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #FFF0F0;">
+        <textarea id="textarea_newsfeed" placeholder="Enter text.." class="p-2 border-0 w-100" style="font-size: 12px;height: 90px; cursor: text;"></textarea>
+      </div>
+      <button type="submit" id="button_add_newsfeed" class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #D43F3A; border-color: #D5D5D5;">Add</button>
+    </div>
+    {% comment %}editing newsfeed{% endcomment %}
+    <div class="mt-3" style="width: 280px;">
+      <p class="mb-0" style="color: #67AF5B;">To Edit Newsfeed</p>
+      <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #9CC895;">
+        <select id="select_edit_newsfeed" class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686; cursor: pointer;"></select>
+      </div>
+      <button data-bs-toggle="modal" data-bs-target="#editNewsfeedModal" class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #597C53; border-color: #D5D5D5;">Edit</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editNewsfeedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Newsfeed</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <textarea id="modal_edit_newsfeed" class="p-2 w-100" style="font-size: 12px; color: #8C8686;height: 90px; cursor: text;"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="modal_edit_save_button" type="button" class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% comment %}removing newsfeed{% endcomment %}
+    <div class="mt-3" style="width: 280px;">
+      <p class="mb-0">To Remove Newsfeed</p>
+      <div class="text-center p-3 rounded shadow" style="border: 1px solid #D5D5D5; background-color: #C5C1C1;">
+        <select id="select_remove_newsfeed" class="text-center p-2 border-0 w-100" style="font-size: 12px; color: #8C8686; cursor: pointer;"></select>
+      </div>
+      <button id="button_remove_newsfeed" class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #000000; border-color: #D5D5D5;">Remove</button>
+    </div>
+  </div>
+  <div class="mt-5">
+  <p class="mb-0" style="color: #53727C">To Refresh the Applicant's Queue View</p>
+  <button id="button_refresh" class="w-100 rounded fw-bold text-white" style="font-size: 20px; background-color: #53727C; border-color: #D5D5D5;">Refresh Applicant’s View</button>
+  </div>
+  <script>
+    $('#button_refresh').on('click', () => {
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: { branch_id: branch_id }, // branch_id is global variable
+        url: window.location.origin + '/branch/api/change_queue_setting_status/'
+      })
+        .done((data) => {
+          console.log(data)
+          // alert(data.status)
+        })
+        .fail((xhr, status, errorThrown) => {
+          alert('Sorry, there was a problem with changing a queue setting status!')
+          console.log('Error: ' + errorThrown)
+          console.log('Status: ' + status)
+          console.dir(xhr)
+        })
+    })
+  </script>
+</div>
+
+{% comment %}script{% endcomment %}
+<script src="{% static 'queues/branch/queue/js/settings.js' %}"></script>

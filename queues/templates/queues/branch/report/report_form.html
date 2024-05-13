@@ -1,9 +1,9 @@
 <form id="report_form" style="width: 300px;">
-  <h1 class="fw-bold fs-2">Report Form</h1>
-  <div class="container p-2 shadow mb-3 borde rounded" style="background-color: #F8DCDC;">
+  <h1 class="text-start fs-2">Report Form</h1>
+  <div class="container p-2 shadow mb-3 border rounded" style="background-color: #F8DCDC;">
     <div class="d-flex flex-column gap-1 my-1">
       <label for="services" class="fw-bold">Service</label>
-      <select id="services" name="services" class="fw-bold p-1 border-0" style="color: #D43F3A;">
+      <select id="services" name="services" class="fw-bold p-1 border-0" style="color: #D43F3A; cursor: pointer;">
         {% for service in services %}
           <option value="{{ service.id }}">{{ service.name }}</option>
         {% endfor %}
@@ -15,7 +15,7 @@
     </div>
     <div class="d-flex flex-column gap-1 mb-4 my-1">
       <label for="pax" class="fw-bold">Pax</label>
-      <select id="pax" name="pax" class="fw-bold p-1 border-0" style="color: #D43F3A;">
+      <select id="pax" name="pax" class="fw-bold p-1 border-0" style="color: #D43F3A; cursor: pointer;">
         {% for no in no_of_pax %}
           <option value="{{ no }}">{{ no }}</option>
         {% endfor %}

@@ -3,7 +3,8 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 from queues.views.views_home import home, login
 from queues.views.views_report import report, api_send_report
-from queues.models import Branch, Service
+from queues.views.views_queue import api_get_services, api_create_pref_queue, api_delete_pref_queue
+from queues.models import Branch, Service, PrefQueue
 import json
 
 
@@ -27,13 +28,13 @@ class HomeViewTests(TestCase):
         request = HttpRequest()
         response = home(request)
         actual_html = response.content.decode()
-        expected_html = render_to_string("queues/home/index.html", { "branches": list(Branch.objects.all().values()) })
+        expected_html = render_to_string("queues/home/index.html", { "branches": Branch.get_branch_without_password() })
         self.assertEqual(actual_html, expected_html)
         
     def test_correct_context(self):
         response = self.client.get("/")
         actual_context = list(response.context)[0]
-        expected_context = { "branches": list(Branch.objects.all().values()) }
+        expected_context = { "branches": Branch.get_branch_without_password() }
         self.assertEqual(actual_context, expected_context)
 
 
@@ -120,7 +121,90 @@ class ReportViewTests(TestCase):
         request.POST["branch_id"] = Branch.objects.all().last().id
         response = api_send_report(request)
         self.assertEqual(response.status_code, 200)
-        
-    
-        
 
+
+class ViewQueueTests(TestCase):
+
+    @classmethod
+    def setUpTestData(clf):
+        ViewQueueTests.pref_queue = PrefQueue.objects.create(
+            branch=Branch.objects.all().first(), 
+            service=Service.objects.all().first())
+        
+    def test_json_correct(self):
+        services = Service.objects.all().values()
+        request = HttpRequest()
+        response = api_get_services(request)
+        actual_data = json.loads(response.content) # json string to json object
+        self.assertEqual(actual_data["services"], list(services))
+    
+    def test_the_status_when_add_new_preference_queue_success(self):
+        request = HttpRequest()
+        request.POST["branch_id"] = 3
+        request.POST["service_id"] = 1
+        response = api_create_pref_queue(request)
+        pref_queue = PrefQueue.objects.all().last()
+        data = json.loads(response.content)
+        self.assertEqual(data["status"], f"{pref_queue} has been added to preference queue")
+    
+    def test_the_status_when_add_new_preference_queue_failure(self):
+        request = HttpRequest()
+        request.POST["branch_id"] = 1
+        request.POST["service_id"] = 1
+        response = api_create_pref_queue(request)
+        data = json.loads(response.content)
+        self.assertEqual(data["status"], "has already in preference queue")
+    
+    def test_the_added_preference_queue_if_the_info_matches(self):
+        # constant
+        BRANCH_ID = 3
+        SERVICE_ID = 6
+        # client
+        request = HttpRequest()
+        request.POST["branch_id"] = BRANCH_ID
+        request.POST["service_id"] = SERVICE_ID
+        
+        # server
+        api_create_pref_queue(request)
+        
+        # db
+        pref_queue = PrefQueue.objects.all().last()
+        self.assertEqual(pref_queue.branch.id, BRANCH_ID)
+        self.assertEqual(pref_queue.service.id, SERVICE_ID)
+        
+    def test_api_delete_pref_queue_if_deletes(self):
+        request = HttpRequest()
+        request.POST["pref_queue_id"] = ViewQueueTests.pref_queue.id
+        api_delete_pref_queue(request)
+        pref_queue = PrefQueue.objects.all()
+        self.assertEqual(pref_queue.exists(), False)
+        
+    def test_api_read_queues_if_the_data_is_correct(self):
+        pass
+    
+    def test_api_decrease_queue_no_if_save_correctly(self):
+        pass
+    
+    def test_api_increase_queue_no_if_save_correctly(self):
+        pass
+    
+    def test_api_set_queue_window_if_save_correctly(self):
+        pass
+    
+    def test_api_call_applicant_if_save_correctly(self):
+        pass
+    
+    def test_api_newsfeeds_if_the_data_is_correct(self):
+        pass
+    
+    def test_api_create_newsfeed_if_save_correctly(self):
+        pass
+    
+    def test_api_delete_newsfeed_if_save_correctly(self):
+        pass
+    
+    
+class ViewFeedbackTests(TestCase):
+    
+    def test_api_send_feedback_if_save_correctly(self):
+        pass

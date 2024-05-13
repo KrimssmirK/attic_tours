@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from queues.models import Branch
+from queues.models import Branch, Feedback
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def feedback(request, branch_id):
@@ -13,4 +15,19 @@ def feedback(request, branch_id):
             "key_shift": 4,
             "key_scale": 2,
         },
+    )
+
+
+@csrf_exempt
+def api_send_feedback(request):
+    feedback = Feedback(
+        title=request.POST["title"],
+        description=request.POST["description"],
+        branch_id=request.POST["branch_id"],
+    )
+    feedback.save()
+    return JsonResponse(
+        data={"status": f"{feedback} has been created and saved!"},
+        safe=False,
+        status=201,
     )
