@@ -72,6 +72,30 @@
       <button id="button_remove_newsfeed" class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #000000; border-color: #D5D5D5;">Remove</button>
     </div>
   </div>
+  <div class="mt-5">
+  <p class="mb-0" style="color: #53727C">To Refresh the Applicant's Queue View</p>
+  <button id="button_refresh" class="w-100 rounded fw-bold text-white" style="font-size: 20px; background-color: #53727C; border-color: #D5D5D5;">Refresh Applicant’s View</button>
+  </div>
+  <script>
+    $('#button_refresh').on('click', () => {
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: { branch_id: branch_id }, // branch_id is global variable
+        url: window.location.origin + '/branch/api/change_queue_setting_status/'
+      })
+        .done((data) => {
+          console.log(data)
+          // alert(data.status)
+        })
+        .fail((xhr, status, errorThrown) => {
+          alert('Sorry, there was a problem with changing a queue setting status!')
+          console.log('Error: ' + errorThrown)
+          console.log('Status: ' + status)
+          console.dir(xhr)
+        })
+    })
+  </script>
 </div>
 
 {% comment %}script{% endcomment %}

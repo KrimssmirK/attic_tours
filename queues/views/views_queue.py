@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from queues.models import Branch, Service, PrefQueue, Queue, Window, Newsfeed
+from queues.models import Branch, Service, PrefQueue, Queue, Window, Newsfeed, QueueSettingStatus
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt  # for enabling post request
 from django.utils import timezone
@@ -192,3 +192,34 @@ def api_change_newsfeed(request):
     newsfeed.save()
     data = {"status": f"{newsfeed} has been removed."}
     return JsonResponse(data=data, safe=False, status=201)
+
+
+@csrf_exempt
+def change_queue_setting_status(request):
+    status_list = QueueSettingStatus.objects.filter(pk=request.POST["branch_id"])
+    if not status_list.exists():
+        queue_setting_status = QueueSettingStatus(
+            branch_id=request.POST["branch_id"],
+        )
+    else:
+        queue_setting_status = status_list.first()
+    queue_setting_status.change = True
+    queue_setting_status.save()
+    return JsonResponse(data={"status": f"the queue setting status change is set to be {queue_setting_status.change}"}, safe=False, status=201)
+
+
+@csrf_exempt
+def queue_setting_status(request):
+    status_list = QueueSettingStatus.objects.filter(pk=request.POST["branch_id"])
+    if not status_list.exists():
+        queue_setting_status = QueueSettingStatus(
+            branch_id=request.POST["branch_id"],
+        )
+    else:
+        queue_setting_status = status_list.first()
+    if queue_setting_status.change:
+        queue_setting_status.change = False
+        queue_setting_status.save()
+        return JsonResponse(data={"change": True }, safe=False, status=201)
+    else:
+        return JsonResponse(data={"change": False }, safe=False, status=201)

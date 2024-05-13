@@ -75,6 +75,10 @@ class Queue(models.Model):
     def __str__(self):
         return f"{self.branch}-{self.service}-{self.no}-{self.window}"
 
+class QueueSettingStatus(models.Model):
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    change = models.BooleanField(default=False)
+
 
 class Newsfeed(models.Model):
     text = models.CharField(max_length=200)
