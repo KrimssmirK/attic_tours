@@ -1,0 +1,117 @@
+{% load static %}
+<script>
+  const ACCESS_TOKEN = Number(sessionStorage.getItem("access_token"))
+  const key_shift = {{ key_shift }}
+  const key_scale = {{ key_scale }}
+  const branch_id = Number(window.location.pathname.split("/")[2])
+  if ((ACCESS_TOKEN - key_shift) / key_scale != branch_id) {
+    alert("You are not allowed to enter this branch without entering the password!!!")
+    sessionStorage.removeItem("access_token")
+    const url = window.location.origin
+    open(url, '_self')
+  }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% comment %}CSS Framework{% endcomment %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    {% comment %}jQuery{% endcomment %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{% static 'queues/branch/js/nav.js' %}"></script>
+    <script src="{% static 'queues/home/js/logout.js' %}"></script>
+    <style>
+      .loader {
+        border: 3px solid #f3f3f3; /* Light grey */
+        border-top: 3px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 22.5px;
+        height: 22.5px;
+        animation: spin 2s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+    <title>
+      ATTIC TOURS -{% block title %}
+
+      {% endblock %}
+    </title>
+  </head>
+  <body style="background-color: {% block bodycolor %}
+    {% endblock %}">
+    <div id="nav">
+      <nav class="navbar navbar-expand-md navbar-light bg-light" style="background-color: white !important;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'queues:report' branch_id=branch_id %}"><img src="{% static 'queues/branch/img/attic_logo.png' %}" alt="home" /><span class="p-2 fw-light">{{ branch_name }}</span></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item align-self-center">
+                <a class="nav-link {% block report %}
+                  {% endblock %}"
+                  aria-current="page"
+                  href="{% url 'queues:report' branch_id=branch_id %}">
+                  REPORT
+                </a>
+              </li>
+              <li id="nav_queue" class="nav-item dropdown align-self-center">
+                <a id="nav_queue_link" class="nav-link dropdown-toggle {% block queue %}{% endblock %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                  QUEUE
+                </a>
+                <ul id="nav_queue_items" class="dropdown-menu">
+                  <li><a class="dropdown-item 
+                    "
+                    aria-current="page"
+                    href="{% url 'queues:queue' branch_id=branch_id %}">
+                  CONTROLLER
+                  </a></li>
+                  <li><a class="dropdown-item" href="{% url 'queues:applicant_queue' branch_id=branch_id %}">APPLICANT'S VIEW</a></li>
+                
+                </ul>
+                
+              </li>
+              <li class="nav-item align-self-center">
+                <a class="nav-link {% block feedback %}
+                  {% endblock %}"
+                  aria-current="page"
+                  href="{% url 'queues:feedback' branch_id=branch_id %}">
+                  FEEDBACK
+                </a>
+              </li>
+            </ul>
+            <div id="logout" class="d-flex flex-column justify-content-end" style="color: #4E4747;cursor: pointer;">
+              <i class="bi bi-door-open align-self-center"></i>
+              <p class="align-self-center" style="font-size: 8px;">EXIT</p>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <script>
+      $("#nav_queue").hover(()=>{
+        $("#nav_queue_link").attr("class", "nav-link dropdown-toggle show")
+        $("#nav_queue_link").attr("aria-expanded", "true")
+        $("#nav_queue_items").attr("class", "dropdown-menu show")
+        $("#nav_queue_items").attr("data-bs-popper", "static")
+      },()=>{
+        $("#nav_queue_link").attr("class", "nav-link dropdown-toggle")
+        $("#nav_queue_link").attr("aria-expanded", "false")
+        $("#nav_queue_items").attr("class", "dropdown-menu")
+        $("#nav_queue_items").attr("data-bs-popper", "")
+      })
+    </script>
+
+    {% block content %}
+
+    {% endblock %}
+  </body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

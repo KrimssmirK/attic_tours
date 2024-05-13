@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Queue, Service, Branch
+from queues.models import Branch, Service, Report, Window, Queue
 
-
-class QueueAdmin(admin.ModelAdmin):
-    list_display = ["branch", "service", "number", "window", "call", "date"]
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ["branch", "by", "service", "pax", "date"]
     list_filter = ["branch", "date"]
 
-
-admin.site.register(Queue, QueueAdmin)
-admin.site.register(Service)
 admin.site.register(Branch)
+admin.site.register(Service)
+admin.site.register(Report, ReportAdmin)
+admin.site.register(Window)
+admin.site.register(Queue)

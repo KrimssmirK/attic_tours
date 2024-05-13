@@ -1,0 +1,64 @@
+{% extends '../base.html' %}
+{% block title %}
+  FEEDBACK
+{% endblock %}
+{% block bodycolor %}
+  #F4FAFF
+{% endblock %}
+{% block feedback %}
+  active
+{% endblock %}
+{% block content %}
+  <div class="container mw-100 p-5">
+    <h1 class="fw-bold text-shadow text-center mb-5" style="font-size: 64px;text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;">FEEDBACK</h1>
+    <p class="text-center w-50 mx-auto" style="font-style: italic; font-size:14px;">If you have any concerns, difficulties or suggestions for this queue system, please kindly send a feedback. Thank you =></p>
+    <div class="d-flex justify-content-center m-3">
+      
+      <form id="feedback_form"style="width:400px;">
+        <div class="p-3 rounded border" style="background-color: #FFF0F0; border-color: #D5D5D5;">
+          <div class="d-flex flex-column gap-4">
+            <div>
+              <label class="fw-bold my-2" for="title">Title</label><br />
+              <input class="w-100 border-0" type="text" id="title" required/>
+            </div>
+            <div>
+              <label class="fw-bold my-2" for="description">Description</label><br />
+              <textarea class="w-100 fw-bold border-0 p-1" id="description" placeholder="Any feedbacks or suggestions here" style="color: #8C8686;height:150px;" required></textarea>
+            </div>
+          </div>
+        </div>
+        <button type="submit"class="w-100 rounded fw-bold text-white mt-2" style="letter-spacing: 10px;font-size: 20px; background-color: #D43F3A; border-color: #D5D5D5;">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $('#feedback_form').on('submit', (event) => {
+      event.preventDefault()
+      alert('Thank you for your feedback.')
+      const data = {
+        "branch_id": branch_id,
+        "title": $("#title").val(),
+        "description": $("#description").val(),
+      }
+    
+      // 2. send data
+      $.ajax({
+        type: 'POST',
+        url: window.location.origin + '/branch/api/send_feedback/',
+        data: data,
+        dataType: 'json'
+      }) // SUCCESS
+        .done((json) => {
+          // alert(json.status)
+          window.location.reload()
+        }) // FAIL
+        .fail((xhr, status, errorThrown) => {
+          alert('Sorry, there was a problem with sending a feedback!')
+          console.log('Error: ' + errorThrown)
+          console.log('Status: ' + status)
+          console.dir(xhr)
+        })
+    })
+  </script>
+{% endblock %}

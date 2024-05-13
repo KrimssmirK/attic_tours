@@ -1,0 +1,71 @@
+<form id="report_form" style="width: 300px;">
+  <h1 class="text-start fs-2">Report Form</h1>
+  <div class="container p-2 shadow mb-3 border rounded" style="background-color: #F8DCDC;">
+    <div class="d-flex flex-column gap-1 my-1">
+      <label for="services" class="fw-bold">Service</label>
+      <select id="services" name="services" class="fw-bold p-1 border-0" style="color: #D43F3A; cursor: pointer;">
+        {% for service in services %}
+          <option value="{{ service.id }}">{{ service.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="d-flex flex-column gap-1 my-3">
+      <label for="by" class="fw-bold">By</label>
+      <input type="text" id="by" placeholder="enter your name" class="fw-bold p-1 border-0" style="color: #D43F3A;" required />
+    </div>
+    <div class="d-flex flex-column gap-1 mb-4 my-1">
+      <label for="pax" class="fw-bold">Pax</label>
+      <select id="pax" name="pax" class="fw-bold p-1 border-0" style="color: #D43F3A; cursor: pointer;">
+        {% for no in no_of_pax %}
+          <option value="{{ no }}">{{ no }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <button type="submit" class="w-100 text-white fw-bold p-2 rounded border-white" style="background-color: #D43F3A; letter-spacing: 10px;">Report</button>
+</form>
+
+<script>
+    $('#report_form').on('submit', (event) => {
+      event.preventDefault()
+      alert('Thank you for reporting.')
+      // flow after submitting report form
+      // 1. collect data
+      // 2. send data AJAX
+      // 3. IF SUCCESS? reset the form FAIL? inform the user alert!
+    
+      // 1. collect data
+      // data - branch_id, report_type_id, coordinator, no_of_pax
+      const branch_id = '{{ branch_id }}'
+      const service_id = $('#services').val()
+      const by = $('#by').val()
+      const pax = $('#pax').val()
+      const collected_data = {
+        branch_id: branch_id,
+        service_id: service_id,
+        by: by,
+        pax: pax
+      }
+    
+      // 2. send data
+      $.ajax({
+        type: 'POST',
+        url: window.location.origin + '/branch/api/send_report/',
+        data: collected_data,
+        dataType: 'json'
+      }) // SUCCESS
+        .done((json) => {
+          window.location.reload()
+          // reset the form values
+          // $('#report_types').val('1')
+          // $('#coordinator').val('')
+          // $('#no_of_pax').val('1')
+        }) // FAIL
+        .fail((xhr, status, errorThrown) => {
+          alert('Sorry, there was a problem!')
+          console.log('Error: ' + errorThrown)
+          console.log('Status: ' + status)
+          console.dir(xhr)
+        })
+    })
+  </script>
