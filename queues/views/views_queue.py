@@ -196,13 +196,13 @@ def api_change_newsfeed(request):
 
 @csrf_exempt
 def change_queue_setting_status(request):
-    status_list = QueueSettingStatus.objects.filter(pk=request.POST["branch_id"])
-    if not status_list.exists():
+    queue_setting_status_list = QueueSettingStatus.objects.filter(branch_id=request.POST["branch_id"])
+    if not queue_setting_status_list.exists():
         queue_setting_status = QueueSettingStatus(
             branch_id=request.POST["branch_id"],
         )
     else:
-        queue_setting_status = status_list.first()
+        queue_setting_status = queue_setting_status_list.first()
     queue_setting_status.change = True
     queue_setting_status.save()
     return JsonResponse(data={"status": f"the queue setting status change is set to be {queue_setting_status.change}"}, safe=False, status=201)
@@ -210,13 +210,13 @@ def change_queue_setting_status(request):
 
 @csrf_exempt
 def queue_setting_status(request):
-    status_list = QueueSettingStatus.objects.filter(pk=request.POST["branch_id"])
-    if not status_list.exists():
+    queue_setting_status_list = QueueSettingStatus.objects.filter(branch_id=request.POST["branch_id"])
+    if not queue_setting_status_list.exists():
         queue_setting_status = QueueSettingStatus(
             branch_id=request.POST["branch_id"],
         )
     else:
-        queue_setting_status = status_list.first()
+        queue_setting_status = queue_setting_status_list.first()
     if queue_setting_status.change:
         queue_setting_status.change = False
         queue_setting_status.save()
