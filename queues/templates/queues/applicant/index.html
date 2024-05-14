@@ -1,15 +1,17 @@
 {% load static %}
 <script>
-  const ACCESS_TOKEN = Number(sessionStorage.getItem("access_token"))
+  {% comment %} const ACCESS_TOKEN = Number(sessionStorage.getItem("access_token"))
   const key_shift = {{ key_shift }}
-  const key_scale = {{ key_scale }}
+  const key_scale = {{ key_scale }} {% endcomment %}
   const branch_id = Number(window.location.pathname.split("/")[2])
-  if ((ACCESS_TOKEN - key_shift) / key_scale != branch_id) {
+
+  // if not authenticated
+  {% comment %} if ((ACCESS_TOKEN - key_shift) / key_scale != branch_id) {
     alert("You are not allowed to enter this branch without entering the password!!!")
     sessionStorage.removeItem("access_token")
     const url = window.location.origin
     open(url, '_self')
-  }
+  } {% endcomment %}
 </script>
 <!DOCTYPE html>
 <html lang="en">
