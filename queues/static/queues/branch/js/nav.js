@@ -5,6 +5,8 @@ $(document).ready(() => {
         }, () => {
             $("#logout").css("opacity", "1.0")
         }).on("click", () => {
-            logout()
+            sessionStorage.removeItem("access_token");
+            const url = window.location.origin;
+            open(url, '_self');
         })
 })
