@@ -24,6 +24,8 @@ from queues.views.views_queue import (
 from queues.views.views_feedback import feedback, api_send_feedback
 from queues.views.views_applicant_queue import applicant_queue
 
+from queues.views.views_test import test_view
+
 app_name = "queues"
 urlpatterns = [
     # --------------------------------------VIEWs--------------------------------------
@@ -106,4 +108,8 @@ urlpatterns = [
     ),
     # FEEDBACK
     path("branch/api/send_feedback/", api_send_feedback, name="api_send_feedback"),
+    
+    
+    # --------------------------------------test views--------------------------------------
+    path("test/design/", test_view, name="test_view"),
 ]
