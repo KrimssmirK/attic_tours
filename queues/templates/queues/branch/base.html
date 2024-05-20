@@ -61,11 +61,11 @@
                   REPORT
                 </a>
               </li>
-              <li id="nav_queue" class="nav-item dropdown align-self-center">
-                <a id="nav_queue_link" class="nav-link dropdown-toggle {% block queue %}{% endblock %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+              <li class="nav-item dropdown align-self-center">
+                <a class="nav-link dropdown-toggle {% block queue %}{% endblock %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                   QUEUE
                 </a>
-                <ul id="nav_queue_items" class="dropdown-menu">
+                <ul class="dropdown-menu">
                   <li><a class="dropdown-item 
                     "
                     aria-current="page"
@@ -94,20 +94,6 @@
         </div>
       </nav>
     </div>
-    <script>
-      $("#nav_queue").hover(()=>{
-        $("#nav_queue_link").attr("class", "nav-link dropdown-toggle show")
-        $("#nav_queue_link").attr("aria-expanded", "true")
-        $("#nav_queue_items").attr("class", "dropdown-menu show")
-        $("#nav_queue_items").attr("data-bs-popper", "static")
-      },()=>{
-        $("#nav_queue_link").attr("class", "nav-link dropdown-toggle")
-        $("#nav_queue_link").attr("aria-expanded", "false")
-        $("#nav_queue_items").attr("class", "dropdown-menu")
-        $("#nav_queue_items").attr("data-bs-popper", "")
-      })
-    </script>
-
     {% block content %}
 
     {% endblock %}
