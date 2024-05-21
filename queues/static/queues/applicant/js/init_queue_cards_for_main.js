@@ -119,8 +119,9 @@ $(document).ready(() => {
     
             $("#audio_calling")[0].play().then(_ => {
                 // Autoplay started!
-                const delayInMilliseconds = 3_000
-                setTimeout(() => speak(), delayInMilliseconds);
+                // speak feature is removed by main office
+                // const delayInMilliseconds = 3_000
+                // setTimeout(() => speak(), delayInMilliseconds);
             }).catch(error => {
                 console.log("Error in Audio")
                 console.log(error)
