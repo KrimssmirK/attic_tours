@@ -103,10 +103,59 @@ $(document).ready(() => {
                     // Autoplay started!
                     const delayInMilliseconds = 3_000
                     setTimeout(() => speak(), delayInMilliseconds);
+                    animate()
                 }).catch(error => {
                     console.log("Error in Audio")
                     console.log(error)
                 });
+            }
+
+            function animate() {
+       
+                $("#queue_no_" + queue.id).animate({
+                    color: "red",
+                    fontSize: "9em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "black",
+                    fontSize: "8em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "red",
+                    fontSize: "9em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "black",
+                    fontSize: "8em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "red",
+                    fontSize: "9em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "black",
+                    fontSize: "8em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "red",
+                    fontSize: "9em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "black",
+                    fontSize: "8em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "red",
+                    fontSize: "9em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "black",
+                    fontSize: "8em"
+                }, "slow")
+                $("#queue_no_" + queue.id).animate({
+                    color: "black",
+                    fontSize: "9em"
+                }, "slow")
             }
 
             function call_applicant(new_queue) {

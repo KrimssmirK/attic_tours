@@ -64,7 +64,7 @@ $(document).ready(() => {
                     $("<span>", {
                         id: "queue_no_" + queue.id,
                         class: "fw-bold text-center",
-                        style: "font-size:8vw;",
+                        style: "font-size:8vw;color:black;",
                         text: queue.current_no
                     })
                 ).append(
@@ -122,10 +122,49 @@ $(document).ready(() => {
                 // speak feature is removed by main office
                 // const delayInMilliseconds = 3_000
                 // setTimeout(() => speak(), delayInMilliseconds);
+
+                // animation feature
+                animate()
             }).catch(error => {
                 console.log("Error in Audio")
                 console.log(error)
             });
+        }
+
+        function animate() {
+       
+            $("#queue_no_" + queue.id).animate({
+                color: "red",
+                fontSize: "9vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "black",
+                fontSize: "8vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "red",
+                fontSize: "9vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "black",
+                fontSize: "8vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "red",
+                fontSize: "9vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "black",
+                fontSize: "8vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "red",
+                fontSize: "9vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "black",
+                fontSize: "8vw"
+            }, "slow")
         }
     
         function speak() {
