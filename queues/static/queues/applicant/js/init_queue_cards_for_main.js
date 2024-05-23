@@ -42,8 +42,9 @@ $(document).ready(() => {
     
         $queue_card =
             $("<div>", {
+                id: "border_"+queue.id,
                 class: "rounded p-0 m-0 w-100 mh-100",
-                style: "border: 5px solid #FF0000;"
+                style: "border: 3px solid #000000;"
             }).append(
                 $("<div>", {
                     class: "d-flex flex-column justify-content-between p-1",
@@ -51,29 +52,31 @@ $(document).ready(() => {
                 }
                 ).append(
                     $("<div>", {
+                        id: "title_panel_"+queue.id,
                         class: "text-white text-center rounded p-1",
-                        style: "background-color: #FF0000;"
+                        style: "background-color: #000000;"
                     }).append(
-                        $("<span>", {
-                            class: "fw-bold",
-                            style: "font-size: 1.3vw;",
+                        $("<p>", {
+                            id: "title_" + queue.id,
+                            class: "fw-bold user-select-none m-0",
+                            style: "font-size: 1.4vw;",
                             text: queue.service_name
                         })
                     )
                 ).append(
-                    $("<span>", {
+                    $("<p>", {
                         id: "queue_no_" + queue.id,
-                        class: "fw-bold text-center",
-                        style: "font-size:8vw;color:black;",
+                        class: "fw-bold text-center user-select-none m-0",
+                        style: "font-size:9vw;color:black;",
                         text: queue.current_no
                     })
                 ).append(
                     $("<div>", {
                         class: "text-center"
                     }).append(
-                        $("<span>", {
+                        $("<p>", {
                             id: "queue_window_" + queue.id,
-                            class: "fw-bold",
+                            class: "fw-bold user-select-none m-0",
                             style: "font-size: 1.2vw;",
                             text: window.name
                         })
@@ -131,40 +134,51 @@ $(document).ready(() => {
             });
         }
 
+        function animate_after() {
+            $("#border_" + queue.id).animate({
+                borderColor: "red"
+            }, "slow")
+            $("#title_panel_" + queue.id).animate({
+                backgroundColor: "red"
+            }, "slow")
+            $("#title_" + queue.id).animate({
+                fontSize: "1.7vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "red",
+                fontSize: "12vw"
+            }, "slow")
+            $("#queue_window_" + queue.id).animate({
+                color: "red",
+                fontSize: "1.5vw"
+            }, "slow")
+        }
+
+        function animate_before() {
+            $("#border_" + queue.id).animate({
+                borderColor: "black"
+            }, "slow")
+            $("#title_panel_" + queue.id).animate({
+                backgroundColor: "black"
+            }, "slow")
+            $("#title_" + queue.id).animate({
+                fontSize: "1.4vw"
+            }, "slow")
+            $("#queue_no_" + queue.id).animate({
+                color: "black",
+                fontSize: "9vw"
+            }, "slow")
+            $("#queue_window_" + queue.id).animate({
+                color: "black",
+                fontSize: "1.2vw"
+            }, "slow")
+        }
+
         function animate() {
-       
-            $("#queue_no_" + queue.id).animate({
-                color: "red",
-                fontSize: "9vw"
-            }, "slow")
-            $("#queue_no_" + queue.id).animate({
-                color: "black",
-                fontSize: "8vw"
-            }, "slow")
-            $("#queue_no_" + queue.id).animate({
-                color: "red",
-                fontSize: "9vw"
-            }, "slow")
-            $("#queue_no_" + queue.id).animate({
-                color: "black",
-                fontSize: "8vw"
-            }, "slow")
-            $("#queue_no_" + queue.id).animate({
-                color: "red",
-                fontSize: "9vw"
-            }, "slow")
-            $("#queue_no_" + queue.id).animate({
-                color: "black",
-                fontSize: "8vw"
-            }, "slow")
-            $("#queue_no_" + queue.id).animate({
-                color: "red",
-                fontSize: "9vw"
-            }, "slow")
-            $("#queue_no_" + queue.id).animate({
-                color: "black",
-                fontSize: "8vw"
-            }, "slow")
+            for (var i = 0 ; i < 4 ; i++) {
+                animate_after()
+                animate_before()
+            }
         }
     
         function speak() {

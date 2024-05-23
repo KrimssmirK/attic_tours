@@ -1,4 +1,6 @@
 $(document).ready(() => {
+    const WINDOW = window
+    init_queue_cards()
     async function init_queue_cards() {
         const ORIGIN = window.location.origin
         async function request_queues_and_windows() {
@@ -23,6 +25,7 @@ $(document).ready(() => {
 
             $queue_card =
                 $("<div>", {
+                    id: "border_" + queue.id,
                     class: "rounded h-75",
                     style: "border: 5px solid #FF0000;width:20%;"
                 }).append(
@@ -32,19 +35,21 @@ $(document).ready(() => {
                     }
                     ).append(
                         $("<div>", {
+                            id: "title_panel_" + queue.id,
                             class: "text-white text-center rounded p-2",
                             style: "background-color: #FF0000;width: 100%;"
                         }).append(
-                            $("<span>", {
-                                class: "fw-bold w-100",
+                            $("<p>", {
+                                id: "title_" + queue.id,
+                                class: "fw-bold w-100 user-select-none m-0",
                                 style: "font-size: 1.4em;",
                                 text: queue.service_name
                             })
                         )
                     ).append(
-                        $("<span>", {
+                        $("<p>", {
                             id: "queue_no_" + queue.id,
-                            class: "fw-bold text-center",
+                            class: "fw-bold text-center user-select-none m-0",
                             style: "font-size:9em;",
                             text: queue.current_no
                         })
@@ -52,9 +57,9 @@ $(document).ready(() => {
                         $("<div>", {
                             class: "text-center"
                         }).append(
-                            $("<span>", {
+                            $("<p>", {
                                 id: "queue_window_" + queue.id,
-                                class: "fw-bold",
+                                class: "fw-bold user-select-none m-0",
                                 style: "font-size: 1.2em;",
                                 text: window.name
                             })
@@ -76,13 +81,8 @@ $(document).ready(() => {
                     }
                 }
 
-                console.log("ring functions queue: ", queue)
-
-                // queue card info
-                const template = queue.service_name + " applicant number " + $("#queue_no_" + queue.id).text() + " please proceed to " + $("#queue_window_" + queue.id).text()
-
-                const message = new SpeechSynthesisUtterance(template)
-                // message settings
+                const speech = queue.service_name + " applicant number " + $("#queue_no_" + queue.id).text() + " please proceed to " + $("#queue_window_" + queue.id).text()
+                const message = new SpeechSynthesisUtterance(speech)
                 if (voice_selected) {
                     message.voice = voice_selected
                 }
@@ -90,72 +90,53 @@ $(document).ready(() => {
                 message.pitch = 1.3
                 message.rate = 0.8
                 message.lang = "en-US"
-
-
-
-                // speak
                 speechSynthesis.speak(message)
             }
 
             function call() {
+                $main_content = $("#main_content")
+                $current_queue_container = $("#current_queue_container")
+                $current_queue = $("#border_" + queue.id)
+                $body = $("#body")
+
 
                 $("#audio_calling")[0].play().then(_ => {
                     // Autoplay started!
                     const delayInMilliseconds = 3_000
-                    setTimeout(() => speak(), delayInMilliseconds);
-                    animate()
-                }).catch(error => {
-                    console.log("Error in Audio")
-                    console.log(error)
-                });
+                    setTimeout(() => {
+                        speak()
+                        change_current_queue_style()
+                        $main_content.detach()
+                        $current_queue_container.append($current_queue);
+                    }, delayInMilliseconds);
+                    setTimeout(() => {
+                        WINDOW.location.reload()
+                    }, 10_000);
+
+                })
+                    .catch(error => {
+                        console.log("Error in Audio")
+                        console.log(error)
+                    });
             }
 
-            function animate() {
-       
-                $("#queue_no_" + queue.id).animate({
-                    color: "red",
-                    fontSize: "9em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "black",
-                    fontSize: "8em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "red",
-                    fontSize: "9em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "black",
-                    fontSize: "8em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "red",
-                    fontSize: "9em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "black",
-                    fontSize: "8em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "red",
-                    fontSize: "9em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "black",
-                    fontSize: "8em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "red",
-                    fontSize: "9em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "black",
-                    fontSize: "8em"
-                }, "slow")
-                $("#queue_no_" + queue.id).animate({
-                    color: "black",
-                    fontSize: "9em"
-                }, "slow")
+
+
+            function change_current_queue_style() {
+                $("#border_" + queue.id).css({
+                    width: "80%",
+                    height: "80%"
+                })
+                $("#title" + queue.id).css({
+                    fontSize: "15em"
+                })
+
+                $("#queue_no_" + queue.id).css({
+                    fontSize: "20em"
+                })
+                $("#queue_window_" + queue.id).css({
+                    fontSize: "2em"
+                })
             }
 
             function call_applicant(new_queue) {
@@ -227,7 +208,5 @@ $(document).ready(() => {
             $("#queue_card_container").append($queue_card)
         })
     }
-
-    init_queue_cards()
 })
 

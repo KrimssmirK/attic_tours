@@ -1,24 +1,23 @@
 {% extends '../base.html' %}
-{% block title %}
+{% block tab_title %}
   QUEUE
 {% endblock %}
 {% block bodycolor %}
   #FEFFF8
 {% endblock %}
-{% block queue %}
+{% block queue_nav_link %}
   active
 {% endblock %}
 {% block content %}
-<div class="container mw-100 p-5">
-  {% comment %} <h1 class="fw-bold text-shadow text-center" style="font-size: 64px;text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;">QUEUE</h1> {% endcomment %}
-  <div class="d-flex justify-content-between gap-5 my-4 flex-wrap" style="padding-left:50px; padding-right: 50px;">
-    <div class="me-3">
-      {% include "./settings.html" %}
-    </div>
-  
-    <div class="w-50">
-      {% include "./queues.html" %}
+  <div class="container mw-100 p-1">
+    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSettings" aria-expanded="false" aria-controls="collapseSettings">Settings</button>
+
+    <div class="d-flex justify-content-center gap-5 my-4 flex-wrap">
+      <div class="me-3 collapse collapse-horizontal" id="collapseSettings">
+        {% include './settings.html' %}
+      </div>
+
+      {% include './queues.html' %}
     </div>
   </div>
-</div>
 {% endblock %}
