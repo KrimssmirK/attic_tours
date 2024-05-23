@@ -5,7 +5,7 @@ $(document).ready(() => {
         
         function construct_newsfeed_paragraph(text) {
             const properties = {
-                class: "p-2 fw-bold text-white",
+                class: "p-2 fw-bold text-white user-select-none",
                 style: "font-size:2vw;",
                 text: text,
             }
