@@ -9,15 +9,15 @@
   active
 {% endblock %}
 {% block content %}
-<div class="container mw-100 p-5">
-  <div class="d-flex justify-content-between gap-5 my-4 flex-wrap" style="padding-left:50px; padding-right: 50px;">
-    <div class="me-3">
-      {% include "./settings.html" %}
-    </div>
-  
-    <div class="w-50">
-      {% include "./queues.html" %}
+  <div class="container mw-100 p-1">
+    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSettings" aria-expanded="false" aria-controls="collapseSettings">Settings</button>
+
+    <div class="d-flex justify-content-center gap-5 my-4 flex-wrap">
+      <div class="me-3 collapse collapse-horizontal" id="collapseSettings">
+        {% include './settings.html' %}
+      </div>
+
+      {% include './queues.html' %}
     </div>
   </div>
-</div>
 {% endblock %}
