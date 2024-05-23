@@ -27,19 +27,19 @@
     <script src="{% static 'queues/applicant/js/init_newsfeeds_paragraphs.js' %}"></script>
     <title>ATTIC TOURS - APPLICANT'S QUEUE</title>
   </head>
-  <body class="text-center mx-auto" style="background-color: #FFF0F0;">
-    <div class="p-2 d-flex flex-column gap-1">
+  <body id="body" class="text-center mx-auto" style="background-color: #FFF0F0;">
+    <div id="main_content" class="p-2 d-flex flex-column gap-1">
       <div class="row justify-content-center">
         <div class="col-4">
           <div class="d-flex flex-column gap-1">
-            <div class="w-50 mx-auto">
+            <div class="w-50 mx-auto user-select-none">
               <img class="img-fluid" src="{% static 'queues/applicant/img/logo.png' %}" alt="attic_logo" />
             </div>
             <div class="w-100 mx-auto text-center rounded p-1" style="border:3px solid #FC0000;">
-              <p class="lh-1 p-2 my-auto" style="font-size:2vw;">PLEASE <span class="fw-bold">TAKE A NUMBER</span> AND WAIT FOR YOUR NUMBER TO BE CALLED</p>
+              <p class="lh-1 p-2 my-auto user-select-none" style="font-size:2vw;">PLEASE <span class="fw-bold">TAKE A NUMBER</span> AND WAIT FOR YOUR NUMBER TO BE CALLED</p>
             </div>
             <div class="w-100 mx-auto fw-bold text-center rounded p-1" style="border:3px solid #FC0000;">
-              <p class="lh-1 p-2 my-auto" style="font-size:2vw;">FOR PASSPORT CLAIMS, PLEASE PROCEED TO ANY WINDOW</p>
+              <p class="lh-1 p-2 my-auto user-select-none" style="font-size:2vw;">FOR PASSPORT CLAIMS, PLEASE PROCEED TO ANY WINDOW</p>
             </div>
           </div>
         </div>
@@ -53,6 +53,8 @@
         <div id="newsfeeds-container" class="newsfeeds-container"></div>
       </div>
     </div>
+
+    <div id="current_queue_container" class="d-flex justify-content-center mt-5"></div>
 
     
 
