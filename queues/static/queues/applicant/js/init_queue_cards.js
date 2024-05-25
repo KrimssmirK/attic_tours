@@ -98,21 +98,24 @@ $(document).ready(() => {
             function call() {
                 $main_content = $("#main_content")
                 $current_queue_container = $("#current_queue_container")
-                $current_queue = $("#border_" + queue.id)
-                $body = $("#body")
-
+                $current_queue_clone = $("#border_" + queue.id).clone()
+                $current_queue_clone.width(jQuery(WINDOW).width())
+                $current_queue_clone.find("#title_" + queue.id).css("font-size", "3em")
+                $current_queue_clone.find("#queue_no_" + queue.id).css("font-size", "20em")
+                $current_queue_clone.find("#queue_window_" + queue.id).css("font-size", "3em")
+                // $current_queue_clone.height(WINDOW.innerHeight)
 
                 $("#audio_calling")[0].play().then(_ => {
                     // Autoplay started!
                     const delayInMilliseconds = 3_000
                     setTimeout(() => {
                         speak()
-                        change_current_queue_style()
-                        $main_content.detach()
-                        $current_queue_container.append($current_queue);
+                        $current_queue_container.append($current_queue_clone);
+                        $main_content.css( "opacity", 0 )
                     }, delayInMilliseconds);
                     setTimeout(() => {
-                        WINDOW.location.reload()
+                        $current_queue_clone.detach()
+                        $main_content.css( "opacity", 1 )  
                     }, 10_000);
 
                 })
@@ -120,25 +123,6 @@ $(document).ready(() => {
                         console.log("Error in Audio")
                         console.log(error)
                     });
-            }
-
-
-
-            function change_current_queue_style() {
-                $("#border_" + queue.id).css({
-                    width: "80%",
-                    height: "80%"
-                })
-                $("#title" + queue.id).css({
-                    fontSize: "15em"
-                })
-
-                $("#queue_no_" + queue.id).css({
-                    fontSize: "20em"
-                })
-                $("#queue_window_" + queue.id).css({
-                    fontSize: "2em"
-                })
             }
 
             function call_applicant(new_queue) {
