@@ -33,7 +33,7 @@ services = [
     {"name": "WIFI", "price": None},
     {"name": "TRAVEL INSURANCE", "price": None},
     {"name": "VISA", "price": None}, # SM NORTH EDSA IDEA
-    {"name": "JAPAN/KOREA", "price": None}, # SM NORTH EDSA IDEA
+    {"name": "JAPAN/KOREA VISA", "price": None}, # SM NORTH EDSA IDEA
     {"name": "TICKETING/SALES", "price": None}, # SM NORTH EDSA IDEA
     
     
