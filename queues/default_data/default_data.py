@@ -32,6 +32,11 @@ services = [
     {"name": "TICKETING", "price": None},
     {"name": "WIFI", "price": None},
     {"name": "TRAVEL INSURANCE", "price": None},
+    {"name": "VISA", "price": None}, # SM NORTH EDSA IDEA
+    {"name": "JAPAN/KOREA VISA", "price": None}, # SM NORTH EDSA IDEA
+    {"name": "TICKETING/SALES", "price": None}, # SM NORTH EDSA IDEA
+    
+    
 ]
 
 
@@ -114,6 +119,8 @@ windows = [
 JAPAN_VISA = 19
 KOREA_VISA = 20
 TICKETING = 25
+JAPAN_KOREA = 29 # SM NORTH EDSA IDEA
+TICKETING_SALES = 30 # SM NORTH EDSA IDEA
 
 # branches constant
 MAIN_OFFICE = 1
@@ -137,9 +144,8 @@ pref_queues = [
     {"service": JAPAN_VISA, "branch": FAIRVIEW},
     {"service": KOREA_VISA, "branch": FAIRVIEW},
     {"service": TICKETING, "branch": FAIRVIEW},
-    {"service": JAPAN_VISA, "branch": NORTH_EDSA},
-    {"service": KOREA_VISA, "branch": NORTH_EDSA},
-    {"service": TICKETING, "branch": NORTH_EDSA},
+    {"service": JAPAN_KOREA, "branch": NORTH_EDSA},
+    {"service": TICKETING_SALES, "branch": NORTH_EDSA},
     {"service": JAPAN_VISA, "branch": CLARK},
     {"service": KOREA_VISA, "branch": CLARK},
     {"service": TICKETING, "branch": CLARK},
