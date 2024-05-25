@@ -2,7 +2,7 @@
 <script>
   // const ACCESS_TOKEN = Number(sessionStorage.getItem("access_token"))
   // const key_shift = {{ key_shift }}
-  // const key_scale = {{ key_scale }} 
+  // const key_scale = {{ key_scale }}
   const branch_id = Number(window.location.pathname.split('/')[2])
   
   // if not authenticated
@@ -69,11 +69,9 @@
       url: window.location.origin + '/branch/api/queue_setting_status/'
     })
       .done((data) => {
-        console.log(data)
         if (data.change) {
           window.location.reload()
         }
-        // alert(data.status)
       })
       .fail((xhr, status, errorThrown) => {
         // alert('Sorry, there was a problem with changing a queue setting status!')
@@ -88,7 +86,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <script>
-  var height = $("#attic_youtube").height()
+  var height = $('#attic_youtube').height()
   var expected_width = (1920 * height) / 1080
-  $("#attic_youtube").width(expected_width)
-</script> 
+  $('#attic_youtube').width(expected_width)
+</script>
