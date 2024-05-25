@@ -1,17 +1,17 @@
 {% load static %}
 <script>
-  {% comment %} const ACCESS_TOKEN = Number(sessionStorage.getItem("access_token"))
-  const key_shift = {{ key_shift }}
-  const key_scale = {{ key_scale }} {% endcomment %}
-  const branch_id = Number(window.location.pathname.split("/")[2])
-
+  // const ACCESS_TOKEN = Number(sessionStorage.getItem("access_token"))
+  // const key_shift = {{ key_shift }}
+  // const key_scale = {{ key_scale }}
+  const branch_id = Number(window.location.pathname.split('/')[2])
+  
   // if not authenticated
-  {% comment %} if ((ACCESS_TOKEN - key_shift) / key_scale != branch_id) {
-    alert("You are not allowed to enter this branch without entering the password!!!")
-    sessionStorage.removeItem("access_token")
-    const url = window.location.origin
-    open(url, '_self')
-  } {% endcomment %}
+  // if ((ACCESS_TOKEN - key_shift) / key_scale != branch_id) {
+  // alert("You are not allowed to enter this branch without entering the password!!!")
+  // sessionStorage.removeItem("access_token")
+  // const url = window.location.origin
+  // open(url, '_self')
+  // }
 </script>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,30 +22,32 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="{% static 'queues/applicant/css/style.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-color-animation@1.5.1/jquery.animate-colors-min.min.js"></script>
     <script src="{% static 'queues/applicant/js/init_queue_cards.js' %}"></script>
     <script src="{% static 'queues/applicant/js/init_newsfeeds_paragraphs.js' %}"></script>
     <title>ATTIC TOURS - APPLICANT'S QUEUE</title>
   </head>
-  <body class="text-center mx-auto" style="background-color: #FFF0F0;">
-    <div class="p-2 d-flex flex-column gap-1">
+  <body id="body" class="text-center mx-auto position-relative" style="background-color: #FFF0F0;">
+    <div id="main_content" class="p-2 d-flex flex-column gap-1">
       <div class="row justify-content-center">
         <div class="col-4">
           <div class="d-flex flex-column gap-1">
-            <div class="w-50 mx-auto">
+            <div class="w-50 mx-auto user-select-none">
               <img class="img-fluid" src="{% static 'queues/applicant/img/logo.png' %}" alt="attic_logo" />
             </div>
             <div class="w-100 mx-auto text-center rounded p-1" style="border:3px solid #FC0000;">
-              <p class="lh-1 p-2 my-auto" style="font-size:2vw;">PLEASE <span class="fw-bold">TAKE A NUMBER</span> AND WAIT FOR YOUR NUMBER TO BE CALLED</p>
+              <p class="lh-1 p-2 my-auto user-select-none" style="font-size:2vw;">
+                PLEASE <span class="fw-bold">TAKE A NUMBER</span> AND WAIT FOR YOUR NUMBER TO BE CALLED
+              </p>
             </div>
             <div class="w-100 mx-auto fw-bold text-center rounded p-1" style="border:3px solid #FC0000;">
-              <p class="lh-1 p-2 my-auto" style="font-size:2vw;">FOR PASSPORT CLAIMS, PLEASE PROCEED TO ANY WINDOW</p>
+              <p class="lh-1 p-2 my-auto user-select-none" style="font-size:2vw;">FOR PASSPORT CLAIMS, PLEASE PROCEED TO ANY WINDOW</p>
             </div>
           </div>
         </div>
         <div class="col-8" id="attic_youtube">
-          <iframe class="container-fluid p-0 h-100 rounded" style="border:5px solid #FC0000;"  src="https://www.youtube.com/embed/videoseries?si=UKD7DsjKgPDjDx0b&amp;list=PLvf9VUdJeGeecJHhDmNzdbkhO2jm2kyqp&amp;loop=1&amp;controls=1&amp;autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+          <iframe class="container-fluid p-0 h-100 rounded" style="border:5px solid #FC0000;" src="https://www.youtube.com/embed/videoseries?si=UKD7DsjKgPDjDx0b&amp;list=PLvf9VUdJeGeecJHhDmNzdbkhO2jm2kyqp&amp;loop=1&amp;controls=1&amp;autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
         </div>
-       
       </div>
       <div id="queue_card_container" class="d-flex justify-content-evenly gap-2"></div>
       <div class="newsfeed-scroll-container">
@@ -53,7 +55,7 @@
       </div>
     </div>
 
-    
+    <div id="current_queue_container" class="position-absolute top-0 pt-2"></div>
 
     <audio src="{% static 'queues/applicant/audio/callingsound.mp3' %}" id="audio_calling"></audio>
   </body>
@@ -67,24 +69,24 @@
       url: window.location.origin + '/branch/api/queue_setting_status/'
     })
       .done((data) => {
-        console.log(data)
         if (data.change) {
           window.location.reload()
         }
-        // alert(data.status)
       })
       .fail((xhr, status, errorThrown) => {
-        alert('Sorry, there was a problem with changing a queue setting status!')
+        // alert('Sorry, there was a problem with changing a queue setting status!')
         console.log('Error: ' + errorThrown)
         console.log('Status: ' + status)
         console.dir(xhr)
+        // browser reloads the page if the connection is failed due to slow internet connection
+        window.location.reload()
       })
   }, 1000)
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <script>
-  var height = $("#attic_youtube").height()
+  var height = $('#attic_youtube').height()
   var expected_width = (1920 * height) / 1080
-  $("#attic_youtube").width(expected_width)
+  $('#attic_youtube').width(expected_width)
 </script>

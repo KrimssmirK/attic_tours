@@ -1,4 +1,6 @@
 $(document).ready(() => {
+    const WINDOW = window
+    init_queue_cards()
     async function init_queue_cards() {
         const ORIGIN = window.location.origin
         async function request_queues_and_windows() {
@@ -10,10 +12,12 @@ $(document).ready(() => {
                 data: { "branch_id": branch_id }, // branch_id is global variable
                 url: URL,
             }).fail((xhr, status, errorThrown) => {
-                alert('Sorry, there was a problem with fetching queues!')
+                // alert('Sorry, there was a problem with fetching queues!')
                 console.log('Error: ' + errorThrown)
                 console.log('Status: ' + status)
                 console.dir(xhr)
+                // browser reloads the page if the connection is failed due to slow internet connection
+                WINDOW.location.reload()
             })
             return [data.queues, data.windows]
         }
@@ -23,6 +27,7 @@ $(document).ready(() => {
 
             $queue_card =
                 $("<div>", {
+                    id: "border_" + queue.id,
                     class: "rounded h-75",
                     style: "border: 5px solid #FF0000;width:20%;"
                 }).append(
@@ -32,19 +37,21 @@ $(document).ready(() => {
                     }
                     ).append(
                         $("<div>", {
+                            id: "title_panel_" + queue.id,
                             class: "text-white text-center rounded p-2",
                             style: "background-color: #FF0000;width: 100%;"
                         }).append(
-                            $("<span>", {
-                                class: "fw-bold w-100",
+                            $("<p>", {
+                                id: "title_" + queue.id,
+                                class: "fw-bold w-100 user-select-none m-0",
                                 style: "font-size: 1.4em;",
                                 text: queue.service_name
                             })
                         )
                     ).append(
-                        $("<span>", {
+                        $("<p>", {
                             id: "queue_no_" + queue.id,
-                            class: "fw-bold text-center",
+                            class: "fw-bold text-center user-select-none m-0",
                             style: "font-size:9em;",
                             text: queue.current_no
                         })
@@ -52,9 +59,9 @@ $(document).ready(() => {
                         $("<div>", {
                             class: "text-center"
                         }).append(
-                            $("<span>", {
+                            $("<p>", {
                                 id: "queue_window_" + queue.id,
-                                class: "fw-bold",
+                                class: "fw-bold user-select-none m-0",
                                 style: "font-size: 1.2em;",
                                 text: window.name
                             })
@@ -76,13 +83,8 @@ $(document).ready(() => {
                     }
                 }
 
-                console.log("ring functions queue: ", queue)
-
-                // queue card info
-                const template = queue.service_name + " applicant number " + $("#queue_no_" + queue.id).text() + " please proceed to " + $("#queue_window_" + queue.id).text()
-
-                const message = new SpeechSynthesisUtterance(template)
-                // message settings
+                const speech = queue.service_name + " applicant number " + $("#queue_no_" + queue.id).text() + " please proceed to " + $("#queue_window_" + queue.id).text()
+                const message = new SpeechSynthesisUtterance(speech)
                 if (voice_selected) {
                     message.voice = voice_selected
                 }
@@ -90,23 +92,37 @@ $(document).ready(() => {
                 message.pitch = 1.3
                 message.rate = 0.8
                 message.lang = "en-US"
-
-
-
-                // speak
                 speechSynthesis.speak(message)
             }
 
             function call() {
+                $main_content = $("#main_content")
+                $current_queue_container = $("#current_queue_container")
+                $current_queue_clone = $("#border_" + queue.id).clone()
+                $current_queue_clone.width(jQuery(WINDOW).width())
+                $current_queue_clone.find("#title_" + queue.id).css("font-size", "3em")
+                $current_queue_clone.find("#queue_no_" + queue.id).css("font-size", "20em")
+                $current_queue_clone.find("#queue_window_" + queue.id).css("font-size", "3em")
+                // $current_queue_clone.height(WINDOW.innerHeight)
 
                 $("#audio_calling")[0].play().then(_ => {
                     // Autoplay started!
                     const delayInMilliseconds = 3_000
-                    setTimeout(() => speak(), delayInMilliseconds);
-                }).catch(error => {
-                    console.log("Error in Audio")
-                    console.log(error)
-                });
+                    setTimeout(() => {
+                        speak()
+                        $current_queue_container.append($current_queue_clone);
+                        $main_content.css( "opacity", 0 )
+                    }, delayInMilliseconds);
+                    setTimeout(() => {
+                        $current_queue_clone.detach()
+                        $main_content.css( "opacity", 1 )  
+                    }, 10_000);
+
+                })
+                    .catch(error => {
+                        console.log("Error in Audio")
+                        console.log(error)
+                    });
             }
 
             function call_applicant(new_queue) {
@@ -124,10 +140,12 @@ $(document).ready(() => {
                             return true
                         })
                         .fail((xhr, status, errorThrown) => {
-                            alert('Sorry, there was a problem with fetching queues!')
+                            // alert('Sorry, there was a problem with fetching queues!')
                             console.log('Error: ' + errorThrown)
                             console.log('Status: ' + status)
                             console.dir(xhr)
+                            // browser reloads the page if the connection is failed due to slow internet connection
+                            WINDOW.location.reload()
                             return false
                         })
                     return done
@@ -148,10 +166,12 @@ $(document).ready(() => {
                         data: { "queue_id": queue.id },
                         url: URL,
                     }).fail((xhr, status, errorThrown) => {
-                        alert('Sorry, there was a problem with updating queue..')
+                        // alert('Sorry, there was a problem with updating queue..')
                         console.log('Error: ' + errorThrown)
                         console.log('Status: ' + status)
                         console.dir(xhr)
+                        // browser reloads the page if the connection is failed due to slow internet connection
+                        WINDOW.location.reload()
                     })
                     return new_queue
                 }
@@ -178,7 +198,5 @@ $(document).ready(() => {
             $("#queue_card_container").append($queue_card)
         })
     }
-
-    init_queue_cards()
 })
 

@@ -1,0 +1,71 @@
+{% load static %}
+{% comment %}this branch id is used to request data for queue{% endcomment %}
+<script>
+  const branch_id = Number(window.location.pathname.split('/')[2])
+</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="{% static 'queues/applicant/css/style.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-color-animation@1.5.1/jquery.animate-colors-min.min.js"></script>
+    <script src="{% static 'queues/applicant/js/init_queue_cards_for_main.js' %}"></script>
+    <script src="{% static 'queues/applicant/js/init_newsfeeds_paragraphs_for_main.js' %}"></script>
+    <title>ATTIC TOURS - APPLICANT'S QUEUE</title>
+  </head>
+  <body class="text-center mx-auto" style="background-color: #FFF0F0;">
+    <div class="p-2 d-flex flex-column h-100 justify-content-around gap-1">
+      <div class="row h-100">
+        <div class="col-9" style="padding-right: 0px;">
+          <iframe class="container-fluid p-0 rounded h-100" style="border:3px solid #FFFFFF;" src="https://www.youtube.com/embed/videoseries?si=UKD7DsjKgPDjDx0b&amp;list=PLvf9VUdJeGeecJHhDmNzdbkhO2jm2kyqp&amp;loop=1&amp;controls=1&amp;autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+        </div>
+
+        <div class="col-3">
+          <div class="d-flex flex-column h-100 justify-content-center">
+            <div id="queue_card_container" class="d-flex justify-content-around gap-1 flex-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="newsfeed-scroll-container">
+        <div id="newsfeeds-container" class="newsfeeds-container"></div>
+      </div>
+    </div>
+
+    <audio src="{% static 'queues/applicant/audio/callingsound.mp3' %}" id="audio_calling"></audio>
+  </body>
+</html>
+
+{% comment %}this script is checking if the setting is changed in the controller and it updates this applicants view automatically{% endcomment %}
+<script>
+  function update_queue_settings(branch_id, interval) {
+    setInterval(() => {
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: { branch_id: branch_id }, // branch_id is global variable
+        url: window.location.origin + '/branch/api/queue_setting_status/'
+      })
+        .done((response) => {
+          if (response.change) {
+            window.location.reload()
+          }
+        })
+        .fail((xhr, status, errorThrown) => {
+          // alert('Sorry, there was a problem with changing a queue setting status!')
+          console.log('Error: ' + errorThrown)
+          console.log('Status: ' + status)
+          console.dir(xhr)
+          // browser reloads the page if the connection is failed due to slow internet connection
+          window.location.reload()
+        })
+    }, interval)
+  }
+  update_queue_settings(branch_id, 1000)
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

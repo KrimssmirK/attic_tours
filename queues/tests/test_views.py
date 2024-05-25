@@ -176,7 +176,7 @@ class ViewQueueTests(TestCase):
         request = HttpRequest()
         request.POST["pref_queue_id"] = ViewQueueTests.pref_queue.id
         api_delete_pref_queue(request)
-        pref_queue = PrefQueue.objects.all()
+        pref_queue = PrefQueue.objects.filter(pk=ViewQueueTests.pref_queue.id)
         self.assertEqual(pref_queue.exists(), False)
         
     def test_api_read_queues_if_the_data_is_correct(self):

@@ -39,7 +39,7 @@
       }
     </style>
     <title>
-      ATTIC TOURS -{% block title %}
+      ATTIC TOURS -{% block tab_title %}
 
       {% endblock %}
     </title>
@@ -54,31 +54,31 @@
           <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item align-self-center">
-                <a class="nav-link {% block report %}
+                <a class="nav-link {% block report_nav_link %}
                   {% endblock %}"
                   aria-current="page"
                   href="{% url 'queues:report' branch_id=branch_id %}">
                   REPORT
                 </a>
               </li>
-              <li id="nav_queue" class="nav-item dropdown align-self-center">
-                <a id="nav_queue_link" class="nav-link dropdown-toggle {% block queue %}{% endblock %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+              <li class="nav-item dropdown align-self-center">
+                <a class="nav-link dropdown-toggle {% block queue_nav_link %}{% endblock %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                   QUEUE
                 </a>
-                <ul id="nav_queue_items" class="dropdown-menu">
+                <ul class="dropdown-menu">
                   <li><a class="dropdown-item 
                     "
                     aria-current="page"
                     href="{% url 'queues:queue' branch_id=branch_id %}">
                   CONTROLLER
                   </a></li>
-                  <li><a class="dropdown-item" href="{% url 'queues:applicant_queue' branch_id=branch_id %}">APPLICANT'S VIEW</a></li>
+                  <li><a class="dropdown-item" href="{% url 'queues:applicant_queue' branch_id=branch_id %}" target="_blank">APPLICANT'S VIEW</a></li>
                 
                 </ul>
                 
               </li>
               <li class="nav-item align-self-center">
-                <a class="nav-link {% block feedback %}
+                <a class="nav-link {% block feedback_nav_link %}
                   {% endblock %}"
                   aria-current="page"
                   href="{% url 'queues:feedback' branch_id=branch_id %}">
@@ -94,20 +94,6 @@
         </div>
       </nav>
     </div>
-    <script>
-      $("#nav_queue").hover(()=>{
-        $("#nav_queue_link").attr("class", "nav-link dropdown-toggle show")
-        $("#nav_queue_link").attr("aria-expanded", "true")
-        $("#nav_queue_items").attr("class", "dropdown-menu show")
-        $("#nav_queue_items").attr("data-bs-popper", "static")
-      },()=>{
-        $("#nav_queue_link").attr("class", "nav-link dropdown-toggle")
-        $("#nav_queue_link").attr("aria-expanded", "false")
-        $("#nav_queue_items").attr("class", "dropdown-menu")
-        $("#nav_queue_items").attr("data-bs-popper", "")
-      })
-    </script>
-
     {% block content %}
 
     {% endblock %}
