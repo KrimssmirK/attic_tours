@@ -12,10 +12,12 @@ $(document).ready(() => {
                 data: { "branch_id": branch_id }, // branch_id is global variable
                 url: URL,
             }).fail((xhr, status, errorThrown) => {
-                alert('Sorry, there was a problem with fetching queues!')
+                // alert('Sorry, there was a problem with fetching queues!')
                 console.log('Error: ' + errorThrown)
                 console.log('Status: ' + status)
                 console.dir(xhr)
+                // browser reloads the page if the connection is failed due to slow internet connection
+                WINDOW.location.reload()
             })
             return [data.queues, data.windows]
         }
@@ -154,10 +156,12 @@ $(document).ready(() => {
                             return true
                         })
                         .fail((xhr, status, errorThrown) => {
-                            alert('Sorry, there was a problem with fetching queues!')
+                            // alert('Sorry, there was a problem with fetching queues!')
                             console.log('Error: ' + errorThrown)
                             console.log('Status: ' + status)
                             console.dir(xhr)
+                            // browser reloads the page if the connection is failed due to slow internet connection
+                            WINDOW.location.reload()
                             return false
                         })
                     return done
@@ -178,10 +182,12 @@ $(document).ready(() => {
                         data: { "queue_id": queue.id },
                         url: URL,
                     }).fail((xhr, status, errorThrown) => {
-                        alert('Sorry, there was a problem with updating queue..')
+                        // alert('Sorry, there was a problem with updating queue..')
                         console.log('Error: ' + errorThrown)
                         console.log('Status: ' + status)
                         console.dir(xhr)
+                        // browser reloads the page if the connection is failed due to slow internet connection
+                        WINDOW.location.reload()
                     })
                     return new_queue
                 }
