@@ -114,7 +114,8 @@ $(document).ready(() => {
                         $main_content.css( "opacity", 0 )
                     }, delayInMilliseconds);
                     setTimeout(() => {
-                        $current_queue_clone.detach()
+                        // $current_queue_clone.detach()
+                        $current_queue_container.empty()
                         $main_content.css( "opacity", 1 )  
                     }, 10_000);
 
