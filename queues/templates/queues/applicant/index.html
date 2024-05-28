@@ -27,7 +27,7 @@
     <script src="{% static 'queues/applicant/js/init_newsfeeds_paragraphs.js' %}"></script>
     <title>ATTIC TOURS - APPLICANT'S QUEUE</title>
   </head>
-  <body id="body" class="text-center mx-auto position-relative" style="background-color: #FFF0F0;">
+  <body class="text-center mx-auto" style="background-color: #FFF0F0;">
     <div id="main_content" class="p-2 d-flex flex-column gap-1">
       <div class="row justify-content-center">
         <div class="col-4">
@@ -54,8 +54,6 @@
         <div id="newsfeeds-container" class="newsfeeds-container"></div>
       </div>
     </div>
-
-    <div id="current_queue_container" class="position-absolute top-0 pt-2"></div>
 
     <audio src="{% static 'queues/applicant/audio/callingsound.mp3' %}" id="audio_calling"></audio>
   </body>

@@ -38,13 +38,13 @@ $(document).ready(() => {
                     ).append(
                         $("<div>", {
                             id: "title_panel_" + queue.id,
-                            class: "text-white text-center rounded p-2",
+                            class: "text-center rounded p-2",
                             style: "background-color: #FF0000;width: 100%;"
                         }).append(
                             $("<p>", {
                                 id: "title_" + queue.id,
                                 class: "fw-bold w-100 user-select-none m-0",
-                                style: "font-size: 1.4em;",
+                                style: "font-size: 1.4em; color: white;",
                                 text: queue.service_name
                             })
                         )
@@ -96,34 +96,45 @@ $(document).ready(() => {
             }
 
             function call() {
-                $main_content = $("#main_content")
-                $current_queue_container = $("#current_queue_container")
-                $current_queue_clone = $("#border_" + queue.id).clone()
-                $current_queue_clone.width(jQuery(WINDOW).width())
-                $current_queue_clone.find("#title_" + queue.id).css("font-size", "3em")
-                $current_queue_clone.find("#queue_no_" + queue.id).css("font-size", "20em")
-                $current_queue_clone.find("#queue_window_" + queue.id).css("font-size", "3em")
-                // $current_queue_clone.height(WINDOW.innerHeight)
-
                 $("#audio_calling")[0].play().then(_ => {
                     // Autoplay started!
+                    do_animation()
                     const delayInMilliseconds = 3_000
                     setTimeout(() => {
                         speak()
-                        $current_queue_container.append($current_queue_clone);
-                        $main_content.css( "opacity", 0 )
                     }, delayInMilliseconds);
-                    setTimeout(() => {
-                        // $current_queue_clone.detach()
-                        $current_queue_container.empty()
-                        $main_content.css( "opacity", 1 )  
-                    }, 10_000);
-
                 })
                     .catch(error => {
                         console.log("Error in Audio")
                         console.log(error)
                     });
+            }
+           
+
+            
+
+            function do_animation() {
+                function back_to_normal_form() {
+                    $("#border_" + queue.id).animate({
+                        opacity: "1"
+                    }, "slow")
+                    $("#queue_no_" + queue.id).animate({
+                        fontSize: "9em"
+                    }, "slow")
+                }
+                function change_the_normal_form() {
+                    $("#border_" + queue.id).animate({
+                        opacity: "0.4"
+                    }, "slow")
+                    $("#queue_no_" + queue.id).animate({
+                        fontSize: "5em"
+                    }, "slow")
+              
+                }
+                for (var i = 0 ; i < 5 ; i++) {
+                    change_the_normal_form()
+                    back_to_normal_form()
+                } 
             }
 
             function call_applicant(new_queue) {
