@@ -1,0 +1,16 @@
+windows = [
+    {"name": "ANY WINDOW"},
+    {"name": "WINDOW 1"},
+    {"name": "WINDOW 2"},
+    {"name": "WINDOW 3"},
+    {"name": "WINDOW 4"},
+    {"name": "WINDOW 5"},
+    {"name": "WINDOW 6"},
+    {"name": "WINDOW 7"},
+    {"name": "WINDOW VISA"},
+    {"name": "WINDOW JAPAN VISA"},
+    {"name": "WINDOW KOREA VISA"},
+    {"name": "WINDOW TICKETING"},
+    {"name": "WINDOW TOUR PACKAGE"},
+    {"name": "WINDOW WIFI"},
+]
