@@ -6,7 +6,7 @@ from queues.models import Branch
 def home(request):
     branches = Branch.get_branch_without_password()
     context = { "branches": branches }
-    return render(request, "queues/home/index.html", context=context)
+    return render(request, "queues/home/home.html", context=context)
 
 
 @csrf_exempt

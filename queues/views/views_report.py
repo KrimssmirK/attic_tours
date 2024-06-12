@@ -22,7 +22,7 @@ def report(request, branch_id):
         "key_scale": 2,
         "today_date": timezone.now().date(),
     }
-    return render(request, "queues/branch/report/container.html", context)
+    return render(request, "queues/branch/report/report_container.html", context)
 
 
 @csrf_exempt

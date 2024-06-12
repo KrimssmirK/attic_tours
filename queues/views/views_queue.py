@@ -9,7 +9,7 @@ def view_queue(request, branch_id):
     logged_in_branch = Branch.objects.get(pk=branch_id)
     return render(
         request,
-        "queues/branch/queue/container.html",
+        "queues/branch/queue/queue_container.html",
         {
             "branch_id": branch_id,
             "branch_name": logged_in_branch.name,
