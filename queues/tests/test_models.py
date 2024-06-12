@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.utils import timezone
-from queues.models import Service, Branch, Report, Window, PrefQueue, Queue, Newsfeed, Feedback
+from queues.models import Service, Branch, Report, Window, PrefQueue, Queue, Newsfeed
 
 
 class ModelServiceTests(TestCase):
@@ -439,57 +439,3 @@ class ModelNewsfeedTests(TestCase):
         newsfeed = Newsfeed.objects.get(id=1)
         expected_name = newsfeed.text[:10]
         self.assertEqual(str(newsfeed), expected_name)
-        
-
-class ModelFeedbackTests(TestCase):
-    @classmethod
-    def setUpTestData(clf):
-        branch = Branch(
-            name="SM FAIRVIEW",
-            mobile_no="4213412",
-            landline_no="(02)2343-4233",
-            password="1111"
-        )
-        branch.save()
-        
-        Feedback.objects.create(
-            title="Good Design",
-            description="well done!!!",
-            branch=branch
-        )
-        
-    def test_title_label(self):
-        feedback = Feedback.objects.get(id=1)
-        field_label = feedback._meta.get_field("title").verbose_name
-        self.assertEqual(field_label, "title")
-    
-    def test_title_max_length(self):
-        feedback = Feedback.objects.get(id=1)
-        max_length = feedback._meta.get_field("title").max_length
-        self.assertEqual(max_length, 100)
-        
-    def test_description_label(self):
-        feedback = Feedback.objects.get(id=1)
-        field_label = feedback._meta.get_field("description").verbose_name
-        self.assertEqual(field_label, "description")
-        
-    def test_description_max_length(self):
-        feedback = Feedback.objects.get(id=1)
-        max_length = feedback._meta.get_field("description").max_length
-        self.assertEqual(max_length, 500)
-    
-    def test_set_branch(self):
-        branch = Branch.objects.all().last()
-        feedback = Feedback.objects.all().last()
-        self.assertEqual(feedback.branch, branch)
-    
-    def test_set_date(self):
-        today_date = timezone.datetime.today().date()
-        feedback = Feedback.objects.get(id=1)
-        self.assertEqual(feedback.date.date(), today_date)
-        
-    def test_object_name(self):
-        feedback = Feedback.objects.get(id=1)
-        expected_name = f"{feedback.branch}-{feedback.title}"
-        self.assertEqual(str(feedback), expected_name)
-        

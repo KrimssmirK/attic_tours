@@ -21,7 +21,6 @@ from queues.views.views_queue import (
     change_queue_setting_status,
     queue_setting_status
 )
-from queues.views.views_feedback import feedback, api_send_feedback
 from queues.views.views_applicant_queue import applicant_queue
 
 from queues.views.views_test import test_view
@@ -40,9 +39,6 @@ urlpatterns = [
         applicant_queue,
         name="applicant_queue",
     ),
-    # FEEDBACK
-    path("branch/<int:branch_id>/feedback/", feedback, name="feedback"),
-    
     
     # --------------------------------------APIs--------------------------------------
     # HOME
@@ -106,8 +102,6 @@ urlpatterns = [
     path(
         "branch/api/change_newsfeed/", api_change_newsfeed, name="api_change_newsfeed"
     ),
-    # FEEDBACK
-    path("branch/api/send_feedback/", api_send_feedback, name="api_send_feedback"),
     
     
     # --------------------------------------test views--------------------------------------

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from queues.models import (
-    Branch, Service, Report, Window, Queue, PrefQueue, Newsfeed, Feedback, QueueSettingStatus
+    Branch, Service, Report, Window, Queue, PrefQueue, Newsfeed, QueueSettingStatus
     )
 
 
@@ -22,10 +22,6 @@ class NewsfeedAdmin(admin.ModelAdmin):
     list_display = ["branch", "text"]
     list_filter = ["branch"]
 
-class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ["branch", "title", "date"]
-    list_filter = ["branch", "date"]
-    
 class QueueSettingStatusAdmin(admin.ModelAdmin):
     list_display = ["branch", "change"]
 
@@ -37,5 +33,4 @@ admin.site.register(Window)
 admin.site.register(Queue)
 admin.site.register(PrefQueue, PrefQueueAdmin)
 admin.site.register(Newsfeed, NewsfeedAdmin)
-admin.site.register(Feedback, FeedbackAdmin)
 admin.site.register(QueueSettingStatus, QueueSettingStatusAdmin)

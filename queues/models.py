@@ -86,13 +86,3 @@ class Newsfeed(models.Model):
 
     def __str__(self):
         return self.text[:10]
-
-
-class Feedback(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
-    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.branch}-{self.title}"
