@@ -46,7 +46,7 @@
   </head>
   <body style="background-color: {% block bodycolor %}
     {% endblock %}">
-    <div id="nav">
+    <div id="nav" class="user-select-none">
       <nav class="navbar navbar-expand-md navbar-light bg-light" style="background-color: white !important;">
         <div class="container-fluid">
           <a class="navbar-brand" href="{% url 'queues:report' branch_id=branch_id %}"><img src="{% static 'queues/branch/img/attic_logo.png' %}" alt="home" /><span class="p-2 fw-light">{{ branch_name }}</span></a>

@@ -1,7 +1,5 @@
 {% load static %}
-<div class="card card-body" style="overflow-y: scroll; height:600px;">
-  <h2 class="text-start" style="font-size:32px;">Settings</h2>
-  {% comment %}Queue Settings{% endcomment %}
+<div class="card card-body user-select-none" style="overflow-y: scroll; height:600px; width: 320px; z-index:2;">
   <div class="mt-3">
     <h3 class="fw-bold" style="font-size:16px;">Queue</h3>
     {% comment %}adding queues{% endcomment %}
@@ -76,7 +74,7 @@
       <button id="button_refresh" class="w-100 rounded fw-bold text-white" style="font-size: 20px; background-color: #53727C; border-color: #D5D5D5;">Refresh Applicant’s View</button>
     </div>
   </div>
- 
+
   <script>
     $('#button_refresh').on('click', () => {
       $.ajax({
