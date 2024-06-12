@@ -7,7 +7,7 @@ def applicant_queue(request, branch_id):
     if logged_in_branch.name == "MAIN OFFICE":
         return render(
             request,
-            "queues/applicant/index_for_main.html",
+            "queues/applicant/applicant_view_main.html",
             {
                 "branch_id": branch_id,
                 # "branch_name": logged_in_branch.name,
@@ -18,7 +18,7 @@ def applicant_queue(request, branch_id):
     else:
         return render(
             request,
-            "queues/applicant/index.html",
+            "queues/applicant/applicant_view.html",
             {
                 "branch_id": branch_id,
                 # "branch_name": logged_in_branch.name,
