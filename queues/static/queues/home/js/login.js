@@ -26,7 +26,7 @@ $(document).ready(() => {
             .done((result) => {
                 if (result.password_matched) {
                     sessionStorage.setItem("access_token", result.access_token)
-                    const url = window.location.origin + '/branch/' + branchId + "/report/"
+                    const url = window.location.origin + '/branch/' + branchId + "/queue/"
                     open(url, '_self')
                 } else {
                     alert('password is incorrect!')

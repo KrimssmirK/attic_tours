@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     {% comment %}jQuery{% endcomment %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    {% comment %} the logic of logout is in the nav.js {% endcomment %}
+    {% comment %}the logic of logout is in the nav.js{% endcomment %}
     <script src="{% static 'queues/branch/js/nav.js' %}"></script>
     <style>
       .loader {
@@ -45,37 +45,32 @@
     </title>
   </head>
   <body style="background-color: {% block bodycolor %}
+
     {% endblock %}">
     <div id="nav" class="user-select-none">
       <nav class="navbar navbar-expand-md navbar-light bg-light" style="background-color: white !important;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'queues:report' branch_id=branch_id %}"><img src="{% static 'queues/branch/img/attic_logo.png' %}" alt="home" /><span class="p-2 fw-light">{{ branch_name }}</span></a>
+          <a class="navbar-brand"><img src="{% static 'queues/branch/img/attic_logo.png' %}" alt="home" /><span class="p-2 fw-bolf">{{ branch_name }}</span></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
             <ul class="navbar-nav">
-              {% comment %} <li class="nav-item align-self-center">
-                <a class="nav-link {% block report_nav_link %}
-                  {% endblock %}"
-                  aria-current="page"
-                  href="{% url 'queues:report' branch_id=branch_id %}">
-                  REPORT
-                </a>
-              </li> {% endcomment %}
               <li class="nav-item dropdown align-self-center">
-                <a class="nav-link dropdown-toggle {% block queue_nav_link %}{% endblock %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                <a class="nav-link dropdown-toggle {% block queue_nav_link %}
+                  {% endblock %}"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="true">
                   QUEUE
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item 
-                    "
-                    aria-current="page"
-                    href="{% url 'queues:queue' branch_id=branch_id %}">
-                  CONTROLLER
-                  </a></li>
-                  <li><a class="dropdown-item" href="{% url 'queues:applicant_queue' branch_id=branch_id %}" target="_blank">APPLICANT'S VIEW</a></li>
-                
+                  <li>
+                    <a class="dropdown-item" aria-current="page" href="{% url 'queues:queue' branch_id=branch_id %}">CONTROLLER</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'queues:applicant_queue' branch_id=branch_id %}" target="_blank">APPLICANT'S VIEW (SEPARATE MONITOR)</a>
+                  </li>
                 </ul>
-                
               </li>
             </ul>
             <div id="logout" class="d-flex flex-column justify-content-end" style="color: #4E4747;cursor: pointer;">
