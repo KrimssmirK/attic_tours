@@ -14,7 +14,7 @@
     position: absolute;
     white-space: nowrap;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     
     /* animation: scroll-horizontal 50s linear infinite; */
     gap: 100px;
@@ -23,14 +23,3 @@
 .newsfeeds-container p {
     margin: 0;
 }
-
-/* this is set via jQuery */
-/* @keyframes scroll-horizontal {
-    0% {
-        left: 100%;
-    }
-
-    100% {
-        left: -200%;
-    }
-} */

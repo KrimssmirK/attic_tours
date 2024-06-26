@@ -1,9 +1,10 @@
 // run this js after the document is fully loaded
 $(document).ready(() => {
-    const WINDOW = window
+    init_newsfeeds_paragraphs(branch_id) // branch_id is global variable
+
     async function init_newsfeeds_paragraphs(branch_id) { // branch_id is global variable
         
-        function construct_newsfeed_paragraph(text) {
+        function create_newsfeed(text) {
             const properties = {
                 class: "p-2 fw-bold text-white user-select-none",
                 style: "font-size:1.3vw;",
@@ -13,7 +14,8 @@ $(document).ready(() => {
         }
 
         async function request_newsfeeds() {
-            const ENDPOINT = window.location.origin + '/branch/api/newsfeeds/'
+            const WINDOW = window
+            const ENDPOINT = WINDOW.location.origin + '/branch/api/newsfeeds/'
             var data = await $.ajax({
                 url: ENDPOINT,
                 type: 'GET',
@@ -31,11 +33,34 @@ $(document).ready(() => {
 
         var newsfeeds = await request_newsfeeds()
         // appending paragraph (p)
+        let nletters = 0
+        let n_groups = 0
         newsfeeds.forEach(newsfeed => {
-            $newsfeed_paragraph = construct_newsfeed_paragraph(newsfeed.text)
+            $newsfeed_paragraph = create_newsfeed(newsfeed.text)
             $("#newsfeeds-container").append($newsfeed_paragraph)
+            nletters += newsfeed.text.length
+            n_groups += 1
+        })
+
+        const ADJUST = 1.5
+        const LEFT = ((4 + nletters) + (5 * n_groups)) * ADJUST
+        const SPEED = 0.005
+        const DURATION = LEFT / SPEED
+        setInterval(() => {
+            $("#newsfeeds-container").animate(
+                {
+                    left: "-" + String(LEFT) + "%"
+                },
+                {
+                    duration: DURATION,
+                    easing: "linear",
+                    complete: () => {
+                        $("#newsfeeds-container").css("left", "100%")
+                    }
+                }
+            )
         })
     }
 
-    init_newsfeeds_paragraphs(branch_id) // branch_id is global variable
+    
 })
